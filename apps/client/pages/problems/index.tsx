@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
 
-const TrackSlug = () => {
+const ProblemIndex = () => {
     const router = useRouter()
     const { slug } = router.query
     return (
@@ -83,4 +83,4 @@ const TrackSlug = () => {
     )
 }
 
-export default TrackSlug
+export default ProblemIndex
