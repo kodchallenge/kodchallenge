@@ -1,5 +1,9 @@
 .dotPointBg {
-    background-image: url(/assets/dot-point.svg);
-    background-repeat: repeat;
     pointer-events: none;
+    background-color: hsl(var(--bc));
+    opacity: 0.15;
+    -webkit-mask-image: url(/assets/dot-point.svg);
+    mask-repeat: repeat;
+    -webkit-mask-repeat: repeat;
+    mask-image: url(/assets/dot-point.svg);
 }
