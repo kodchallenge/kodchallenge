@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import Head from 'next/head';
 import Link from 'next/link';
 import { Fragment } from 'react';
-// import s from '@/assets/styles/main.module.css'
+import s from '@/assets/styles/main.module.css'
 import KcLayout from '@/layouts/KcLayout';
 
 export function Index() {
@@ -15,16 +15,16 @@ export function Index() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <KcLayout overlay={(
-          <div className={clsx("full-screen")}></div>
+          <div className={clsx(s.dotPointBg, "full-screen")}></div>
       )}>
         <div className="vh-80 flex items-center tails-selected-element">
           <div className="w-full mx-auto text-center md:text-center">
-            <h3 className="px-0 mb-6 text-lg text-slate-600 md:text-xl">Öğrenirken eğlenmeye hazır mısın? 🎉</h3>
+            <h3 className="px-0 mb-6 text-lg text-slate-300 md:text-xl">Öğrenirken eğlenmeye hazır mısın? 🎉</h3>
             <h1 className="mb-6 text-5xl font-extrabold leading-none max-w-5xl mx-auto tracking-normal text-slate-300 sm:text-6xl md:text-6xl lg:text-7xl md:tracking-tight">
               <span className="w-full text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 lg:inline">Türkçe</span> Programlama Platformu
               <br />
             </h1>
-            <p className="px-0 mb-6 text-lg text-gray-600 md:text-xl lg:px-24">
+            <p className="px-0 mb-6 text-lg text-gray-400 md:text-xl lg:px-24">
               Ücretsiz ve Türkçe sorular ile programlama yeteneğini geliştir. Ödüllü programlama yarışmalarına katıl.
               Her hafta birbirinden eğlenceli kodlama challenge etkinliklerinde sen de yerini al.
             </p>
@@ -40,7 +40,7 @@ export function Index() {
                     <span className="block xl:inline">Programlama dillerine göre ayrılmış</span>
                     <span className="block text-indigo-600 xl:inline" data-primary="indigo-600">Problemler!</span>
                   </h1>
-                  <p className="mx-auto text-base text-gray-500 sm:max-w-md lg:text-xl md:max-w-3xl">Şuan da aktif olarak C, C++, C#, Java, JavaScript, Python gibi dillerde kodlama yapabilir, kendinizi daha da geliştirebilirsiniz.</p>
+                  <p className="mx-auto text-base text-gray-400 sm:max-w-md lg:text-xl md:max-w-3xl">Şuan da aktif olarak C, C++, C#, Java, JavaScript, Python gibi dillerde kodlama yapabilir, kendinizi daha da geliştirebilirsiniz.</p>
                   <div className="relative flex flex-col sm:flex-row sm:space-x-4">
                     <a href="#_" className="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-indigo-600 rounded-md sm:mb-0 hover:bg-indigo-700 sm:w-auto" data-primary="indigo-600" data-rounded="rounded-md">
                       Problemler
@@ -71,7 +71,7 @@ export function Index() {
                     <span className="block xl:inline">Ücretsiz Kodlama</span>
                     <span className="block text-indigo-600" data-primary="indigo-600">Yarışmalarına Katıl</span>
                   </h1>
-                  <p className="mx-auto text-base text-gray-500 sm:max-w-md lg:text-xl md:max-w-3xl">Ödüllü ve ücretsiz kodlama yarışmalarına katıl. Rozet ve gerçek ödül sahibi ol.</p>
+                  <p className="mx-auto text-base text-gray-400 sm:max-w-md lg:text-xl md:max-w-3xl">Ödüllü ve ücretsiz kodlama yarışmalarına katıl. Rozet ve gerçek ödül sahibi ol.</p>
                   <div className="relative flex flex-col sm:flex-row sm:space-x-4">
                     <a href="/contests" className="flex items-center w-full px-6 py-3 mb-3 text-lg text-white bg-indigo-600 rounded-md sm:mb-0 hover:bg-indigo-700 sm:w-auto" data-primary="indigo-600" data-rounded="rounded-md">
                       Yarışmalar

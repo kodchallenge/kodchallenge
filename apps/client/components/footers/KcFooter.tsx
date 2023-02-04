@@ -6,27 +6,27 @@ const KcFooter = () => {
         <footer className="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8 tails-selected-element">
             <nav className="flex flex-wrap justify-center -mx-5 -my-2">
                 <div className="px-5 py-2">
-                    <a href="/abouts" className="text-base leading-6 text-gray-500 hover:text-orange-400">
+                    <a href="/abouts" className="text-base leading-6 text-gray-400 hover:text-orange-400">
                         Hakkımızda
                     </a>
                 </div>
                 <div className="px-5 py-2">
-                    <a href="/blog" className="text-base leading-6 text-gray-500 hover:text-orange-400">
+                    <a href="/blog" className="text-base leading-6 text-gray-400 hover:text-orange-400">
                         Blog
                     </a>
                 </div>
                 <div className="px-5 py-2">
-                    <a href="/teams" className="text-base leading-6 text-gray-500 hover:text-orange-400">
+                    <a href="/teams" className="text-base leading-6 text-gray-400 hover:text-orange-400">
                         Takım
                     </a>
                 </div>
                 <div className="px-5 py-2">
-                    <a href="/contacts" className="text-base leading-6 text-gray-500 hover:text-orange-400">
+                    <a href="/contacts" className="text-base leading-6 text-gray-400 hover:text-orange-400">
                         İletişim
                     </a>
                 </div>
                 <div className="px-5 py-2">
-                    <a href="/terms" className="text-base leading-6 text-gray-500 hover:text-orange-400">
+                    <a href="/terms" className="text-base leading-6 text-gray-400 hover:text-orange-400">
                         Kullanım Koşulları
                     </a>
                 </div>
@@ -54,7 +54,7 @@ const KcFooter = () => {
             <p className="mt-8 text-base leading-6 text-center text-gray-400">
                 © 2023 KodTeam. Tüm Hakları Saklıdır.
             </p>
-            <span className="w-full m-o block text-center text-gray-600" style={{margin: 10}}>
+            <span className="w-full m-o block text-center text-gray-500" style={{margin: 10}}>
                 v{version}
             </span>
         </footer>
