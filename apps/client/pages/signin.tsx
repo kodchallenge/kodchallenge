@@ -19,31 +19,33 @@ const Signin = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className='w-full vh-100 overflow-hidden flex items-center justify-center flex-col space-y-2'>
-                <div className="card w-full px-3 sm:max-w-md lg:max-w-lg md:4/5 bg-zinc-900 shadow-2xl">
-                    <KcBrandButton />
-                    <div className="p-0 sm:p-8 card-body">
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Kullanıcı Adı veya E-posta</span>
-                            </label>
-                            <input type="text" className="input input-bordered" />
+            <div className='w-full overflow-auto'>
+                <div className='min-h-screen w-full flex items-center p-5 justify-center flex-col space-y-2'>
+                    <div className=" card w-full px-3 sm:max-w-md lg:max-w-lg md:4/5 bg-base-100 shadow-2xl">
+                        <KcBrandButton />
+                        <div className="p-0 sm:p-8 card-body">
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Kullanıcı Adı veya E-posta</span>
+                                </label>
+                                <input type="text" className="input input-bordered" />
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Parola</span>
+                                </label>
+                                <input type="text" className="input input-bordered" />
+                            </div>
+                            <div className="form-control mt-6">
+                                <button className="btn btn-primary">Giriş Yap</button>
+                            </div>
                         </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Parola</span>
-                            </label>
-                            <input type="text" className="input input-bordered" />
+                        <div className='text-center'>
+                            <p className='m-0'>
+                                KodChallenge'da yeni misin?
+                                <Link href={"/signup"} className="btn btn-link">HESAP OLUŞTUR</Link>
+                            </p>
                         </div>
-                        <div className="form-control mt-6">
-                            <button className="btn btn-primary">Giriş Yap</button>
-                        </div>
-                    </div>
-                    <div className='text-center'>
-                        <p className='m-0'>
-                            KodChallenge'da yeni misin?
-                            <Link href={"/signup"} className="btn btn-link">HESAP OLUŞTUR</Link>
-                        </p>
                     </div>
                 </div>
             </div>
