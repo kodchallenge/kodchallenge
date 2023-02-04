@@ -1,0 +1,5 @@
+.dotPointBg {
+    background-image: url(/assets/dot-point.svg);
+    background-repeat: repeat;
+    pointer-events: none;
+}
