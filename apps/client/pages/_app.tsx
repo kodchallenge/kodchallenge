@@ -1,3 +1,4 @@
+import { wrapper } from '@/store';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import '../assets/styles/globals.css'
@@ -15,4 +16,4 @@ function CustomApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default CustomApp;
+export default wrapper.withRedux(CustomApp);
