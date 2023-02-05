@@ -29,9 +29,27 @@ const KcHeader = (props: KcHeaderProps) => {
                     <div className="navbar-center hidden md:flex">
                         <ul className="menu menu-horizontal px-1">
                             <li><Link href={"/problems"}>Problemler</Link></li>
-                            <li><Link href={"/contests"}>Yarışmalar</Link></li>
-                            <li><Link href={"/challenges"}>Etkinlikler</Link></li>
-                            <li><Link href={"/projects"}>Projeler</Link></li>
+                            <li>
+                                <Link href={"/"}>
+                                    <div className="tooltip tooltip-bottom tooltip-open" data-tip="Yakında">
+                                        Yarışmalar
+                                    </div>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={"/"}>
+                                    <div className="tooltip tooltip-bottom tooltip-open" data-tip="Yakında">
+                                        Etkinlikler
+                                    </div>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href={"/"}>
+                                    <div className="tooltip tooltip-bottom tooltip-open" data-tip="Yakında">
+                                        Projeler
+                                    </div>
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                     <div className="navbar-end">
