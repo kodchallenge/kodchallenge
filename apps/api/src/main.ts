@@ -8,6 +8,7 @@ import * as path from 'path';
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import { getAllProblems } from './app/db/problem.db';
+import { getCategories } from './app/db/category.db';
 const app = express();
 app.use(cors())
 app.use(bodyParser.json())
@@ -21,6 +22,10 @@ app.get('/api', (req, res) => {
 
 app.get("/api/problems", async (req, res) => {
   res.json(await getAllProblems())
+})
+
+app.get("/api/categories", async (req, res) => {
+  res.json(await getCategories())
 })
 
 
