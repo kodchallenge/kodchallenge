@@ -5,14 +5,24 @@
 
 import express from 'express';
 import * as path from 'path';
-
+import cors from 'cors'
+import bodyParser from 'body-parser'
+import { getAllProblems } from './app/db/problem.db';
 const app = express();
+app.use(cors())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to api!' });
 });
+
+app.get("/api/problems", async (req, res) => {
+  res.json(await getAllProblems())
+})
+
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, () => {
