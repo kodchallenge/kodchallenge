@@ -1,5 +1,14 @@
-import { Category } from "../models/category.model"
+import { CategoryModel, ProblemModel } from "../models"
 
 export const getCategories = async () => {
-    return Category.findByPk(2)
+    return CategoryModel.findAll({
+        include: [{
+            model: ProblemModel,
+            attributes: ["title", "slug", "score", "id"],
+            where: {
+                is_deleted: false,
+                is_private: false
+            }
+        }]
+    })
 }

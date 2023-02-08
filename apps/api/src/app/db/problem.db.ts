@@ -1,11 +1,6 @@
-// import { pool } from "../db"
+import { ProblemModel } from "../models"
 
 export const getAllProblems = async () => {
-    return new Promise((resolve, reject) => {
-        // pool.query(`SELECT * FROM categories ORDER BY id ASC`, (err, result) => {
-        //     if (err)
-        //         return reject(err)
-        //     resolve(result.rows)
-        // })
+    return ProblemModel.findAll({
     })
 }

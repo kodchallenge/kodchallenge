@@ -1,7 +1,11 @@
-import Sequelize from "sequelize";
+import Sequelize, { ModelDefined } from "sequelize";
 import { sequelize } from "../db";
+import { ProblemModel } from "./problem.model";
 
-export const Category = sequelize.define("categories", {
+export const CategoryModel: ModelDefined<{
+    id: number;
+    name: string;
+}, {}> = sequelize.define("categories", {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true
@@ -10,3 +14,7 @@ export const Category = sequelize.define("categories", {
         type: Sequelize.STRING,
     }
 }, {createdAt: false, updatedAt: false})
+
+CategoryModel.hasMany(ProblemModel, {
+    foreignKey: "category_id"
+})
