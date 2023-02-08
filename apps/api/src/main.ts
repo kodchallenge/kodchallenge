@@ -17,10 +17,6 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.use('/v1', router);
 
-app.use((req, res) => {
-  console.log("asd")
-})
-
 const port = process.env.PORT || 3333;
 const server = app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}/api`);
