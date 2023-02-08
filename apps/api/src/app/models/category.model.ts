@@ -1,11 +1,9 @@
 import Sequelize, { ModelDefined } from "sequelize";
-import { sequelize } from "../db";
+import { KcContext } from "../configs/db";
+import { Category } from "../types";
 import { ProblemModel } from "./problem.model";
 
-export const CategoryModel: ModelDefined<{
-    id: number;
-    name: string;
-}, {}> = sequelize.define("categories", {
+export const CategoryModel: ModelDefined<Category, {}> = KcContext.define("categories", {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true
