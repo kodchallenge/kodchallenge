@@ -1,6 +1,7 @@
 import Sequelize, { ModelDefined } from "sequelize";
 import { KcContext } from "../configs/db";
 import { Problem } from "../types";
+import { ProblemBaseCodeModel } from "./problemBaseCode.model";
 
 export const ProblemModel: ModelDefined<Problem, {}> = KcContext.define("problems", {
     id: {
@@ -38,3 +39,8 @@ export const ProblemModel: ModelDefined<Problem, {}> = KcContext.define("problem
         field: "is_deleted"
     },
 }, { createdAt: false, updatedAt: false, deletedAt: false })
+
+ProblemModel.hasMany(ProblemBaseCodeModel, {
+    foreignKey: "problem_id",
+    as: "problemId"
+})
