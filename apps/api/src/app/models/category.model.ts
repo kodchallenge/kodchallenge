@@ -11,8 +11,6 @@ export const CategoryModel: ModelDefined<Category, {}> = KcContext.define("categ
     name: {
         type: Sequelize.STRING,
     }
-}, {createdAt: false, updatedAt: false})
+}, { createdAt: false, updatedAt: false })
 
-CategoryModel.hasMany(ProblemModel, {
-    foreignKey: "category_id"
-})
+ProblemModel.belongsTo(CategoryModel, { foreignKey: "category_id" })

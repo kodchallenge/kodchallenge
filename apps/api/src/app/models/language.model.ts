@@ -1,9 +1,9 @@
 import Sequelize, { ModelDefined } from "sequelize";
 import { KcContext } from "../configs/db";
-import { Problem } from "../types";
+import { Language } from "../types";
 import { ProblemBaseCodeModel } from "./problemBaseCode.model";
 
-export const LanguageModel: ModelDefined<Problem, {}> = KcContext.define("languages", {
+export const LanguageModel: ModelDefined<Language, {}> = KcContext.define("languages", {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true
@@ -18,5 +18,6 @@ export const LanguageModel: ModelDefined<Problem, {}> = KcContext.define("langua
 
 LanguageModel.hasMany(ProblemBaseCodeModel, {
     foreignKey: "language_id",
-    as: "languageId",
 })
+
+ProblemBaseCodeModel.belongsTo(LanguageModel, { foreignKey: "language_id" })
