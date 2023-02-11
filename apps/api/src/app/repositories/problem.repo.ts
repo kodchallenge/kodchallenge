@@ -10,4 +10,10 @@ export default class ProblemRepository {
     public static async getById(id: number): Promise<Model<Problem, {}>> {
         return ProblemModel.findByPk(id)
     }
+
+    public static async getBySlug(slug: string): Promise<Model<Problem, {}> | null> {
+        return ProblemModel.findOne({
+            where: { slug }
+        })
+    }
 }

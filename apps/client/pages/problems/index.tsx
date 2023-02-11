@@ -1,17 +1,23 @@
 import KcLayout from '@/layouts/KcLayout'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import React from 'react'
+import { GetServerSideProps } from 'next'
+import { Problem } from '@/models'
+import { ProblemService } from '@/services'
 
-const ProblemIndex = () => {
-    const router = useRouter()
-    const { slug } = router.query
+export type Props = {
+    problems: Problem[]
+}
+
+const ProblemIndex = ({
+    problems
+}: Props) => {
     return (
         <KcLayout>
             <Head>
-                <title>{slug} diline ait problemler - KodChallenge</title>
-                <meta name="description" content={`${slug} dilinde kendinizi geliştirebileceğiniz farklı türden problemleri burada bulabilirsiniz.`} />
+                <title>Tüm Programlama Soruları | KodChallenge</title>
+                <meta name="description" content={`Kendinizi geliştirebileceğiniz farklı türden programlama sorularını burada bulabilirsiniz.`} />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
@@ -32,17 +38,17 @@ const ProblemIndex = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {Array.from({ length: 13 }).map((problem, i) => (
+                                        {problems.map((problem, i) => (
                                             <tr>
                                                 <td>
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" className="mr-1 h-[18px] w-[18px] text-yellow dark:text-dark-yellow"><path fill-rule="evenodd" d="M8.972 3a1 1 0 01.964.649l4.978 13.274 1.632-5.221A1 1 0 0117.5 11H21a1 1 0 110 2h-2.765l-2.28 7.298a1 1 0 01-1.891.053L9.086 7.077l-1.632 5.221A1 1 0 016.5 13H3a1 1 0 110-2h2.765l2.28-7.298A1 1 0 018.973 3z" clip-rule="evenodd"></path></svg>
                                                 </td>
                                                 <td>
-                                                    <Link href={"/problems/asd"} className="">{i + 1}. Ardışık Sayıların Toplamı</Link>
+                                                    <Link href={`/problems/${problem.slug}`} className="">{i + 1}. {problem.title}</Link>
                                                 </td>
-                                                <td>%87</td>
-                                                <td>20</td>
-                                                <td>Kolay</td>
+                                                <td>%{85}</td>
+                                                <td>{problem.score}</td>
+                                                <td>{problem.difficulty}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -83,4 +89,12 @@ const ProblemIndex = () => {
     )
 }
 
+export const getServerSideProps: GetServerSideProps<{ problems: Problem[] }> = async (context) => {
+    const res = await ProblemService.getList();
+    return {
+        props: {
+            problems: res.data,
+        },
+    }
+}
 export default ProblemIndex

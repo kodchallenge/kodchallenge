@@ -1,7 +1,8 @@
 import Router from "express-promise-router";
-import { getProblemById, getProblems } from '../controllers/problem.controller'
+import { getProblemById, getProblemByIdOrSlug, getProblems } from '../controllers/problem.controller'
 
 const problemRouter = Router()
 problemRouter.get("/", getProblems)
-problemRouter.get("/:id", getProblemById)
+problemRouter.get("/:id", getProblemByIdOrSlug)
+
 export default problemRouter

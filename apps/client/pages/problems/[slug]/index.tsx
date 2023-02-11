@@ -5,8 +5,17 @@ import Head from 'next/head'
 import Header from '@/components/editor/Header'
 import { useDispatch } from 'react-redux'
 import { setEditorThemeAction } from '@/store/editorStore'
+import { Problem } from '@/models'
+import { GetServerSideProps } from 'next'
+import { ProblemService } from '@/services'
+import KodMarkdown from 'kod-markdown'
 
-const ProblemDetailIndex = () => {
+export type Props = {
+    problem: Problem
+}
+const ProblemDetailIndex = ({
+    problem
+}: Props) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(setEditorThemeAction(document.documentElement.getAttribute("data-theme") as EditorThemes ?? "dracula"))
@@ -14,7 +23,7 @@ const ProblemDetailIndex = () => {
     return (
         <>
             <Head>
-                <title>Problem Detay | KodChallenge</title>
+                <title>{problem.title} | KodChallenge</title>
                 <link rel="stylesheet" href="/assets/styles/editor.css" />
             </Head>
             <div className="kc-editor">
@@ -22,7 +31,9 @@ const ProblemDetailIndex = () => {
                     <Header />
                     <KodLayout.Row gutterSize={10} minSize={400}>
                         <KodLayout.Tab id='description-area' style={{ overflow: "auto !important" }}>
-                            <ProblemDescription />
+                            <div className='p-10'>
+                                <KodMarkdown markdown={problem.description} theme='light' />
+                            </div>
                         </KodLayout.Tab>
                         <KodLayout.Column gutterSize={10}>
                             <KodLayout.Tab>
@@ -37,6 +48,16 @@ const ProblemDetailIndex = () => {
             </div>
         </>
     )
+}
+
+
+export const getServerSideProps: GetServerSideProps<{ problem: Problem }, { slug: string }> = async (context) => {
+    const res = await ProblemService.getBySlug(context.params.slug);
+    return {
+        props: {
+            problem: res.data,
+        },
+    }
 }
 
 export default ProblemDetailIndex
