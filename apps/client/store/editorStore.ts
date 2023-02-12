@@ -6,10 +6,14 @@ const slice = createSlice({
     name: "editor",
     initialState: {
         theme: <EditorThemes>"dracula",
+        selectedLanguage: <string> "",
     },
     reducers: {
         setEditorThemeAction: (state, action: PayloadAction<EditorThemes>) => {
             state.theme = action.payload;
+        },
+        setSelectedLanguageAction: (state, action: PayloadAction<string>) => {
+            state.selectedLanguage = action.payload;
         },
 
     },
@@ -23,6 +27,6 @@ const slice = createSlice({
     },
 })
 
-export const { setEditorThemeAction } = slice.actions
+export const { setEditorThemeAction, setSelectedLanguageAction } = slice.actions
 
 export default slice.reducer

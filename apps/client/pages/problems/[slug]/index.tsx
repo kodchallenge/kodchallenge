@@ -4,7 +4,7 @@ import { EditorOutput, KodEditor, ProblemDescription } from '@/components/editor
 import Head from 'next/head'
 import Header from '@/components/editor/Header'
 import { useDispatch } from 'react-redux'
-import { setEditorThemeAction } from '@/store/editorStore'
+import { setEditorThemeAction, setSelectedLanguageAction } from '@/store/editorStore'
 import { Problem } from '@/models'
 import { GetServerSideProps } from 'next'
 import { ProblemService } from '@/services'
@@ -57,6 +57,7 @@ export const getServerSideProps = wrapper.getServerSideProps<{ problem: Problem 
     //@ts-ignore
     const res = await ProblemService.getBySlug(context.params.slug);
     store.dispatch(setCurrentProblemAction(res.data))
+    store.dispatch(setSelectedLanguageAction(res.data.base_codes[0].language.slug))
     return {
         props: {
             problem: res.data,
