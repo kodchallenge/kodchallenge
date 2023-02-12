@@ -7,26 +7,28 @@ import { Problem } from '@/models'
 
 const Header = () => {
     const { theme } = useSelector((state: RootState) => state.editor)
+    const { currentProblem } = useSelector((state: RootState) => state.problem)
     const dispatch = useDispatch()
     const handleThemeChange = (theme: EditorThemes) => {
         document.documentElement.setAttribute("data-theme", theme)
         dispatch(setEditorThemeAction(theme))
 
     }
+    console.log(currentProblem)
     return (
         <div className='shadow-lg'>
             <div className='p-2'>
                 <div className='flex justify-between'>
                     <KcBrandButton />
+                    <div className='flex items-center'>
+                        <h3>{currentProblem.title}</h3>
+                    </div>
                     <div className='flex items-center space-x-4'>
                         <span>
                             <select className="select select-bordered w-full max-w-xs">
-                                <option>C</option>
-                                <option>C++</option>
-                                <option>C#</option>
-                                <option>Java</option>
-                                <option>JavaScript</option>
-                                <option>Python</option>
+                                {currentProblem.base_codes.map(x => (
+                                    <option value={x.language.slug}>{x.language.name}</option>
+                                ))}
                             </select>
                         </span>
                         <div className='flex items-center space-x-4'>
