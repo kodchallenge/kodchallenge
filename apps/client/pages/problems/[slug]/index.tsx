@@ -9,6 +9,8 @@ import { Problem } from '@/models'
 import { GetServerSideProps } from 'next'
 import { ProblemService } from '@/services'
 import KodMarkdown from 'kod-markdown'
+import { wrapper } from '@/store'
+import { setCurrentProblemAction } from '@/store/problemStore'
 
 export type Props = {
     problem: Problem
@@ -51,13 +53,15 @@ const ProblemDetailIndex = ({
 }
 
 
-export const getServerSideProps: GetServerSideProps<{ problem: Problem }, { slug: string }> = async (context) => {
+export const getServerSideProps = wrapper.getServerSideProps<{ problem: Problem }>(store => async (context) => {
+    //@ts-ignore
     const res = await ProblemService.getBySlug(context.params.slug);
+    store.dispatch(setCurrentProblemAction(res.data))
     return {
         props: {
             problem: res.data,
         },
     }
-}
+})
 
 export default ProblemDetailIndex

@@ -1,15 +1,16 @@
+import { Problem } from "@/models";
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit/dist/createAction";
 import { HYDRATE } from "next-redux-wrapper";
 
 const slice = createSlice({
-    name: "editor",
+    name: "problem",
     initialState: {
-        theme: <EditorThemes>"dracula",
+        currentProblem: <Problem | null> null,
     },
     reducers: {
-        setEditorThemeAction: (state, action: PayloadAction<EditorThemes>) => {
-            state.theme = action.payload;
+        setCurrentProblemAction: (state, action: PayloadAction<Problem | null>) => {
+            state.currentProblem = action.payload;
         },
 
     },
@@ -17,12 +18,12 @@ const slice = createSlice({
         [HYDRATE]: (state, action) => {
             return {
                 ...state,
-                ...action.payload.editor,
+                ...action.payload.problem,
             };
         },
     },
 })
 
-export const { setEditorThemeAction } = slice.actions
+export const { setCurrentProblemAction } = slice.actions
 
 export default slice.reducer

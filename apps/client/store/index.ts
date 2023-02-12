@@ -1,11 +1,13 @@
 import { configureStore, Action, ThunkAction } from "@reduxjs/toolkit";
 import editorStore from "./editorStore";
 import { createWrapper } from "next-redux-wrapper";
+import problemStore from "./problemStore";
 
 export const makeStore = () => configureStore({
-    reducer: {
-        editor: editorStore
-    }
+  reducer: {
+    editor: editorStore,
+    problem: problemStore,
+  }
 })
 
 export type RootStore = ReturnType<typeof makeStore>;
