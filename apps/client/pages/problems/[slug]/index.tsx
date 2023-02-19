@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import KodLayout from 'kod-layout'
 import { EditorOutput, KodEditor, ProblemDescription } from '@/components/editor'
 import Head from 'next/head'
 import Header from '@/components/editor/Header'
-import { useDispatch } from 'react-redux'
-import { setEditorThemeAction, setSelectedLanguageAction } from '@/store/editorStore'
+import { useDispatch, useSelector } from 'react-redux'
+import { setEditorOutputConsoleAction, setEditorThemeAction, setSelectedLanguageAction } from '@/store/editorStore'
 import { Problem } from '@/models'
 import { GetServerSideProps } from 'next'
 import { ProblemService } from '@/services'
 import KodMarkdown from 'kod-markdown'
-import { wrapper } from '@/store'
+import { RootState, wrapper } from '@/store'
 import { setCurrentProblemAction } from '@/store/problemStore'
+import { editor } from 'monaco-editor'
+import { CodeService } from '@/services'
 
 export type Props = {
     problem: Problem
@@ -18,10 +20,30 @@ export type Props = {
 const ProblemDetailIndex = ({
     problem
 }: Props) => {
+    const {selectedLanguage} = useSelector((state: RootState) => state.editor)
     const dispatch = useDispatch()
+    const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null)
     useEffect(() => {
         dispatch(setEditorThemeAction(document.documentElement.getAttribute("data-theme") as EditorThemes ?? "dracula"))
     }, [])
+
+    const runCode = () => {
+        if (!editorRef.current) return;
+        const code = editorRef.current.getValue()
+        console.log(code)
+        CodeService.runCode({
+            code,
+            language: selectedLanguage,
+            problemSlug: problem.slug,
+            userId: 123
+        }).then(res => {
+            console.log(res.data)
+            dispatch(setEditorOutputConsoleAction(res.data.output))
+        }).catch(err => {
+            dispatch(setEditorOutputConsoleAction(err.response.data.message))
+        })
+    }
+
     return (
         <>
             <Head>
@@ -39,10 +61,10 @@ const ProblemDetailIndex = ({
                         </KodLayout.Tab>
                         <KodLayout.Column gutterSize={10}>
                             <KodLayout.Tab>
-                                <KodEditor />
+                                <KodEditor editorRef={editorRef} />
                             </KodLayout.Tab>
                             <KodLayout.Tab>
-                                <EditorOutput />
+                                <EditorOutput runCode={runCode} />
                             </KodLayout.Tab>
                         </KodLayout.Column>
                     </KodLayout.Row>

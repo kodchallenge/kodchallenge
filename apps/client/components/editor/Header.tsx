@@ -2,7 +2,7 @@ import React from 'react'
 import { KcBrandButton } from '@/components/buttons'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store'
-import { setEditorThemeAction } from '@/store/editorStore'
+import { setEditorThemeAction, setSelectedLanguageAction } from '@/store/editorStore'
 import { Problem } from '@/models'
 
 const Header = () => {
@@ -14,7 +14,11 @@ const Header = () => {
         dispatch(setEditorThemeAction(theme))
 
     }
-    console.log(currentProblem)
+
+    const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        dispatch(setSelectedLanguageAction(e.target.value))
+    }
+
     return (
         <div className='shadow-lg'>
             <div className='p-2'>
@@ -25,7 +29,7 @@ const Header = () => {
                     </div>
                     <div className='flex items-center space-x-4'>
                         <span>
-                            <select className="select select-bordered w-full max-w-xs">
+                            <select className="select select-bordered w-full max-w-xs" onChange={handleLanguageChange}>
                                 {currentProblem.base_codes.map(x => (
                                     <option value={x.language.slug}>{x.language.name}</option>
                                 ))}

@@ -7,6 +7,7 @@ const slice = createSlice({
     initialState: {
         theme: <EditorThemes>"dracula",
         selectedLanguage: <string> "",
+        output: <string> "",
     },
     reducers: {
         setEditorThemeAction: (state, action: PayloadAction<EditorThemes>) => {
@@ -15,7 +16,9 @@ const slice = createSlice({
         setSelectedLanguageAction: (state, action: PayloadAction<string>) => {
             state.selectedLanguage = action.payload;
         },
-
+        setEditorOutputConsoleAction: (state, action: PayloadAction<string>) => {
+            state.output = action.payload;
+        },
     },
     extraReducers: {
         [HYDRATE]: (state, action) => {
@@ -27,6 +30,6 @@ const slice = createSlice({
     },
 })
 
-export const { setEditorThemeAction, setSelectedLanguageAction } = slice.actions
+export const { setEditorThemeAction, setSelectedLanguageAction, setEditorOutputConsoleAction } = slice.actions
 
 export default slice.reducer

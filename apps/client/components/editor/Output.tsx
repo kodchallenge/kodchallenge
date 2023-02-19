@@ -1,8 +1,19 @@
+import { RootState } from '@/store';
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
-const Output = () => {
+export type Props = {
+    runCode: () => void;
+}
+
+const Output = ({
+    runCode
+}: Props) => {
+    const { output } = useSelector((state: RootState) => state.editor)
+
+    console.log(output)
     return (
         <div className='card'>
             <Tabs>
@@ -12,14 +23,14 @@ const Output = () => {
                         <Tab selectedClassName="tab-active" className={"tab"}>Test Case</Tab>
                     </div>
                     <div className='flex items-center space-x-2'>
-                        <button className='btn btn-sm'>Çalıştır</button>
+                        <button className='btn btn-sm' onClick={runCode}>Çalıştır</button>
                         <button className='btn btn-sm btn-primary'>Testleri Başlat</button>
                         <button className='btn btn-success btn-sm' disabled>Gönder</button>
                     </div>
                 </TabList>
 
                 <TabPanel>
-                    <h2>Any content 1</h2>
+                    <p dangerouslySetInnerHTML={{__html: output.replace(/\n/g, "<br>").replace(/ /g, "&nbsp;")}}></p>
                 </TabPanel>
                 <TabPanel>
                     <h2>Any content 2</h2>
