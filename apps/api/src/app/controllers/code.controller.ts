@@ -16,11 +16,12 @@ export const runCode = async (req: Request, res: Response) => {
     
     const solutionPath = path.join(process.env.SOLUTION_PATH, userId.toString(), problemSlug, language);
 
-    // await mkdir(solutionPath)
-    console.table({problemPath, solutionPath})
     fse.copySync(problemPath, solutionPath, {overwrite: true})
     fse.writeFile(path.join(solutionPath, "solution." + language), code)
     exec(`kcompiler --path=${solutionPath} --language=${language}`, (err, stdout, stderr) => {
-        res.json(stdout)
+        if(stderr) {
+            return res.json({status: false, output: stderr})
+        }
+        res.json({status: true, output: stdout})
     })
 }
