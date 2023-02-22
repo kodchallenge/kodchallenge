@@ -9,6 +9,14 @@ export type Props = {
     editorRef?: React.MutableRefObject<editor.editor.IStandaloneCodeEditor | null>
 }
 
+const slugToEditorLanguage = (slug: string) => {
+    const languages = [
+        {value: "javascript", slug: "js"},
+        {value: "typescript", slug: "ts"},
+    ]
+    return languages.find(x => x.slug == slug)?.value ?? slug;
+}
+
 const Editor = ({
     editorRef
 }: Props) => {
@@ -18,7 +26,7 @@ const Editor = ({
     return (
         <MonacoEditor
             // height={height}
-            language={selectedLanguage}
+            language={slugToEditorLanguage(selectedLanguage)}
             value={currentProblem.base_codes.find(x => x.language.slug == selectedLanguage).code}
             theme={theme == "dracula" ? "dark" : "light"}
             beforeMount={(monaco) => {
