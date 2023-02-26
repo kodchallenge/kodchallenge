@@ -13,6 +13,7 @@ const slugToEditorLanguage = (slug: string) => {
     const languages = [
         {value: "javascript", slug: "js"},
         {value: "typescript", slug: "ts"},
+        {value: "python", slug: "py"},
     ]
     return languages.find(x => x.slug == slug)?.value ?? slug;
 }

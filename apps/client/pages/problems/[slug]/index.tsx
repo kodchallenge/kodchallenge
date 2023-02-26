@@ -27,20 +27,26 @@ const ProblemDetailIndex = ({
         dispatch(setEditorThemeAction(document.documentElement.getAttribute("data-theme") as EditorThemes ?? "dracula"))
     }, [])
 
-    const runCode = () => {
+    const runCode = async () => {
         if (!editorRef.current) return;
         const code = editorRef.current.getValue()
         console.log(code)
-        CodeService.runCode({
+        await CodeService.runCode({
             code,
             language: selectedLanguage,
             problemSlug: problem.slug,
             userId: 123
         }).then(res => {
             console.log(res.data)
-            dispatch(setEditorOutputConsoleAction(res.data.output))
+            dispatch(setEditorOutputConsoleAction({
+                output: res.data.output,
+                isError: !res.data.status
+            }))
         }).catch(err => {
-            dispatch(setEditorOutputConsoleAction(err.response.data.message))
+            dispatch(setEditorOutputConsoleAction({
+                output: err.response.data.message,
+                isError: true
+            }))
         })
     }
 

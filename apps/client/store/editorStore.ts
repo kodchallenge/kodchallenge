@@ -8,6 +8,7 @@ const slice = createSlice({
         theme: <EditorThemes>"dracula",
         selectedLanguage: <string> "",
         output: <string> "",
+        isError: <boolean> false,
     },
     reducers: {
         setEditorThemeAction: (state, action: PayloadAction<EditorThemes>) => {
@@ -16,8 +17,9 @@ const slice = createSlice({
         setSelectedLanguageAction: (state, action: PayloadAction<string>) => {
             state.selectedLanguage = action.payload;
         },
-        setEditorOutputConsoleAction: (state, action: PayloadAction<string>) => {
-            state.output = action.payload;
+        setEditorOutputConsoleAction: (state, action: PayloadAction<{isError: boolean, output: string}>) => {
+            state.output = action.payload.output;
+            state.isError = action.payload.isError;
         },
     },
     extraReducers: {
