@@ -11,7 +11,6 @@ export default class CodeService {
         status: boolean,
         output: string,
     }, any>> {
-        console.dir(api())
-        return axios.post("http://localhost:3333/v1/code/run", data)
+        return api().post("/v1/code/run", data)
     }
 }
