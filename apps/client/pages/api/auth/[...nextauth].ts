@@ -1,7 +1,7 @@
 import NextAuth, { AuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 export const authOptions: AuthOptions = {
-    secret: process.env.NextAuth_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -53,7 +53,10 @@ export const authOptions: AuthOptions = {
             // Allows callback URLs on the same origin
             else if (new URL(url).origin === baseUrl) return url;
             return baseUrl;
-          },
+        },
+    },
+    session: {
+        strategy: "jwt",
     },
     pages: {
         signIn: '/auth/signin',

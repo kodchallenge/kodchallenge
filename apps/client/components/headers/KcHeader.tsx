@@ -19,7 +19,7 @@ const KcHeader = (props: KcHeaderProps) => {
                             </label>
                             <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><Link href={"/problems"}>Problemler</Link></li>
-                                <li><Link href={"/contests"}>Yarışmalar</Link></li>
+                                <li><Link href={"/admin"}>Yarışmalar</Link></li>
                                 <li><Link href={"/challenges"}>Etkinlikler</Link></li>
                                 <li><Link href={"/projects"}>Projeler</Link></li>
                             </ul>
@@ -30,7 +30,7 @@ const KcHeader = (props: KcHeaderProps) => {
                         <ul className="menu menu-horizontal px-1">
                             <li><Link href={"/problems"}>Problemler</Link></li>
                             <li>
-                                <Link href={"/"}>
+                                <Link href={"/admin"}>
                                     <div className="tooltip tooltip-bottom tooltip-open" data-tip="Yakında">
                                         Yarışmalar
                                     </div>

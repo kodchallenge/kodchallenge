@@ -7,6 +7,7 @@ import Head from 'next/head'
 import { KcBrandButton } from '@/components/buttons'
 import { ClientSafeProvider, getProviders, getSession, LiteralUnion, signIn } from 'next-auth/react'
 import { BuiltInProviderType } from 'next-auth/providers'
+import { useRouter } from 'next/router'
 
 const BgOverlay = (
     <div className={clsx(s.dotPointBg, "full-screen")}></div>
@@ -19,8 +20,19 @@ export type SigninProps = {
 const Signin = ({
     providers
 }: SigninProps) => {
+    const [loading, setLoading] = React.useState(false)
     const email = useRef("");
     const password = useRef("");
+    const router = useRouter()
+    const handleSignin = async () => {
+        if(loading || !email.current || !password.current) return;
+        setLoading(true)
+        signIn("credentials", {
+            email: email.current, 
+            password: password.current,
+            callbackUrl: router.query.callbackUrl as string ?? "/"
+        }).finally(() => setLoading(false))
+    }
     return (
         <KcLayout overlay={BgOverlay} hideHeader hideFooter>
             <Head>
@@ -49,11 +61,10 @@ const Signin = ({
                             <div className="form-control mt-6">
                                 <button
                                     className="btn btn-primary"
-                                    onClick={() => signIn("credentials", {
-                                        email: email.current, password: password.current,
-                                    })}
+                                    onClick={() => handleSignin()}
+                                    disabled={loading}
                                 >
-                                    Giriş Yap
+                                    {!loading ? "Giriş Yap" : "Giriş Yapılıyor..."}
                                 </button>
                             </div>
                         </div>
