@@ -1,3 +1,4 @@
+import api from "@/services/api";
 import NextAuth, { AuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 export const authOptions: AuthOptions = {
@@ -19,23 +20,18 @@ export const authOptions: AuthOptions = {
             },
 
             async authorize(credentials, req) {
-                const { email, password } = credentials
-                console.log(email, password)
-                return { id: "114", name: "Jude Doe", email: "judeDoe@xyz.com", password: 2222, role: "admin" };
-                // const res = await fetch("http://localhost:3000/api/login", {
-                //     method: "POST",
-                //     headers: {
-                //         "Content-Type": "application/json",
-                //     },
-                //     body: JSON.stringify({
-                //         email,
-                //         password,
-                //     }),
-                // });
-                // const user = await res.json();
-                // if (res.ok && user) {
-                //     return user;
-                // } else return null;
+                try {
+                    
+                    const { email, password } = credentials
+                    const data = await api().post("/v1/auth/signin", {email, password})
+                    if(data.status !== 200) {
+                        return null
+                    }
+                    return data.data
+                } catch(err) {
+                    console.error(err)
+                    return null;
+                }
             },
         }),
     ],

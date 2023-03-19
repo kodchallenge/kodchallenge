@@ -1,4 +1,5 @@
 import { RootState } from '@/store';
+import { useSession } from 'next-auth/react';
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
@@ -13,7 +14,11 @@ const Output = ({
 }: Props) => {
     const { output, isError } = useSelector((state: RootState) => state.editor)
     const [isRunning, setIsRunning] = useState(false)
+    const { data: session } = useSession()
     const handleRunCodeClick = () => {
+        if(!session) {
+            return;
+        }
         setIsRunning(true)
         runCode().finally(() => {
             setIsRunning(false)

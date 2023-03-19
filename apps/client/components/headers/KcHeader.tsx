@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import React from 'react'
 import { KcBrandButton } from '../buttons';
@@ -7,6 +8,7 @@ export type KcHeaderProps = {
 }
 
 const KcHeader = (props: KcHeaderProps) => {
+    const { data: session } = useSession()
 
     return (
         <header>
@@ -53,7 +55,11 @@ const KcHeader = (props: KcHeaderProps) => {
                         </ul>
                     </div>
                     <div className="navbar-end">
-                        <Link href={"/signin"} className="btn btn-primary">Giriş Yap</Link>
+                        {!session ? (
+                            <Link href={"/signin"} className="btn btn-primary">Giriş Yap</Link>
+                        ) : (
+                            <Link href={"/profile"} className="btn btn-secondary">Hesabım</Link>
+                        )}
                     </div>
                 </nav>
             </div>

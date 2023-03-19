@@ -3,7 +3,7 @@ import Script from 'next/script'
 
 export default function Document() {
     return (
-        <Html lang="tr" data-theme="dracula">
+        <Html lang="tr" data-theme="dark">
             <Head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
