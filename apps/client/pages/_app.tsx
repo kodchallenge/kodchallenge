@@ -1,12 +1,15 @@
-import { wrapper } from '@/store';
+import { RootState, wrapper } from '@/store';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import '../assets/styles/globals.css'
 import { SessionProvider } from "next-auth/react"
+import LoginModal from '@/components/modals/LoginModal';
+import { useSelector } from 'react-redux';
 function CustomApp({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
+  const { showLoginModal } = useSelector((state: RootState) => state.app)
   return (
     <SessionProvider session={session}>
       <Head>
@@ -15,6 +18,7 @@ function CustomApp({
       <main className="app">
         <Component {...pageProps} />
       </main>
+      {showLoginModal && <LoginModal />}
     </SessionProvider>
   );
 }

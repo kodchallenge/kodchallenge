@@ -13,6 +13,7 @@ import { RootState, wrapper } from '@/store'
 import { setCurrentProblemAction } from '@/store/problemStore'
 import { editor } from 'monaco-editor'
 import { CodeService } from '@/services'
+import LoginModal from '@/components/modals/LoginModal'
 
 export type Props = {
     problem: Problem

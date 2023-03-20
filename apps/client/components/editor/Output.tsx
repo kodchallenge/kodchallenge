@@ -1,7 +1,8 @@
 import { RootState } from '@/store';
+import { setShowLoginModalAction } from '@/store/appStore';
 import { useSession } from 'next-auth/react';
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
@@ -15,16 +16,16 @@ const Output = ({
     const { output, isError } = useSelector((state: RootState) => state.editor)
     const [isRunning, setIsRunning] = useState(false)
     const { data: session } = useSession()
+    const dispatch = useDispatch()
     const handleRunCodeClick = () => {
-        if(!session) {
-            return;
+        if (!session) {
+            return dispatch(setShowLoginModalAction(true))
         }
         setIsRunning(true)
         runCode().finally(() => {
             setIsRunning(false)
         })
     }
-
     return (
         <div className='card h-full'>
             <Tabs className={"h-full flex flex-col flex-1"}>

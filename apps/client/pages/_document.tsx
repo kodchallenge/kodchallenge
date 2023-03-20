@@ -3,7 +3,7 @@ import Script from 'next/script'
 
 export default function Document() {
     return (
-        <Html lang="tr" data-theme="dark">
+        <Html lang="tr" data-theme="light">
             <Head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
@@ -17,13 +17,13 @@ export default function Document() {
                     strategy="afterInteractive"
                 />
                 <Script id="google-analytics" strategy="afterInteractive">
-                    {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
+                {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){window.dataLayer.push(arguments);}
+                    gtag('js', new Date());
 
-          gtag('config', 'g-J3PXNERGEF');
-        `}
+                    gtag('config', 'g-J3PXNERGEF');
+                `}
                 </Script>
             </body>
         </Html>
