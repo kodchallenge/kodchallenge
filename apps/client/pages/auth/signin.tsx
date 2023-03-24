@@ -71,7 +71,7 @@ const Signin = ({
                         <div className='text-center'>
                             <p className='m-0'>
                                 KodChallenge'da yeni misin?
-                                <Link href={"/signup"} className="btn btn-link">HESAP OLUŞTUR</Link>
+                                <Link href={"/auth/signup"} className="btn btn-link">HESAP OLUŞTUR</Link>
                             </p>
                         </div>
                         <div className="flex flex-col space-y-4">

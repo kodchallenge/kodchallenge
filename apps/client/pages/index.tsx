@@ -28,7 +28,7 @@ export function Index() {
               Ücretsiz ve Türkçe sorular ile programlama yeteneğini geliştir. Ödüllü programlama yarışmalarına katıl.
               Her hafta birbirinden eğlenceli kodlama challenge etkinliklerinde sen de yerini al.
             </p>
-            <Link href={"/signup"} className="btn btn-primary">👉 Bize Katıl</Link>
+            <Link href={"/auth/signup"} className="btn btn-primary">👉 Bize Katıl</Link>
           </div>
         </div>
         <section className="px-2 z-10 py-32 md:px-0 tails-selected-element">

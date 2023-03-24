@@ -1,8 +1,8 @@
 import { RootState } from '@/store';
-import { setShowLoginModalAction } from '@/store/appStore';
-import { useSession } from 'next-auth/react';
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { signIn, useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
@@ -16,11 +16,9 @@ const Output = ({
     const { output, isError } = useSelector((state: RootState) => state.editor)
     const [isRunning, setIsRunning] = useState(false)
     const { data: session } = useSession()
-    const dispatch = useDispatch()
     const handleRunCodeClick = () => {
-        if (!session) {
-            return dispatch(setShowLoginModalAction(true))
-        }
+        if (!session) return;
+        
         setIsRunning(true)
         runCode().finally(() => {
             setIsRunning(false)
@@ -31,12 +29,12 @@ const Output = ({
             <Tabs className={"h-full flex flex-col flex-1"}>
                 <TabList className={"tabs tabs-boxed justify-between items-center shadow-md"}>
                     <div>
-                        <Tab selectedClassName="tab-active" className={"tab"}>Konsol</Tab>
-                        <Tab selectedClassName="tab-active" className={"tab"}>Test Case</Tab>
+                        <Tab selectedClassName="tab-activse" className={"tab"}>Konsol</Tab>
+                        {/* <Tab selectedClassName="tab-active" className="tab">Test Case</Tab> */}
                     </div>
                     <div className='flex items-center space-x-2'>
-                        <button className='btn btn-sm' onClick={handleRunCodeClick}>Çalıştır</button>
-                        <button className='btn btn-sm btn-primary'>Testleri Başlat</button>
+                        <button className='btn btn-sm' disabled={!session} onClick={handleRunCodeClick}>Çalıştır</button>
+                        <button className='btn btn-sm btn-primary' disabled={!session || !output}>Testleri Başlat</button>
                         <button className='btn btn-success btn-sm' disabled>Gönder</button>
                     </div>
                 </TabList>
@@ -47,14 +45,21 @@ const Output = ({
                             <pre data-prefix='> Çalıştırılıyor..' className="text-success"></pre>
                         ) : (
                             <pre data-prefix="> Çıktı" > <br />
-                                <code className={isError ? "text-error" : "asd"} dangerouslySetInnerHTML={{ __html: output.replace(/\n/g, "<br>").replace(/ /g, "&nbsp;") }} />
+                                {!session ? (
+                                    <code>
+                                        Yazdığınız kodu çalıştırabilmek için <label onClick={() => signIn()} className='link link-info'>giriş</label> yapmanız gerekiyor.
+                                    </code>
+                                ) : (
+                                    <code className={isError ? "text-error" : "asd"} dangerouslySetInnerHTML={{ __html: output.replace(/\n/g, "<br>").replace(/ /g, "&nbsp;") }} />
+                                )}
                             </pre>
                         )}
                     </div>
                 </TabPanel>
-                <TabPanel>
-                    <h2>Any content 2</h2>
-                </TabPanel>
+                {/* <TabPanel>
+                    <h2>Test case panel.</h2>
+                    <p>TODO: burayı hallet.</p>
+                </TabPanel> */}
             </Tabs>
         </div>
     )

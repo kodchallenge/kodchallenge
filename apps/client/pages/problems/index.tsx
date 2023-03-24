@@ -56,7 +56,7 @@ const ProblemIndex = ({
                             </div>
                             <div className='col-span-4'>
                                 <div className='md:sticky md:top-3'>
-                                    <div className="card card-bordered w-full bg-base-100  shadow-2xl">
+                                    <div className="card w-full bg-base-100 shadow">
                                         <div className="card-body space-y-3 sm:space-y-0 p-2 sm:p-4 sm:flex">
                                             <h2 className="card-title text-center flex-initial w-full justify-center">KodChallenge Yıldızları 💫</h2>
                                             {Array.from({ length: 3 }).map((x, index) => (

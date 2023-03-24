@@ -18,7 +18,7 @@ const slice = createSlice({
             state.selectedLanguage = action.payload;
         },
         setEditorOutputConsoleAction: (state, action: PayloadAction<{isError: boolean, output: string}>) => {
-            state.output = action.payload.output;
+            state.output = action.payload.output ?? "";
             state.isError = action.payload.isError;
         },
     },

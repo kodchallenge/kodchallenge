@@ -1,9 +1,8 @@
-import { useSession } from "next-auth/react"
-import Link from "next/link"
+import { signIn, useSession } from "next-auth/react"
 
 export const LoginButton = () => {
     const { data: session } = useSession()
     return !session && (
-        <Link href={"/signin"} className="btn btn-primary">Giriş Yap</Link>
+        <button onClick={() => signIn()} className="btn btn-primary">Giriş Yap</button>
     )
 }
