@@ -14,7 +14,23 @@ const nextConfig = {
   },
   experimental: {
     esmExternals: "loose"
-  }
+  },
+  rewrites: async () => {
+    return [
+      {
+        source: "/signin",
+        destination: "/auth/signin",
+      },
+      {
+        source: "/signup",
+        destination: "/auth/signup",
+      },
+      {
+        source: "/@:username",
+        destination: "/user/:username",
+      },
+    ];
+  },
 };
 
 module.exports = withNx(nextConfig);
