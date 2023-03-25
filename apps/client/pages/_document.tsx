@@ -8,6 +8,8 @@ export default function Document() {
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
                 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+                <link rel="stylesheet"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
             </Head>
             <body>
                 <Main />
@@ -17,7 +19,7 @@ export default function Document() {
                     strategy="afterInteractive"
                 />
                 <Script id="google-analytics" strategy="afterInteractive">
-                {`
+                    {`
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){window.dataLayer.push(arguments);}
                     gtag('js', new Date());
@@ -25,6 +27,7 @@ export default function Document() {
                     gtag('config', 'g-J3PXNERGEF');
                 `}
                 </Script>
+                <Script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"></Script>
             </body>
         </Html>
     )
