@@ -11,6 +11,6 @@ export default class CodeService {
         status: boolean,
         output: string,
     }, any>> {
-        return axios.post(`${process.env.API}/v1/code/run`, data)
+        return api().post(`/v1/code/run`, data)
     }
 }
