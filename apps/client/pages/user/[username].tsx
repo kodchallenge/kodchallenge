@@ -42,7 +42,9 @@ const UserProfile = ({
                                     </div>
                                     <button className="btn btn-primary btn-sm  w-full">Profili Düzenle</button>
                                 </div>
-                                <UserProfileLinkItem icon={"fa-location-dot"} label="Ankara" />
+                                {user.location &&
+                                    <UserProfileLinkItem icon={"fa-location-dot"} label={user.location} />
+                                }
                                 {user.website &&
                                     <a href={user.website} target={"_blank"}>
                                         <UserProfileLinkItem icon={"fa-link"} label={user.website} />
@@ -181,7 +183,8 @@ const UserProfileLinkItem = ({ icon, label }) => {
 export async function getServerSideProps(context) {
     const { username } = context.query
     const { data: user } = await UserService.getByUsername(username)
-
+    user.email = ""
+    user.id = 0
     return {
         props: {
             user
