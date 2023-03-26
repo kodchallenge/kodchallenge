@@ -1,5 +1,4 @@
 import KcLayout from "@/layouts/KcLayout"
-import { Problem } from "@/models"
 import { User } from "@/models/user"
 import { UserService } from "@/services"
 import { progressColors } from "@/utils/colors"
@@ -31,7 +30,7 @@ const UserProfile = ({
                                 <div className="my-3">
                                     <div className="flex flex-start gap-4 my-3">
                                         <div className="col-span-1">
-                                            <img src={user.avatar ?? "https://picsum.photos/id/237/200/300"} alt={user.username + " avatar image"} className="h-20 w-20 rounded-lg object-cover" />
+                                            <img src={user.avatar} alt={user.username + " avatar image"} className="h-20 w-20 rounded-lg object-cover" />
                                         </div>
                                         <div className="col-span-2">
                                             <h4 className="font-bold text-lg">{user.firstname} {user.lastname}</h4>
@@ -39,23 +38,31 @@ const UserProfile = ({
                                         </div>
                                     </div>
                                     <div className="my-3 text-sm">
-                                        <p>Hi, I'm FullStack Developer. I am interesting with React, React Native, Node.js, C#.</p>
+                                        <p>{user.biography}</p>
                                     </div>
                                     <button className="btn btn-primary btn-sm  w-full">Profili Düzenle</button>
                                 </div>
                                 <UserProfileLinkItem icon={"fa-location-dot"} label="Ankara" />
-                                <a href="https://www.kodchallenge.com" target={"_blank"}>
-                                    <UserProfileLinkItem icon={"fa-link"} label="https://www.kodchallenge.com" />
-                                </a>
-                                <a href="https://www.kodchallenge.com" target={"_blank"}>
-                                    <UserProfileLinkItem icon={"fa-brands fa-github"} label="yasintorun" />
-                                </a>
-                                <a href="https://www.kodchallenge.com" target={"_blank"}>
-                                    <UserProfileLinkItem icon={"fa-brands fa-linkedin"} label="yasintorun" />
-                                </a>
-                                <a href="https://www.kodchallenge.com" target={"_blank"}>
-                                    <UserProfileLinkItem icon={"fa-brands fa-twitter"} label="yasintorunx" />
-                                </a>
+                                {user.website &&
+                                    <a href={user.website} target={"_blank"}>
+                                        <UserProfileLinkItem icon={"fa-link"} label={user.website} />
+                                    </a>
+                                }
+                                {user.github &&
+                                    <a href={`https://github.com/${user.github}`} target={"_blank"}>
+                                        <UserProfileLinkItem icon={"fa-brands fa-github"} label={user.github} />
+                                    </a>
+                                }
+                                {user.linkedin &&
+                                    <a href={`https://www.linkedin.com/in/${user.linkedin}`} target={"_blank"}>
+                                        <UserProfileLinkItem icon={"fa-brands fa-linkedin"} label={user.linkedin} />
+                                    </a>
+                                }
+                                {user.twitter &&
+                                    <a href={`https://twitter.com/${user.twitter}`} target={"_blank"}>
+                                        <UserProfileLinkItem icon={"fa-brands fa-twitter"} label={user.twitter} />
+                                    </a>
+                                }
                             </div>
                         </div>
                     </div>
@@ -122,38 +129,38 @@ const UserProfile = ({
                 </div>
 
                 <div className="my-20 carsd sshadow rounded-lg">
-                            <div className="carsd-content py-5">
-                                <table className="table  table-zebra w-full table-hover rounded-none">
-                                    <thead>
-                                        <tr>
-                                            <th>Başlık</th>
-                                            <th>Başarı Oranı</th>
-                                            <th>Skor</th>
-                                            <th>Zorluk</th>
-                                            <th>Tarih</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {[
-                                            { slug: "hello-kodchallenge", title: "Merhaba KodChallenge", correctCase: 1, totalCase: 1, score: 20, difficulty: "Kolay", date: "2023-03-01" },
-                                            { slug: "hello-kodchallenge", title: "İki sayının Toplamı", correctCase: 2, totalCase: 3, score: 10, difficulty: "Kolay", date: "2023-02-28" },
-                                            { slug: "hello-kodchallenge", title: "Koordinatları grupla", correctCase: 2, totalCase: 5, score: 25, difficulty: "Orta", date: "2023-03-10" },
-                                            { slug: "hello-kodchallenge", title: "Binary Tree (İkili Arama)", correctCase: 1, totalCase: 6, score: 50, difficulty: "Zor", date: "2023-03-21" },
-                                        ].map((problem, i) => (
-                                            <tr className="hover">
-                                                <td>
-                                                    <Link href={`/problems/${problem.slug}`} className="">{i + 1}. {problem.title}</Link>
-                                                </td>
-                                                <td>{problem.correctCase} / {problem.totalCase}</td>
-                                                <td>{problem.score}</td>
-                                                <td>{problem.difficulty}</td>
-                                                <td>{new Date(problem.date).toLocaleDateString("tr")}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                    <div className="carsd-content py-5">
+                        <table className="table  table-zebra w-full table-hover rounded-none">
+                            <thead>
+                                <tr>
+                                    <th>Başlık</th>
+                                    <th>Başarı Oranı</th>
+                                    <th>Skor</th>
+                                    <th>Zorluk</th>
+                                    <th>Tarih</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[
+                                    { slug: "hello-kodchallenge", title: "Merhaba KodChallenge", correctCase: 1, totalCase: 1, score: 20, difficulty: "Kolay", date: "2023-03-01" },
+                                    { slug: "hello-kodchallenge", title: "İki sayının Toplamı", correctCase: 2, totalCase: 3, score: 10, difficulty: "Kolay", date: "2023-02-28" },
+                                    { slug: "hello-kodchallenge", title: "Koordinatları grupla", correctCase: 2, totalCase: 5, score: 25, difficulty: "Orta", date: "2023-03-10" },
+                                    { slug: "hello-kodchallenge", title: "Binary Tree (İkili Arama)", correctCase: 1, totalCase: 6, score: 50, difficulty: "Zor", date: "2023-03-21" },
+                                ].map((problem, i) => (
+                                    <tr className="hover">
+                                        <td>
+                                            <Link href={`/problems/${problem.slug}`} className="">{i + 1}. {problem.title}</Link>
+                                        </td>
+                                        <td>{problem.correctCase} / {problem.totalCase}</td>
+                                        <td>{problem.score}</td>
+                                        <td>{problem.difficulty}</td>
+                                        <td>{new Date(problem.date).toLocaleDateString("tr")}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </KcLayout>
     ) : (

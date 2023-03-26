@@ -5,4 +5,10 @@ export interface User {
     lastname: string;
     email: string;
     avatar: string;
+    biography?: string | null;
+    website?: string | null;
+    location?: string | null;
+    github?: string | null;
+    twitter?: string | null;
+    linkedin?: string | null;
 }
