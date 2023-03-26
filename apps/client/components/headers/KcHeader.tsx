@@ -58,7 +58,7 @@ const KcHeader = (props: KcHeaderProps) => {
                         {!session ? (
                             <Link href={"/auth/signin"} className="btn btn-primary">Giriş Yap</Link>
                         ) : (
-                            <Link href={"/profile"} className="btn btn-secondary">Hesabım</Link>
+                            <Link href={"/@"+session.user.username} className="btn btn-primary">Hesabım</Link>
                         )}
                     </div>
                 </nav>
