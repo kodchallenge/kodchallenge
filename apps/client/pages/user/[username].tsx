@@ -3,6 +3,7 @@ import { User } from "@/models/user"
 import { UserService } from "@/services"
 import { progressColors } from "@/utils/colors"
 import clsx from "clsx"
+import { useSession } from "next-auth/react"
 import Head from "next/head"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -15,6 +16,7 @@ const UserProfile = ({
     user
 }: Props) => {
     const router = useRouter()
+    const { data: session } = useSession()
     const { username } = router.query as { username: string }
 
     return user ? (
@@ -40,7 +42,9 @@ const UserProfile = ({
                                     <div className="my-3 text-sm">
                                         <p>{user.biography}</p>
                                     </div>
-                                    <button className="btn btn-primary btn-sm  w-full">Profili Düzenle</button>
+                                    {user.username == session?.user?.username &&
+                                        <button className="btn btn-primary btn-sm  w-full">Profili Düzenle</button>
+                                    }
                                 </div>
                                 {user.location &&
                                     <UserProfileLinkItem icon={"fa-location-dot"} label={user.location} />
