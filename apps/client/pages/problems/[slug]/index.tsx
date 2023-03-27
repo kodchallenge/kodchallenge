@@ -21,35 +21,11 @@ export type Props = {
 const ProblemDetailIndex = ({
     problem
 }: Props) => {
-    const {selectedLanguage} = useSelector((state: RootState) => state.editor)
     const dispatch = useDispatch()
     const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null)
     useEffect(() => {
         dispatch(setEditorThemeAction(document.documentElement.getAttribute("data-theme") as EditorThemes ?? "dracula"))
     }, [])
-
-    const runCode = async () => {
-        if (!editorRef.current) return;
-        const code = editorRef.current.getValue()
-        console.log(code)
-        await CodeService.runCode({
-            code,
-            language: selectedLanguage,
-            problemSlug: problem.slug,
-            userId: 123
-        }).then(res => {
-            console.log(res.data)
-            dispatch(setEditorOutputConsoleAction({
-                output: res.data.output,
-                isError: !res.data.status
-            }))
-        }).catch(err => {
-            dispatch(setEditorOutputConsoleAction({
-                output: err.response.data.message,
-                isError: true
-            }))
-        })
-    }
 
     return (
         <>
@@ -71,7 +47,7 @@ const ProblemDetailIndex = ({
                                 <KodEditor editorRef={editorRef} />
                             </KodLayout.Tab>
                             <KodLayout.Tab>
-                                <EditorOutput runCode={runCode} />
+                                <EditorOutput editorRef={editorRef} problem={problem} />
                             </KodLayout.Tab>
                         </KodLayout.Column>
                     </KodLayout.Row>

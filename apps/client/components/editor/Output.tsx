@@ -1,29 +1,53 @@
+import { Problem } from '@/models';
+import { CodeService } from '@/services';
 import { RootState } from '@/store';
+import { setEditorOutputConsoleAction } from '@/store/editorStore';
+import { editor } from 'monaco-editor';
 import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
 export type Props = {
-    runCode: () => Promise<void>;
+    editorRef: React.MutableRefObject<editor.IStandaloneCodeEditor>;
+    problem: Problem;
 }
 
 const Output = ({
-    runCode
+    editorRef,
+    problem
 }: Props) => {
-    const { output, isError } = useSelector((state: RootState) => state.editor)
+    const { output, isError, selectedLanguage } = useSelector((state: RootState) => state.editor)
     const [isRunning, setIsRunning] = useState(false)
     const { data: session } = useSession()
-    const handleRunCodeClick = () => {
-        if (!session) return;
-        
+    const dispatch = useDispatch()
+
+    const handleRunCodeClick = async () => {
+        if (!editorRef.current || !session) return;
         setIsRunning(true)
-        runCode().finally(() => {
-            setIsRunning(false)
+        const code = editorRef.current.getValue()
+        await CodeService.runCode({
+            code,
+            language: selectedLanguage,
+            problemSlug: problem.slug,
+            userId: session.user.id
+        }).then(res => {
+            console.log(res.data)
+            dispatch(setEditorOutputConsoleAction({
+                output: res.data.output,
+                isError: !res.data.status
+            }))
+        }).catch(err => {
+            dispatch(setEditorOutputConsoleAction({
+                output: err.response.data.message,
+                isError: true
+            }))
         })
+        .finally(() => setIsRunning(false))
     }
+
     return (
         <div className='card h-full'>
             <Tabs className={"h-full flex flex-col flex-1"}>
