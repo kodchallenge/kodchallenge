@@ -37,7 +37,6 @@ const Output = ({
             problemSlug: problem.slug,
             userId: session.user.id
         }).then(res => {
-            console.log(res.data)
             dispatch(setEditorOutputConsoleAction({
                 output: res.data.output,
                 isError: !res.data.status
