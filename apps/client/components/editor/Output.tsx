@@ -2,6 +2,7 @@ import { Problem } from '@/models';
 import { CodeService } from '@/services';
 import { RootState } from '@/store';
 import { setEditorOutputConsoleAction } from '@/store/editorStore';
+import clsx from 'clsx';
 import { editor } from 'monaco-editor';
 import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -21,6 +22,7 @@ const Output = ({
 }: Props) => {
     const { output, isError, selectedLanguage } = useSelector((state: RootState) => state.editor)
     const [isRunning, setIsRunning] = useState(false)
+    const [testCaseResults, setTestCaseResults] = useState<("running" | "fail" | "success")[]>([])
     const { data: session } = useSession()
     const dispatch = useDispatch()
 
@@ -45,7 +47,34 @@ const Output = ({
                 isError: true
             }))
         })
-        .finally(() => setIsRunning(false))
+            .finally(() => setIsRunning(false))
+    }
+
+    const handleTestCodeClick = async () => {
+        if (!editorRef.current || !session) return;
+        setTestCaseResults(Array.from({ length: problem.totalCases }).fill("running") as ("running" | "fail" | "success")[])
+        for (let i = 0; i < problem.totalCases; i++) {
+            const code = editorRef.current.getValue()
+            await CodeService.runTestCases({
+                code,
+                language: selectedLanguage,
+                problemSlug: problem.slug,
+                userId: session.user.id,
+                index: i
+            }).then(res => {
+                setTestCaseResults(prev => {
+                    const newResults = [...prev]
+                    newResults[i] = res.data.status ? "success" : "fail"
+                    return newResults
+                })
+            }).catch(err => {
+                setTestCaseResults(prev => {
+                    const newResults = [...prev]
+                    newResults[i] = "fail"
+                    return newResults
+                })
+            })
+        }
     }
 
     return (
@@ -58,7 +87,7 @@ const Output = ({
                     </div>
                     <div className='flex items-center space-x-2'>
                         <button className='btn btn-sm' disabled={!session} onClick={handleRunCodeClick}>Çalıştır</button>
-                        <button className='btn btn-sm btn-primary' disabled={!session || !output}>Testleri Başlat</button>
+                        <button className='btn btn-sm btn-primary' disabled={!session || !output} onClick={handleTestCodeClick}>Testleri Başlat</button>
                         <button className='btn btn-success btn-sm' disabled>Gönder</button>
                     </div>
                 </TabList>
@@ -74,7 +103,28 @@ const Output = ({
                                         Yazdığınız kodu çalıştırabilmek için <label onClick={() => signIn()} className='link link-info'>giriş</label> yapmanız gerekiyor.
                                     </code>
                                 ) : (
-                                    <code className={isError ? "text-error" : "asd"} dangerouslySetInnerHTML={{ __html: output.replace(/\n/g, "<br>").replace(/ /g, "&nbsp;") }} />
+                                    // <code className={isError ? "text-error" : "asd"} dangerouslySetInnerHTML={{ __html: output.replace(/\n/g, "<br>").replace(/ /g, "&nbsp;") }} />
+                                    <div className='ß'>
+                                        {testCaseResults.map((testCase, i) => (
+                                            <div key={i} className={clsx('flex items-center p-3', {fail: "text-error", success: "text-success"}[testCase])}>
+                                                Case {i + 1}
+                                                <span className='ml-2'>
+                                                    {testCase == "running" &&
+                                                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                        </svg>
+                                                    }
+                                                    {testCase == "success" &&
+                                                        <i className="fa-solid fa-check text-success"></i>
+                                                    }
+                                                    {testCase == "fail" &&
+                                                        <i className="fa-solid fa-xmark text-error"></i>
+                                                    }
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
                                 )}
                             </pre>
                         )}
@@ -85,7 +135,7 @@ const Output = ({
                     <p>TODO: burayı hallet.</p>
                 </TabPanel> */}
             </Tabs>
-        </div>
+        </div >
     )
 }
 

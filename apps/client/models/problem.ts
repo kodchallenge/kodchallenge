@@ -8,5 +8,6 @@ export interface Problem {
     isPrivate: boolean,
     difficulty: string,
     isDeleted: boolean,
-    category_id: number
+    category_id: number,
+    totalCases: number,
 }
