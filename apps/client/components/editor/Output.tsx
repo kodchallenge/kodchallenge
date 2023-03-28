@@ -1,12 +1,12 @@
 import { Problem } from '@/models';
 import { CodeService } from '@/services';
 import { RootState } from '@/store';
-import { setEditorOutputConsoleAction } from '@/store/editorStore';
+import { setEditorOutputConsoleAction, setIsTestableAction } from '@/store/editorStore';
 import clsx from 'clsx';
 import { editor } from 'monaco-editor';
 import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -20,7 +20,7 @@ const Output = ({
     editorRef,
     problem
 }: Props) => {
-    const { output, isError, selectedLanguage } = useSelector((state: RootState) => state.editor)
+    const { output, isError, isTestable, selectedLanguage } = useSelector((state: RootState) => state.editor)
     const [isRunning, setIsRunning] = useState(false)
     const [testCaseResults, setTestCaseResults] = useState<("running" | "fail" | "success")[]>([])
     const { data: session } = useSession()
@@ -29,6 +29,7 @@ const Output = ({
     const handleRunCodeClick = async () => {
         if (!editorRef.current || !session) return;
         setIsRunning(true)
+        setTestCaseResults([])
         const code = editorRef.current.getValue()
         await CodeService.runCode({
             code,
@@ -41,6 +42,7 @@ const Output = ({
                 output: res.data.output,
                 isError: !res.data.status
             }))
+            dispatch(setIsTestableAction(true))
         }).catch(err => {
             dispatch(setEditorOutputConsoleAction({
                 output: err.response.data.message,
@@ -51,8 +53,9 @@ const Output = ({
     }
 
     const handleTestCodeClick = async () => {
-        if (!editorRef.current || !session) return;
+        if (!editorRef.current || !session || !isTestable) return;
         setTestCaseResults(Array.from({ length: problem.totalCases }).fill("running") as ("running" | "fail" | "success")[])
+        dispatch(setIsTestableAction(false))
         for (let i = 0; i < problem.totalCases; i++) {
             const code = editorRef.current.getValue()
             await CodeService.runTestCases({
@@ -87,7 +90,7 @@ const Output = ({
                     </div>
                     <div className='flex items-center space-x-2'>
                         <button className='btn btn-sm' disabled={!session} onClick={handleRunCodeClick}>Çalıştır</button>
-                        <button className='btn btn-sm btn-primary' disabled={!session || !output} onClick={handleTestCodeClick}>Testleri Başlat</button>
+                        <button className='btn btn-sm btn-primary' disabled={!isTestable} onClick={handleTestCodeClick}>Testleri Başlat</button>
                         <button className='btn btn-success btn-sm' disabled>Gönder</button>
                     </div>
                 </TabList>
@@ -102,8 +105,9 @@ const Output = ({
                                     <code>
                                         Yazdığınız kodu çalıştırabilmek için <label onClick={() => signIn()} className='link link-info'>giriş</label> yapmanız gerekiyor.
                                     </code>
+                                ) : !testCaseResults?.length ? (
+                                    <code className={isError ? "text-error" : "asd"} dangerouslySetInnerHTML={{ __html: output.replace(/\n/g, "<br>").replace(/ /g, "&nbsp;") }} />
                                 ) : (
-                                    // <code className={isError ? "text-error" : "asd"} dangerouslySetInnerHTML={{ __html: output.replace(/\n/g, "<br>").replace(/ /g, "&nbsp;") }} />
                                     <div className='ß'>
                                         {testCaseResults.map((testCase, i) => (
                                             <div key={i} className={clsx('flex items-center p-3', {fail: "text-error", success: "text-success"}[testCase])}>

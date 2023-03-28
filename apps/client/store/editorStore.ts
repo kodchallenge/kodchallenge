@@ -9,6 +9,7 @@ const slice = createSlice({
         selectedLanguage: <string> "",
         output: <string> "",
         isError: <boolean> false,
+        isTestable: <boolean> false,
     },
     reducers: {
         setEditorThemeAction: (state, action: PayloadAction<EditorThemes>) => {
@@ -21,6 +22,9 @@ const slice = createSlice({
             state.output = action.payload.output ?? "";
             state.isError = action.payload.isError;
         },
+        setIsTestableAction: (state, action: PayloadAction<boolean>) => {
+            state.isTestable = action.payload;
+        }
     },
     extraReducers: {
         [HYDRATE]: (state, action) => {
@@ -32,6 +36,6 @@ const slice = createSlice({
     },
 })
 
-export const { setEditorThemeAction, setSelectedLanguageAction, setEditorOutputConsoleAction } = slice.actions
+export const { setEditorThemeAction, setSelectedLanguageAction, setEditorOutputConsoleAction, setIsTestableAction } = slice.actions
 
 export default slice.reducer
