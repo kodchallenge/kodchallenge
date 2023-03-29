@@ -1,4 +1,4 @@
-import { Problem } from '@/models';
+import { Problem, Solution } from '@/models';
 import { CodeService, SolutionService } from '@/services';
 import api from '@/services/api';
 import { RootState } from '@/store';
@@ -24,6 +24,7 @@ const Output = ({
     const { output, isError, isTestable, selectedLanguage } = useSelector((state: RootState) => state.editor)
     const { currentProblem } = useSelector((state: RootState) => state.problem)
     const [isRunning, setIsRunning] = useState(false)
+    const [solution, setSolution] = useState<Solution | null>(null)
     const [testCaseResults, setTestCaseResults] = useState<("running" | "fail" | "success")[]>([])
     const { data: session } = useSession()
     const dispatch = useDispatch()
@@ -31,6 +32,7 @@ const Output = ({
     const handleRunCodeClick = async () => {
         if (!editorRef.current || !session) return;
         setIsRunning(true)
+        setSolution(null)
         setTestCaseResults([])
         const code = editorRef.current.getValue()
         await CodeService.runCode({
@@ -56,42 +58,61 @@ const Output = ({
     const handleTestCodeClick = async () => {
         if (!editorRef.current || !session || !isTestable) return;
         try {
+            setSolution(null)
             api().defaults.headers.common["Authorization"] = `Bearer ${session.user.token}`
 
             setTestCaseResults(Array.from({ length: problem.totalCases }).fill("running") as ("running" | "fail" | "success")[])
             dispatch(setIsTestableAction(false))
             const language = currentProblem.base_codes.find(x => x.language.slug == selectedLanguage).language;
-            const {data: solution} = await SolutionService.save({
+            const { data: savedSolution } = await SolutionService.save({
                 code: editorRef.current.getValue(),
                 language: language.id,
                 problem: problem.id,
             })
-            console.log(solution)
 
-            for (let i = 0; i < problem.totalCases; i++) {
-                await CodeService.runTestCases({
-                    index: i,
-                    solution: solution.id,
-                }).then(res => {
-                    setTestCaseResults(prev => {
-                        const newResults = [...prev]
-                        newResults[i] = res.data.status ? "success" : "fail"
-                        return newResults
-                    })
-                }).catch(err => {
-                    setTestCaseResults(prev => {
-                        const newResults = [...prev]
-                        newResults[i] = "fail"
-                        return newResults
-                    })
+            Promise.all(Array.from({ length: problem.totalCases }).map((_, i) => CodeService.runTestCases({
+                index: i,
+                solution: savedSolution.id,
+            }).then(res => {
+                setTestCaseResults(prev => {
+                    const newResults = [...prev]
+                    newResults[i] = res.data.status ? "success" : "fail"
+                    return newResults
                 })
-            }
-        } catch(err) {
+            }).catch(err => {
+                setTestCaseResults(prev => {
+                    const newResults = [...prev]
+                    newResults[i] = "fail"
+                    return newResults
+                })
+            }))).then(() => {
+                setSolution(savedSolution)
+            })
+        } catch (err) {
             dispatch(setEditorOutputConsoleAction({
                 output: "Testler çalıştırılırken bir hata oluştu.",
                 isError: true
             }))
             setTestCaseResults([])
+        }
+    }
+
+    const handleApproveSolutionClick = async () => {
+        if (!editorRef.current || !session || !solution) return;
+        try {
+            api().defaults.headers.common["Authorization"] = `Bearer ${session.user.token}`
+            dispatch(setEditorOutputConsoleAction({isError: false, output: "Çözümünüz onaylanıyor..."}))
+            SolutionService.approve(solution.id, problem.id).then(res => {
+                if(res.data.status) {
+                    dispatch(setEditorOutputConsoleAction({isError: false, output: "Çözümünüz onaylandı!"}))
+                } else {
+                    dispatch(setEditorOutputConsoleAction({isError: true, output: "Çözümünüz onaylanamadı..."}))
+                }
+            }).catch(err => {
+                dispatch(setEditorOutputConsoleAction({isError: true, output: "Çözümünüz onaylanamadı..."}))
+            })
+            setTestCaseResults([])
+        } catch (err) {
         }
     }
 
@@ -106,7 +127,7 @@ const Output = ({
                     <div className='flex items-center space-x-2'>
                         <button className='btn btn-sm' disabled={!session} onClick={handleRunCodeClick}>Çalıştır</button>
                         <button className='btn btn-sm btn-primary' disabled={!isTestable} onClick={handleTestCodeClick}>Testleri Başlat</button>
-                        <button className='btn btn-success btn-sm' disabled>Gönder</button>
+                        <button className='btn btn-success btn-sm' disabled={!solution || testCaseResults.length == 0} onClick={handleApproveSolutionClick}>Kaydet</button>
                     </div>
                 </TabList>
 

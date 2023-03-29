@@ -10,4 +10,8 @@ export class SolutionService {
     }): Promise<AxiosResponse<Solution, any>> {
         return api().post(`/v1/solutions`, data)
     }
+
+    public static async approve(solutionId: number, problemId: number): Promise<AxiosResponse<{ status: true }, any>> {
+        return api().post(`/v1/solutions/${solutionId}`, {problem: problemId})
+    }
 }
