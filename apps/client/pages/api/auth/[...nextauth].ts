@@ -37,9 +37,16 @@ export const authOptions: AuthOptions = {
     ],
     callbacks: {
         async jwt({ token, user }) {
+            if(token) {
+                api().defaults.headers.common["Authorization"] = `Bearer ${token.token}`
+            }
             return { ...token, ...user };
         },
         async session({ session, token, user }) {
+            if(token) {
+                api().defaults.headers.common["Authorization"] = `Bearer ${token.token}`
+            }
+            // @ts-ignore
             session.user = token;
             return session;
         },

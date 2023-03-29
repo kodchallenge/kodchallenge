@@ -15,11 +15,8 @@ export default class CodeService {
     }
 
     public static async runTestCases(data: {
-        code: string,
-        language: string,
-        problemSlug: string,
-        userId: number,
         index: number,
+        solution: number,
     }): Promise<AxiosResponse<{
         status: boolean,
         output: string,

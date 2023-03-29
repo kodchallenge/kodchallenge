@@ -11,4 +11,5 @@ export interface User {
     github?: string | null;
     twitter?: string | null;
     linkedin?: string | null;
+    token?: string | null;
 }

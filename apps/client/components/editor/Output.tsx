@@ -1,5 +1,6 @@
 import { Problem } from '@/models';
-import { CodeService } from '@/services';
+import { CodeService, SolutionService } from '@/services';
+import api from '@/services/api';
 import { RootState } from '@/store';
 import { setEditorOutputConsoleAction, setIsTestableAction } from '@/store/editorStore';
 import clsx from 'clsx';
@@ -21,6 +22,7 @@ const Output = ({
     problem
 }: Props) => {
     const { output, isError, isTestable, selectedLanguage } = useSelector((state: RootState) => state.editor)
+    const { currentProblem } = useSelector((state: RootState) => state.problem)
     const [isRunning, setIsRunning] = useState(false)
     const [testCaseResults, setTestCaseResults] = useState<("running" | "fail" | "success")[]>([])
     const { data: session } = useSession()
@@ -53,29 +55,43 @@ const Output = ({
 
     const handleTestCodeClick = async () => {
         if (!editorRef.current || !session || !isTestable) return;
-        setTestCaseResults(Array.from({ length: problem.totalCases }).fill("running") as ("running" | "fail" | "success")[])
-        dispatch(setIsTestableAction(false))
-        for (let i = 0; i < problem.totalCases; i++) {
-            const code = editorRef.current.getValue()
-            await CodeService.runTestCases({
-                code,
-                language: selectedLanguage,
-                problemSlug: problem.slug,
-                userId: session.user.id,
-                index: i
-            }).then(res => {
-                setTestCaseResults(prev => {
-                    const newResults = [...prev]
-                    newResults[i] = res.data.status ? "success" : "fail"
-                    return newResults
-                })
-            }).catch(err => {
-                setTestCaseResults(prev => {
-                    const newResults = [...prev]
-                    newResults[i] = "fail"
-                    return newResults
-                })
+        try {
+            api().defaults.headers.common["Authorization"] = `Bearer ${session.user.token}`
+
+            setTestCaseResults(Array.from({ length: problem.totalCases }).fill("running") as ("running" | "fail" | "success")[])
+            dispatch(setIsTestableAction(false))
+            const language = currentProblem.base_codes.find(x => x.language.slug == selectedLanguage).language;
+            const {data: solution} = await SolutionService.save({
+                code: editorRef.current.getValue(),
+                language: language.id,
+                problem: problem.id,
             })
+            console.log(solution)
+
+            for (let i = 0; i < problem.totalCases; i++) {
+                await CodeService.runTestCases({
+                    index: i,
+                    solution: solution.id,
+                }).then(res => {
+                    setTestCaseResults(prev => {
+                        const newResults = [...prev]
+                        newResults[i] = res.data.status ? "success" : "fail"
+                        return newResults
+                    })
+                }).catch(err => {
+                    setTestCaseResults(prev => {
+                        const newResults = [...prev]
+                        newResults[i] = "fail"
+                        return newResults
+                    })
+                })
+            }
+        } catch(err) {
+            dispatch(setEditorOutputConsoleAction({
+                output: "Testler çalıştırılırken bir hata oluştu.",
+                isError: true
+            }))
+            setTestCaseResults([])
         }
     }
 
@@ -109,7 +125,7 @@ const Output = ({
                                 ) : (
                                     <div className='ß'>
                                         {testCaseResults.map((testCase, i) => (
-                                            <div key={i} className={clsx('flex items-center p-3', {fail: "text-error", success: "text-success"}[testCase])}>
+                                            <div key={i} className={clsx('flex items-center p-3', { fail: "text-error", success: "text-success" }[testCase])}>
                                                 Case {i + 1}
                                                 <span className='ml-2'>
                                                     {testCase == "running" &&
