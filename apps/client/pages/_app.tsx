@@ -12,13 +12,6 @@ function CustomApp({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   const { showLoginModal } = useSelector((state: RootState) => state.app)
-  // const {data: sessionData} = useSession()
-
-  useEffect(() => {
-    console.log(session)
-    if(session)
-      api().defaults.headers.common["Authorization"] = `Bearer ${session.user.token}`
-  }, [])
 
   return (
     <SessionProvider session={session}>

@@ -59,7 +59,6 @@ const Output = ({
         if (!editorRef.current || !session || !isTestable) return;
         try {
             setSolution(null)
-            api().defaults.headers.common["authorization"] = `Bearer ${session.user.token}`
 
             setTestCaseResults(Array.from({ length: problem.totalCases }).fill("running") as ("running" | "fail" | "success")[])
             dispatch(setIsTestableAction(false))
@@ -100,7 +99,6 @@ const Output = ({
     const handleApproveSolutionClick = async () => {
         if (!editorRef.current || !session || !solution) return;
         try {
-            api().defaults.headers.common["Authorization"] = `Bearer ${session.user.token}`
             dispatch(setEditorOutputConsoleAction({isError: false, output: "Çözümünüz onaylanıyor..."}))
             SolutionService.approve(solution.id, problem.id).then(res => {
                 dispatch(setEditorOutputConsoleAction({isError: !res.data.status, isSuccess: res.data.status, output: res.data.message}))

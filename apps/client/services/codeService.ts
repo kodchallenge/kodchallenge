@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import api from "./api";
+import authApi from "./authApi";
 
 export default class CodeService {
     public static async runCode(data: {
@@ -11,7 +12,7 @@ export default class CodeService {
         status: boolean,
         output: string,
     }, any>> {
-        return api().post(`/v1/code/run`, data)
+        return authApi().post(`/v1/code/run`, data)
     }
 
     public static async runTestCases(data: {
@@ -21,6 +22,6 @@ export default class CodeService {
         status: boolean,
         output: string,
     }, any>> {
-        return api().post(`/v1/code/case`, data)
+        return authApi().post(`/v1/code/case`, data)
     }
 }
