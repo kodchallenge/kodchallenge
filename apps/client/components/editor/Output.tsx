@@ -21,7 +21,7 @@ const Output = ({
     editorRef,
     problem
 }: Props) => {
-    const { output, isError, isTestable, selectedLanguage } = useSelector((state: RootState) => state.editor)
+    const { output, isError, isSuccess, isTestable, selectedLanguage } = useSelector((state: RootState) => state.editor)
     const { currentProblem } = useSelector((state: RootState) => state.problem)
     const [isRunning, setIsRunning] = useState(false)
     const [solution, setSolution] = useState<Solution | null>(null)
@@ -45,7 +45,7 @@ const Output = ({
                 output: res.data.output,
                 isError: !res.data.status
             }))
-            dispatch(setIsTestableAction(true))
+            dispatch(setIsTestableAction(!!res.data.output))
         }).catch(err => {
             dispatch(setEditorOutputConsoleAction({
                 output: err.response.data.message,
@@ -59,7 +59,7 @@ const Output = ({
         if (!editorRef.current || !session || !isTestable) return;
         try {
             setSolution(null)
-            api().defaults.headers.common["Authorization"] = `Bearer ${session.user.token}`
+            api().defaults.headers.common["authorization"] = `Bearer ${session.user.token}`
 
             setTestCaseResults(Array.from({ length: problem.totalCases }).fill("running") as ("running" | "fail" | "success")[])
             dispatch(setIsTestableAction(false))
@@ -90,7 +90,7 @@ const Output = ({
             })
         } catch (err) {
             dispatch(setEditorOutputConsoleAction({
-                output: "Testler çalıştırılırken bir hata oluştu.",
+                output: "Testler çalıştırılırken bir hata oluştu." + err.message,
                 isError: true
             }))
             setTestCaseResults([])
@@ -103,11 +103,7 @@ const Output = ({
             api().defaults.headers.common["Authorization"] = `Bearer ${session.user.token}`
             dispatch(setEditorOutputConsoleAction({isError: false, output: "Çözümünüz onaylanıyor..."}))
             SolutionService.approve(solution.id, problem.id).then(res => {
-                if(res.data.status) {
-                    dispatch(setEditorOutputConsoleAction({isError: false, output: "Çözümünüz onaylandı!"}))
-                } else {
-                    dispatch(setEditorOutputConsoleAction({isError: true, output: "Çözümünüz onaylanamadı..."}))
-                }
+                dispatch(setEditorOutputConsoleAction({isError: !res.data.status, isSuccess: res.data.status, output: res.data.message}))
             }).catch(err => {
                 dispatch(setEditorOutputConsoleAction({isError: true, output: "Çözümünüz onaylanamadı..."}))
             })
@@ -142,7 +138,7 @@ const Output = ({
                                         Yazdığınız kodu çalıştırabilmek için <label onClick={() => signIn()} className='link link-info'>giriş</label> yapmanız gerekiyor.
                                     </code>
                                 ) : !testCaseResults?.length ? (
-                                    <code className={isError ? "text-error" : "asd"} dangerouslySetInnerHTML={{ __html: output.replace(/\n/g, "<br>").replace(/ /g, "&nbsp;") }} />
+                                    <code className={isError ? "text-error" : isSuccess ? "text-success" : ""} dangerouslySetInnerHTML={{ __html: output.replace(/\n/g, "<br>").replace(/ /g, "&nbsp;") }} />
                                 ) : (
                                     <div className='ß'>
                                         {testCaseResults.map((testCase, i) => (
