@@ -3,7 +3,7 @@ export interface Solution {
     problemId: number;
     code: string;
     score: number;
-    language: number;
+    languageId: number;
     createdAt: Date;
     approved: boolean;
 }

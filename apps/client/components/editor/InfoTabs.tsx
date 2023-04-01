@@ -1,6 +1,7 @@
 import React from 'react'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import Description from './Description'
+import UserSolutions from './UserSolutions'
 
 const InfoTabs = () => {
     return (
@@ -18,7 +19,7 @@ const InfoTabs = () => {
                     <h1>Çözümler</h1>
                 </TabPanel>
                 <TabPanel>
-                    <h1>Çözümlerim</h1>
+                    <UserSolutions />
                 </TabPanel>
             </div>
         </Tabs>
