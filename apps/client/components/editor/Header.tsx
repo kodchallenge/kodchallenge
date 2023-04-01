@@ -26,7 +26,7 @@ const Header = () => {
     }
 
     return (
-        <div className='shadow-lg'>
+        <div className='shadow'>
             <div className='p-2'>
                 <div className='flex justify-between'>
                     <KcBrandButton />

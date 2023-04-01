@@ -5,7 +5,7 @@
 }
 
 .gutter {
-    background-color: hsl(var(--b3)) !important;
+    background-color: hsl(var(--b2)) !important;
     background-repeat: no-repeat;
     background-position: 50%;
 }

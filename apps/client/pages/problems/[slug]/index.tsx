@@ -1,4 +1,4 @@
-import { EditorOutput, KodEditor } from '@/components/editor'
+import { EditorOutput, KCEditor, KodEditor } from '@/components/editor'
 import Header from '@/components/editor/Header'
 import { Problem } from '@/models'
 import { ProblemService } from '@/services'
@@ -34,10 +34,8 @@ const ProblemDetailIndex = ({
                 <KodLayout.Base>
                     <Header />
                     <KodLayout.Row gutterSize={10} minSize={400}>
-                        <KodLayout.Tab id='description-area' style={{ overflow: "auto !important" }}>
-                            <div className='p-10'>
-                                <KodMarkdown markdown={problem.description} theme='light' />
-                            </div>
+                        <KodLayout.Tab id='description-area' style={{ overflow: "hidden !important",  }}>
+                            <KCEditor.InfoTabs />
                         </KodLayout.Tab>
                         <KodLayout.Column gutterSize={10}>
                             <KodLayout.Tab>

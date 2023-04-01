@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 const Description = () => {
     const { currentProblem } = useSelector((state: RootState) => state.problem)
     return (
-        <div className='p-10'>
+        <div className='sasp-10'>
             <KodMarkdown fromUrl='/assets/dump/sample.md' theme='light' />
         </div>
     )
