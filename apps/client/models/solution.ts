@@ -1,4 +1,4 @@
-import type { SolutionState } from "@/constants";
+import type { SolutionState, SolutionStateInfo } from "@/constants";
 
 export interface Solution {
     id: number;
@@ -9,4 +9,5 @@ export interface Solution {
     createdAt: Date;
     approved: boolean;
     state: SolutionState;
+    stateInfo?: SolutionStateInfo;
 }

@@ -31,7 +31,7 @@ const InfoTabs = () => {
                     <Description />
                 </TabPanel>
                 <TabPanel>
-                    <h1>Çözümler</h1>
+                    <p className='alert alert-error'>Problemi çözmeden diğer kullanıcıların çözümlerini göremezsiniz!</p>
                 </TabPanel>
                 <TabPanel>
                     <UserSolutions />
