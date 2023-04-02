@@ -11,9 +11,8 @@ const UserSolutions = () => {
 
     useEffect(() => {
         SolutionService.getSolutionsByUserId(1).then(res => {
-            console.log(res.data)
-            const s = res.data.solutions.map(x => ({ ...x, state: randomEnumValue(SolutionState) })) // TODO: remove this line because [state] is get from backend
-            setSolutions(s.map(x => ({ ...x, stateInfo: SolutionStateInfos[x.state] }))) // Initialize stateInfo by state because stateInfo was not received from the backend
+            //const s = res.data.solutions.map(x => ({ ...x, state: randomEnumValue(SolutionState) })) // TODO: remove this line because [state] is get from backend
+            setSolutions(res.data.solutions.map(x => ({ ...x, stateInfo: SolutionStateInfos[x.state] }))) // Initialize stateInfo by state because stateInfo was not received from the backend
         })
     }, [])
 
