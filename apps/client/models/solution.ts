@@ -1,3 +1,5 @@
+import type { SolutionState } from "@/constants";
+
 export interface Solution {
     id: number;
     problemId: number;
@@ -6,4 +8,5 @@ export interface Solution {
     languageId: number;
     createdAt: Date;
     approved: boolean;
+    state: SolutionState;
 }
