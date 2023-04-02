@@ -29,6 +29,10 @@ const nextConfig = {
         source: "/@:username",
         destination: "/user/:username",
       },
+      {
+        source: "/problems/:slug",
+        destination: "/problems/:slug/description",
+      },
     ];
   },
 };
