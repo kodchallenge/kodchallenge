@@ -3,12 +3,14 @@ import editorStore from "./editorStore";
 import { createWrapper } from "next-redux-wrapper";
 import problemStore from "./problemStore";
 import appStore from "./appStore";
+import solutionStore from "./solutionStore";
 
 export const makeStore = () => configureStore({
   reducer: {
     editor: editorStore,
     problem: problemStore,
     app: appStore,
+    solution: solutionStore,
   }
 })
 

@@ -34,17 +34,20 @@ const ProblemDetailIndex = ({
                 <KodLayout.Base>
                     <Header />
                     <KodLayout.Row gutterSize={10} minSize={400}>
-                        <KodLayout.Tab id='description-area' style={{ overflow: "hidden !important",  }}>
+                        <KodLayout.Tab id='description-area' style={{ overflow: "hidden !important", }}>
                             <KCEditor.InfoTabs />
                         </KodLayout.Tab>
-                        <KodLayout.Column gutterSize={10}>
-                            <KodLayout.Tab>
+                        <KodLayout.Tab>
+                            <KCEditor.UserSolution />
+                        </KodLayout.Tab>
+                        {/* <KodLayout.Column gutterSize={10}> */}
+                        {/* <KodLayout.Tab>
                                 <KodEditor editorRef={editorRef} />
                             </KodLayout.Tab>
                             <KodLayout.Tab>
                                 <EditorOutput editorRef={editorRef} problem={problem} />
-                            </KodLayout.Tab>
-                        </KodLayout.Column>
+                            </KodLayout.Tab> */}
+                        {/* </KodLayout.Column> */}
                     </KodLayout.Row>
                 </KodLayout.Base>
             </div>

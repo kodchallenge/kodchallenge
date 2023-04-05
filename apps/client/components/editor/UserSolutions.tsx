@@ -1,27 +1,37 @@
-import { SolutionState, SolutionStateInfos } from '@/constants'
-import { UserSolutionDetail } from '@/models/UserSolutionDetail'
+import { SolutionStateInfos } from '@/constants'
 import { SolutionService } from '@/services'
-import { randomEnumValue } from '@/utils/utils'
+import { RootState } from '@/store'
+import { setUserSolutionsAction } from '@/store/solutionStore'
 import clsx from 'clsx'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 const UserSolutions = () => {
-    const [solutions, setSolutions] = React.useState<UserSolutionDetail[]>([])
-
+    const {userSolutions} = useSelector((state: RootState) => state.solution)
+    const router = useRouter()
+    const dispatch = useDispatch()
     useEffect(() => {
         SolutionService.getSolutionsByUserId(1).then(res => {
-            //const s = res.data.solutions.map(x => ({ ...x, state: randomEnumValue(SolutionState) })) // TODO: remove this line because [state] is get from backend
-            setSolutions(res.data.solutions.map(x => ({ ...x, stateInfo: SolutionStateInfos[x.state] }))) // Initialize stateInfo by state because stateInfo was not received from the backend
+            const solutions = res.data.solutions.map(x => ({ ...x, stateInfo: SolutionStateInfos[x.state] }))
+            dispatch(setUserSolutionsAction(solutions))
         })
     }, [])
 
     return (
         <div>
-            {solutions.length === 0 && <div className='text-center text-gray-500'>Henüz çözüm bulunmamaktadır.</div>}
-            {solutions.map(solution => (
+            {userSolutions.length === 0 && <div className='text-center text-gray-500'>Henüz çözüm bulunmamaktadır.</div>}
+            {userSolutions.map(solution => (
                 <div className='hover:bg-base-200'>
-                    <div className='p-5 flex cursor-pointer items-center justify-between'>
+                    <Link
+                        href={{
+                            pathname: router.pathname,
+                            query: { ...router.query, solution: solution.id },
+                        }}
+                        className='p-5 flex cursor-pointer items-center justify-between'
+                    >
                         <div className='flex items-center gap-10'>
                             <div className='flex flex-col md:min-w-[10rem]'>
                                 <div
@@ -44,7 +54,7 @@ const UserSolutions = () => {
                         <div>
                             <i className='fas fa-chevron-right text-gray-500'></i>
                         </div>
-                    </div>
+                    </Link>
                 </div>
             ))}
         </div>
