@@ -12,3 +12,10 @@ export const SolutionStateInfos: { [key in SolutionState]: SolutionStateInfo } =
     [SolutionState.BuildError]: { name: "Build Hatası", cn: "text-error-content", badgeCN: "badge-error-content", description: "Çözümünüz derlenirken hata oluştu." },
     [SolutionState.Timeout]: { name: "Zaman Aşımı", cn: "text-warning", badgeCN: "badge-warning", description: "Çözümünüz belirlenen sürede tamamlanamadı." },
 }
+
+
+// Problem Editor tab panels
+export enum EditorRightTab {
+    "userSolution" = "userSolution",
+    "editor" = "editor",
+}
