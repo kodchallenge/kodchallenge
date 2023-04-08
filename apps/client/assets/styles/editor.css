@@ -61,7 +61,7 @@
 
 .kl-row,
 .kl-column {
-    height: unset !important;
+    /* height: unset !important; */
     flex-grow: 1 !important;
     overflow: auto !important;
 }

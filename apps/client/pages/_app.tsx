@@ -1,12 +1,11 @@
+import '@/assets/styles/editor.css';
+import '@/assets/styles/globals.css';
+import LoginModal from '@/components/modals/LoginModal';
 import { RootState, wrapper } from '@/store';
+import { SessionProvider } from "next-auth/react";
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import '../assets/styles/globals.css'
-import { SessionProvider, useSession } from "next-auth/react"
-import LoginModal from '@/components/modals/LoginModal';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import api from '@/services/api';
 function CustomApp({
   Component,
   pageProps: { session, ...pageProps },

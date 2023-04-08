@@ -3,8 +3,11 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import Description from './Description'
 import UserSolutions from './UserSolutions'
 import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import { setPageTitleAction } from '@/store/editorStore'
 
 const InfoTabs = () => {
+    const dispatch = useDispatch()
     const router = useRouter()
     const [tabs] = useState([
         { name: 'Açıklama', tab: 'description', tooltip: "Problem detayı" },
@@ -13,8 +16,10 @@ const InfoTabs = () => {
     ])
 
     const handleSelectTab = (index: number) => {
+        delete router.query.solution
         router.query.tab = tabs[index].tab
         router.push(router)
+        dispatch(setPageTitleAction(tabs[index].name))
     }
 
     return (
