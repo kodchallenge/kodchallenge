@@ -15,7 +15,17 @@ const UserSolutions = () => {
     const dispatch = useDispatch()
     useEffect(() => {
         SolutionService.getSolutionsByUserId(1).then(res => {
-            const solutions = res.data.solutions.map(x => ({ ...x, stateInfo: SolutionStateInfos[x.state] }))
+            const solutions = res.data.solutions.map(x => ({ 
+                ...x, 
+                stateInfo: SolutionStateInfos[x.state], 
+                cases: x.cases.map(c => {
+                    let stateInfo = SolutionStateInfos.success
+                    if(c.build) stateInfo = SolutionStateInfos['build-error']
+                    else if(c.timeout) stateInfo = SolutionStateInfos.timeout
+                    else if(!c.status) stateInfo = SolutionStateInfos.failed
+                    return {...c, stateInfo}
+                } ) 
+            }))
             dispatch(setUserSolutionsAction(solutions))
         })
     }, [])

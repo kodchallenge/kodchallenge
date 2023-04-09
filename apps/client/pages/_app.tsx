@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useSelector } from 'react-redux';
+import 'moment/locale/tr'
 function CustomApp({
   Component,
   pageProps: { session, ...pageProps },
