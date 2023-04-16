@@ -1,6 +1,15 @@
 import api from "@/services/api";
 import NextAuth, { AuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
+
+const refrestToken = async (token) => {
+    try {
+        const refreshTokenData = await api().post("/v1/auth/refresh")
+    } catch(err) {
+
+    } 
+}
+
 export const authOptions: AuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     providers: [
@@ -21,14 +30,14 @@ export const authOptions: AuthOptions = {
 
             async authorize(credentials, req) {
                 try {
-                    
+
                     const { email, password } = credentials
-                    const data = await api().post("/v1/auth/signin", {email, password})
-                    if(data.status !== 200) {
+                    const data = await api().post("/v1/auth/signin", { email, password })
+                    if (data.status !== 200) {
                         return null
                     }
                     return data.data
-                } catch(err) {
+                } catch (err) {
                     console.error(err)
                     return null;
                 }
