@@ -31,7 +31,7 @@ const Header = () => {
                 <div className='flex justify-between'>
                     <KcBrandButton />
                     <div className='flex items-center'>
-                        <h3>{currentProblem.title}</h3>
+                        <h6>{currentProblem.title}</h6>
                     </div>
                     <div className='flex items-center space-x-4'>
                         <span>
