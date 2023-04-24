@@ -56,7 +56,7 @@ const Signin = ({
                                 <label className="label">
                                     <span className="label-text">Parola</span>
                                 </label>
-                                <input type="text" className="input input-bordered" onChange={(e) => password.current = e.target.value} />
+                                <input type="password" className="input input-bordered" onChange={(e) => password.current = e.target.value} />
                             </div>
                             <div className="form-control mt-6">
                                 <button
