@@ -1,5 +1,7 @@
+import KcHeader from '@/components/header'
 import './globals.css'
 import { Inter } from 'next/font/google'
+import clsx from 'clsx'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,7 +17,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className={clsx("dot-points", "full-screen")}></div>
+        <div className='lg:w-4/5 md:w-11/12 px-5 m-auto relative z-10'>
+          <KcHeader />
+          {children}
+        </div>
+      </body>
     </html>
   )
 }

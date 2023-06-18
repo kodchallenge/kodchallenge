@@ -25,3 +25,81 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+
+.dot-points {
+  pointer-events: none;
+  background-color: hsl(var(--bc));
+  opacity: 0.15;
+  -webkit-mask-image: url(/assets/dot-point.svg);
+  mask-repeat: repeat;
+  -webkit-mask-repeat: repeat;
+  mask-image: url(/assets/dot-point.svg);
+}
+
+
+.vh-50 {
+  height: 50vh;
+}
+
+.vh-75 {
+  height: 80vh;
+}
+
+.vh-80 {
+  height: 80vh;
+}
+
+.vh-90 {
+  height: 90vh;
+}
+
+.vh-100 {
+  height: 100vh;
+}
+
+.full-screen {
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  width: 100%;
+}
+
+.kod-md {
+  content: "asd";
+}
+
+.kod-md a {
+  color: rgb(0, 132, 255);
+  text-decoration: underline;
+}
+
+.kod-md > * {
+  line-height: 2;
+  font-size: auto;
+  font-weight: auto;
+}
+
+.kod-md div:has(code[class^="language"]) {
+  background-color: rgb(27 29 34) !important;
+}
+
+.kod-md div:has(code[class^="language"]) code {
+  background-color: transparent !important;
+}
+
+.kod-md code.inline {
+  white-space: nowrap;
+  background-color: #66727e66;
+  border-radius: 0.3em;
+  padding: 0.2em 0.4em;
+  margin: 0;
+  text-shadow: rgb(0 0 0 / 10%) 0px 1px;
+}
+
+.linenumber.react-syntax-highlighter-line-number {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
