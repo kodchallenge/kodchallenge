@@ -6,8 +6,8 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <main>
-      <HomeHeroTitleSection />
-      <HomePreviewSection />
+      {/* <HomeHeroTitleSection /> */}
+      {/* <HomePreviewSection /> */}
     </main>
   )
 }

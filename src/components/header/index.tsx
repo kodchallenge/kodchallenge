@@ -1,6 +1,9 @@
+"use client";
 // import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import React from 'react'
+import BrandLink from '../brand/BrandLink';
+import { Button } from 'react-daisyui';
 
 export type KcHeaderProps = {
     disableDrawer?: boolean;
@@ -25,7 +28,7 @@ const KcHeader = (props: KcHeaderProps) => {
                                 <li><Link href={"/projects"}>Projeler</Link></li>
                             </ul>
                         </div>
-                        {/* <KcBrandButton /> */}
+                        <BrandLink />
                     </div>
                     <div className="navbar-center hidden md:flex">
                         <ul className="menu menu-horizontal px-1">
@@ -54,7 +57,8 @@ const KcHeader = (props: KcHeaderProps) => {
                         </ul>
                     </div>
                     <div className="navbar-end">
-                        <Link href={"/auth/signin"} className="btn btn-primary">Giriş Yap</Link>
+                        <Button animation={false} variant='outline'>Test</Button>
+                        {/* <Link href={"/auth/signin"} className="btn btn-primary">Giriş Yap</Link> */}
                         {/* {!session ? (
                         ) : (
                             <Link href={"/@"+session.user.username} className="btn btn-primary">Hesabım</Link>
