@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import React from 'react'
 import BrandLink from '../brand/BrandLink';
-import { Button } from 'react-daisyui';
 
 export type KcHeaderProps = {
     disableDrawer?: boolean;
@@ -57,7 +56,6 @@ const KcHeader = (props: KcHeaderProps) => {
                         </ul>
                     </div>
                     <div className="navbar-end">
-                        <Button animation={false} variant='outline'>Test</Button>
                         {/* <Link href={"/auth/signin"} className="btn btn-primary">Giriş Yap</Link> */}
                         {/* {!session ? (
                         ) : (

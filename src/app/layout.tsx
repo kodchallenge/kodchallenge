@@ -20,7 +20,7 @@ export default function RootLayout({
         {/* <Theme dataTheme='dark'> */}
           <div className={clsx("dot-points", "full-screen")}></div>
           <div className='lg:w-4/5 md:w-11/12 px-5 m-auto relative z-10'>
-            <KcHeader />
+            {/* <KcHeader /> */}
             {children}
           </div>
         {/* </Theme> */}
