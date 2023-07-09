@@ -15,7 +15,7 @@ export const MainFooter = () => {
                         <div className="py-[60px] px-0">
                             <div className="grid grid-cols-1 mt-12">
                                 <div className="text-center flex flex-col justify-center items-center">
-                                    <Logo size={24} />
+                                    <Logo className={"w-10 h-10"} />
                                     {/* <LogoWithLabel size='lg'/> */}
                                     <p className="max-w-xl mx-auto mt-6">
                                         KodTeam, yazılım geliştirme alanında kendini geliştirmek isteyenler için oluşturulmuş bir topluluktur.

@@ -13,9 +13,9 @@ import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
 const badgeColors = {
-    easy: "bg-teal-500",
-    medium: "bg-indigo-500",
-    hard: "bg-rose-500",
+    easy: "bg-teal-500 hover:bg-teal-600",
+    medium: "bg-indigo-500 hover:bg-indigo-600",
+    hard: "bg-rose-500 hover:bg-rose-600",
 }
 
 const ProblemsPage = () => {
@@ -34,7 +34,7 @@ const ProblemsPage = () => {
                     <h1 className='text-4xl font-bold text-center'>Problemler</h1>
                     <div className='my-12 grid grid-cols-2 grid-flow-row gap-4 w-full'>
                         {problems.map((problem) => (
-                            <Card key={problem.title} className='bg-background z-50 cursor-pointer hover:shadow-lg'>
+                            <Card key={problem.title} className='bg-background z-10 cursor-pointer hover:shadow-lg'>
                                 <div className="flex justify-between items-center px-2 space-x-4">
                                     <Avatar className='w-16 h-16'>
                                         <AvatarImage src={problem.image} />

@@ -15,15 +15,15 @@ export const LogoWithLabel = ({
 }: Props) => {
     const sizes = {
         "sm": {
-            logo: 6,
+            logo: "w-6 h-6",
             label: "text-base",
         },
         "md": {
-            logo: 8,
+            logo: "w-8 h-8",
             label: "text-2xl",
         },
         "lg": {
-            logo: 10,
+            logo: "w-10 h-10",
             label: "text-4xl",
         }
     }
@@ -32,7 +32,7 @@ export const LogoWithLabel = ({
 
     return (
         <div className="flex items-center space-x-1">
-            <Logo size={activeSize.logo} />
+            <Logo className={activeSize.logo} />
             <span className={cn("font-bold", activeSize.label)}>
                 <span className="text-primary">Kod</span>Challenge
             </span>

@@ -1,14 +1,14 @@
 import { cn } from '@/lib/utils'
 import React from 'react'
 type LogoProps = React.HTMLAttributes<SVGElement> & {
-    size?: number
 }
 
 export const Logo = ({
-    size = 8,
     className,
     ...svgProps
 }: LogoProps) => {
+    const sizes = {
+    }
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -17,7 +17,7 @@ export const Logo = ({
             // height="1080"
             viewBox="0 0 1080 1080"
             xmlSpace="preserve"
-            className={cn(`w-${size} h-${size}`, className)}
+            className={cn(`w-8 h-8`, className)}
             {...svgProps}
         >
             <g transform="matrix(7.07 0 0 7.07 540 540)" fill="transparent" >
