@@ -33,7 +33,9 @@ export const MainHeader = () => {
         <header className={cn("fixed top-0 right-0 left-0 z-50 duration-500", scrollY > 50 ? "bg-white dark:bg-slate-800 shadow" : "")}>
             <div className="md:flex flex-col hidden">
                 <NavigationMenu className="flex justify-between items-center py-5 container">
-                    <LogoWithLabel />
+                    <Link href={"/"} className="hover:no-underline">
+                        <LogoWithLabel />
+                    </Link>
                     <div className="items-center justify-center text-sm lg:text-base">
                         <NavigationMenuList className="flex justify-center items-center">
                             {navs.map(nav => (
