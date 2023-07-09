@@ -11,5 +11,15 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 ::selection {
-    @apply bg-indigo-600/90 text-white;
+    @apply bg-slate-600/90 text-white;
+}
+
+a {
+    @apply font-medium text-muted-foreground transition-colors hover:underline;
+    &.active {
+        @apply text-primary;
+    }
+    &>button {
+        @apply hover:no-underline;
+    }
 }

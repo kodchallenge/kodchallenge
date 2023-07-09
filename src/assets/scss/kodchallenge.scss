@@ -1,6 +1,6 @@
-// @tailwind base;
-// @tailwind components;
-// @tailwind utilities;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 // FONTS
 @import "custom/fonts";
@@ -8,6 +8,4 @@
 // general
 @import "custom/general";
 
-@import "custom/daisy";
-
-@import "custom/nav/topnav";
+// @import "custom/nav/topnav";
