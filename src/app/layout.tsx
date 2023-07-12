@@ -19,10 +19,8 @@ export default function RootLayout({
     <html lang="en">
       <body className='font-nunito text-base text-black dark:text-white dark:bg-slate-900'>
         {/* <Theme dataTheme='dark'> */}
-        <div className={clsx("dot-points", "full-screen")}></div>
-        <MainHeader />
+        {/* <div className={clsx("dot-points", "full-screen")}></div> */}
         {children}
-        <MainFooter />
       </body>
     </html>
   )

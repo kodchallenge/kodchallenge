@@ -7,7 +7,7 @@ import { LinkedInLogoIcon, TwitterLogoIcon, GitHubLogoIcon } from "@radix-ui/rea
 import { cn } from '@/lib/utils'
 export const MainFooter = () => {
     return (
-        <footer className="bg-slate-900/90 text-white/70 relative">
+        <footer className="bg-slate-900/90 text-white/70 relative order-2">
             <div className='absolute inset-0 dot-points !bg-white' />
             <div className="container relative">
                 <div className="grid grid-cols-12">
