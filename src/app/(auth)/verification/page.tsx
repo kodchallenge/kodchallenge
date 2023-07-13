@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input'
 import AuthCard from '../components/AuthCard'
 
 const page = () => {
+    // CSS.paintWorklet.addModule('https://unpkg.com/brand-colors/dist/brand-colors.js');
     return (
         <AuthCard
             description='Doğrulama Kodu'
