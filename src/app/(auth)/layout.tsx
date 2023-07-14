@@ -9,15 +9,13 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode
 }) {
- 
+
   return (
     <>
       <DotPoints />
-      <main >
-        <div className="container">
-          <div className="flex flex-col items-center justify-center space-y-4">
-            {children}
-          </div>
+      <main className='min-h-screen container flex flex-col items-center justify-center'>
+        <div className='flex flex-col items-center justify-center space-y-4 py-2'>
+          {children}
         </div>
       </main>
     </>
