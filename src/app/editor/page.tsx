@@ -3,6 +3,7 @@ import { Markdown } from '@/components/markdown'
 import { Button } from '@/components/ui/button'
 import { HamburgerMenuIcon, MoonIcon } from '@radix-ui/react-icons'
 import "./editor.css"
+import ProblemListButton from '@/app/editor/components/ProblemListButton'
 
 const md = `## Test
 
@@ -65,10 +66,7 @@ const page = () => {
       <header className='flex shadow items-center justify-between px-4 py-2'>
         <div className='flex items-center space-x-3 e-header-start'>
           <Logo />
-          <Button variant={"ghost"}>
-            <HamburgerMenuIcon className='mr-2' />
-            Problem Listesi
-          </Button>
+          <ProblemListButton />
         </div>
         <div className='e-header-center'>
 
