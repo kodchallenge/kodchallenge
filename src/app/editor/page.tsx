@@ -1,9 +1,13 @@
+"use client" 
 import { Logo } from '@/components/logo'
 import { Markdown } from '@/components/markdown'
 import { Button } from '@/components/ui/button'
 import { HamburgerMenuIcon, MoonIcon } from '@radix-ui/react-icons'
 import "./editor.css"
 import ProblemListButton from '@/app/editor/components/ProblemListButton'
+import MonacoEditor from "@monaco-editor/react";
+import editor from 'monaco-editor'
+import React from 'react'
 
 const md = `## Test
 
@@ -61,6 +65,9 @@ const a = 1
 `
 
 const page = () => {
+
+  const editorRef = React.useRef<editor.editor.IStandaloneCodeEditor>()
+
   return (
     <div className='h-full flex flex-col max-h-screen overflow-hidden'>
       <header className='flex shadow items-center justify-between px-4 py-2'>
@@ -102,9 +109,23 @@ const page = () => {
               </div>
             </Tabs> */}
           </section>
-          <section className='h-full flex-1 shadow border bg-white e-code-editor'>
+          <section className='h-full flex-1 flex flex-col shadow border bg-white e-code-editor'>
             <div className='h-10 border-b'>
 
+            </div>
+            <div className='h-0 flex-auto overflow-auto'>
+              <MonacoEditor
+                // height={height}
+                language={"javascript"}
+                value={"const a = 1"}
+                theme={"light"}
+                beforeMount={(monaco) => {
+                  // monaco.editor.defineTheme("dark", Dark)
+                }}
+                onMount={(editor, monaco) => {
+                  editorRef.current = editor
+                }}
+              />
             </div>
           </section>
         </div>
