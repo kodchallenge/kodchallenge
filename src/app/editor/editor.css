@@ -2,3 +2,24 @@ html, body {
     height: 100% !important;
     margin: 0 !important;
 }
+
+.split {
+    display: flex;
+    flex-direction: row;
+}
+
+.gutter {
+    @apply bg-slate-100;
+}
+
+.gutter.gutter-horizontal {
+    cursor: col-resize;
+}
+
+.gutter.gutter-vertical {
+    cursor: row-resize;
+}
+
+.gutter.gutter-horizontal:active, .gutter.gutter-vertical:active {
+    @apply bg-primary;
+}
