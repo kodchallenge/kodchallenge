@@ -23,3 +23,19 @@ html, body {
 .gutter.gutter-horizontal:active, .gutter.gutter-vertical:active {
     @apply bg-primary;
 }
+
+.terminal-success {
+    @apply text-success;
+}
+
+.terminal-error {
+    @apply text-destructive;
+}
+
+.terminal-warning {
+    @apply text-warning;
+}
+
+.terminal-info {
+    @apply text-info;
+}

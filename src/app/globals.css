@@ -33,6 +33,12 @@
 
     --success: 167.38deg 83.97% 40.29%;
     --success-foreground: 210 40% 98%;
+
+    --warning: 34.8deg 100% 54.97%;
+    --warning-foreground: 222.2 84% 4.9%;
+
+    --info: 208deg 78.26% 54.9%;
+    --info-foreground: 222.2 84% 4.9%;
  
     --ring: 215 20.2% 65.1%;
  

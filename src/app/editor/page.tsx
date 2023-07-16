@@ -11,8 +11,8 @@ import React, { useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import Split from 'react-split'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-const md = `## Test
 
+const md = `## Test
 
 Lorem ipsum, dolor sit \`test="asda asda sd as"\` amet consectetur adipisicing elit. Quisquam odio asperiores nobis accusantium modi fugiat alias vitae illum est iusto blanditiis molestias voluptatem explicabo ipsum, distinctio dolores eveniet perferendis! Dolorem fuga omnis, tempora quis, accusamus facilis eligendi harum at aperiam cumque quisquam praesentium iste placeat aliquam repudiandae similique libero sit dolor voluptatibus incidunt corrupti! Esse voluptas aliquam incidunt magni!
 
@@ -64,6 +64,91 @@ const a = 1
 
 - [ ] to do
 - [x] done
+`
+
+const colorizeTerminalOutput = (output: string) => {
+  const colorCodes = ["WARNING", "INFO", "SUCCESS", "ERROR"]
+
+  colorCodes.forEach((colorCode) => {
+    const regex = new RegExp(`\\[${colorCode}\\](.*?)\\[\\/${colorCode}\\]`, "g")
+    output = output.replace(regex, `<span class="terminal-${colorCode.toLowerCase()}">$1</span>`)
+  })
+  // replace \n to <br>
+  output = output.replace(/\n/g, "<br>")
+  return output
+}
+
+const output = colorizeTerminalOutput(`- [WARNING]warn[/WARNING] See more info here: https://nextjs.org/docs/messages/invalid-next-config
+- [INFO]event compiled client and server[/INFO] [SUCCESS]successfully in 185 ms (20 modules)[/SUCCESS]
+- [ERROR]wait compiling...[/ERROR]
+- [SUCCESS]event compiled client and server successfully in 73 ms (20 modules)[/SUCCESS]
+- wait compiling /editor/page (client and server)...
+- event compiled client and server successfully in 2.7s (2289 modules)
+- wait compiling...
+- event compiled successfully in 574 ms (1143 modules)
+- wait compiling /favicon.ico/route (client and server)...
+- event compiled client and server successfully in 1129 ms (2315 modules)
+- wait compiling...
+- event compiled client and server successfully in 1028 ms (2342 modules)
+- [WARNING]warn[/WARNING] See more info here: https://nextjs.org/docs/messages/invalid-next-config
+- [INFO]event compiled client and server[/INFO] [SUCCESS]successfully in 185 ms (20 modules)[/SUCCESS]
+- [ERROR]wait compiling...[/ERROR]
+- [SUCCESS]event compiled client and server successfully in 73 ms (20 modules)[/SUCCESS]
+- wait compiling /editor/page (client and server)...
+- event compiled client and server successfully in 2.7s (2289 modules)
+- wait compiling...
+- event compiled successfully in 574 ms (1143 modules)
+- wait compiling /favicon.ico/route (client and server)...
+- event compiled client and server successfully in 1129 ms (2315 modules)
+- wait compiling...
+- event compiled client and server successfully in 1028 ms (2342 modules)
+- [WARNING]warn[/WARNING] See more info here: https://nextjs.org/docs/messages/invalid-next-config
+- [INFO]event compiled client and server[/INFO] [SUCCESS]successfully in 185 ms (20 modules)[/SUCCESS]
+- [ERROR]wait compiling...[/ERROR]
+- [SUCCESS]event compiled client and server successfully in 73 ms (20 modules)[/SUCCESS]
+- wait compiling /editor/page (client and server)...
+- event compiled client and server successfully in 2.7s (2289 modules)
+- wait compiling...
+- event compiled successfully in 574 ms (1143 modules)
+- wait compiling /favicon.ico/route (client and server)...
+- event compiled client and server successfully in 1129 ms (2315 modules)
+- wait compiling...
+- event compiled client and server successfully in 1028 ms (2342 modules)
+- [WARNING]warn[/WARNING] See more info here: https://nextjs.org/docs/messages/invalid-next-config
+- [INFO]event compiled client and server[/INFO] [SUCCESS]successfully in 185 ms (20 modules)[/SUCCESS]
+- [ERROR]wait compiling...[/ERROR]
+- [SUCCESS]event compiled client and server successfully in 73 ms (20 modules)[/SUCCESS]
+- wait compiling /editor/page (client and server)...
+- event compiled client and server successfully in 2.7s (2289 modules)
+- wait compiling...
+- event compiled successfully in 574 ms (1143 modules)
+- wait compiling /favicon.ico/route (client and server)...
+- event compiled client and server successfully in 1129 ms (2315 modules)
+- wait compiling...
+- event compiled client and server successfully in 1028 ms (2342 modules)
+- [WARNING]warn[/WARNING] See more info here: https://nextjs.org/docs/messages/invalid-next-config
+- [INFO]event compiled client and server[/INFO] [SUCCESS]successfully in 185 ms (20 modules)[/SUCCESS]
+- [ERROR]wait compiling...[/ERROR]
+- [SUCCESS]event compiled client and server successfully in 73 ms (20 modules)[/SUCCESS]
+- wait compiling /editor/page (client and server)...
+- event compiled client and server successfully in 2.7s (2289 modules)
+- wait compiling...
+- event compiled successfully in 574 ms (1143 modules)
+- wait compiling /favicon.ico/route (client and server)...
+- event compiled client and server successfully in 1129 ms (2315 modules)
+- wait compiling...
+- event compiled client and server successfully in 1028 ms (2342 modules)
+`)
+
+const defaultCode = `/**
+ * @Author: Yasin Torun
+ * @Description: 
+ * lorem ipsum dolor sit amet
+ * @param {number[]} nums
+*/
+const showNumber = (nums) => {
+  // TODO: implement
+}
 `
 
 const page = () => {
@@ -134,7 +219,7 @@ const page = () => {
                   <MonacoEditor
                     // height={height}
                     language={"javascript"}
-                    value={"const a = 1"}
+                    value={defaultCode}
                     theme={"light"}
                     beforeMount={(monaco) => {
                       // monaco.editor.defineTheme("dark", Dark)
@@ -159,7 +244,7 @@ const page = () => {
                 <div className='h-0 flex-auto overflow-auto p-2'>
                   <div className='h-full overflow-y-auto'>
                     <TabsContent value="console">
-                      <Markdown markdown={md} />
+                      <div className={"font-code text-sm"} dangerouslySetInnerHTML={{__html: output}}/>
                     </TabsContent>
                     <TabsContent value="output">Change your password here.</TabsContent>
                   </div>
