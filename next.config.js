@@ -13,6 +13,9 @@ const nextConfig = {
 	},
 	sassOptions: {
 		includePaths: [path.join(__dirname, 'src/assets/scss')]
+	},
+	eslint: {
+		ignoreDuringBuilds: true
 	}
 }
 
