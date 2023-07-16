@@ -2,7 +2,7 @@
 import { Logo } from '@/components/logo'
 import { Markdown } from '@/components/markdown'
 import { Button } from '@/components/ui/button'
-import { CopyIcon, EnterFullScreenIcon, GearIcon, HamburgerMenuIcon, MoonIcon, UpdateIcon } from '@radix-ui/react-icons'
+import { CaretSortIcon, CheckIcon, CopyIcon, EnterFullScreenIcon, GearIcon, HamburgerMenuIcon, MoonIcon, UpdateIcon } from '@radix-ui/react-icons'
 import "./editor.css"
 import ProblemListButton from '@/app/editor/components/ProblemListButton'
 import MonacoEditor from "@monaco-editor/react";
@@ -11,7 +11,18 @@ import React, { useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import Split from 'react-split'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 const md = `## Test
 
 Lorem ipsum, dolor sit \`test="asda asda sd as"\` amet consectetur adipisicing elit. Quisquam odio asperiores nobis accusantium modi fugiat alias vitae illum est iusto blanditiis molestias voluptatem explicabo ipsum, distinctio dolores eveniet perferendis! Dolorem fuga omnis, tempora quis, accusamus facilis eligendi harum at aperiam cumque quisquam praesentium iste placeat aliquam repudiandae similique libero sit dolor voluptatibus incidunt corrupti! Esse voluptas aliquam incidunt magni!
@@ -103,9 +114,25 @@ const showNumber = (nums) => {
 }
 `
 
+
+const languages = [
+  { value: "c", label: "C" },
+  { value: "cpp", label: "C++", },
+  { value: "cs", label: "C#" },
+  { value: "java", label: "Java" },
+  { value: "js", label: "JavaScript" },
+  { value: "ts", label: "TypeScript" },
+  { value: "py", label: "Python" },
+  { value: "kt", label: "Kotlin" },
+  { value: "go", label: "Go" },
+]
+
+
 const page = () => {
   const editorRef = React.useRef<editor.editor.IStandaloneCodeEditor>()
 
+  const [open, setOpen] = React.useState(false)
+  const [language, setLanguage] = React.useState<typeof languages[0]>(languages.find(x => x.value == "js") ?? languages[0])
   // useEffect(() => {
   //   editorRef
   //   setShowConsole(false)
@@ -114,14 +141,16 @@ const page = () => {
   return (
     <div className='h-full flex flex-col max-h-screen overflow-hidden'>
       <header className='flex shadow items-center justify-between px-4 py-2'>
-        <div className='flex items-center space-x-3 e-header-start'>
+        <div className='flex items-center justify-start space-x-3 e-header-start w-auto md:w-[300px]'>
           <Logo />
           <ProblemListButton />
         </div>
-        <div className='e-header-center'>
-
+        <div className='e-header-center text-center'>
+          <h1 className='font-semibold'>
+            İkilik tabandan Onluk tabana dönüşüm
+          </h1>
         </div>
-        <div className='flex items-center space-x-3 e-header-end'>
+        <div className='flex items-center justify-end space-x-3 e-header-end w-auto md:w-[300px]'>
           <div>
             <Button size={"icon"} variant={"ghost"}>
               <MoonIcon />
@@ -165,8 +194,48 @@ const page = () => {
             >
               <section className='flex flex-col border bg-white !w-full'>
                 <div className='h-10 border-b'>
-                  <div className='h-full flex justify-between items-center'>
-                    <div></div>
+                  <div className='h-full flex justify-between items-center px-2'>
+                    <div>
+                      <Popover open={open} onOpenChange={setOpen}>
+                        <PopoverTrigger asChild>
+                          <Button
+                            size={"sm"}
+                            variant="outline"
+                            role="combobox"
+                            aria-expanded={open}
+                            className="w-[125px] border-slate-300 justify-between"
+                          >
+                            <span className="truncate">{language.label}</span>
+                            <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[200px] p-0">
+                          <Command>
+                            {/* <CommandInput placeholder="Search framework..." />
+                            <CommandEmpty>No framework found.</CommandEmpty> */}
+                            <CommandGroup>
+                              {languages.map(lang => (
+                                <CommandItem
+                                  key={lang.value}
+                                  onSelect={() => {
+                                    setLanguage(lang)
+                                    setOpen(false)
+                                  }}
+                                >
+                                  <CheckIcon
+                                    className={cn(
+                                      "mr-2 h-4 w-4",
+                                      language.value === lang.value ? "opacity-100" : "opacity-0"
+                                    )}
+                                  />
+                                  {lang.label}
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                    </div>
                     <div className='flex justify-end items-center space-x-1'>
                       <Button size={"icon"} variant={"ghost"}>
                         <CopyIcon />
