@@ -1,5 +1,5 @@
 "use client"
-import ProblemListButton from '@/app/editor/components/ProblemListButton'
+import ProblemListButton from '@/app/(modules)/problems/[slug]/(editor)/components/ProblemListButton'
 import { Logo } from '@/components/logo'
 import { Markdown } from '@/components/markdown'
 import { Button } from '@/components/ui/button'
@@ -22,6 +22,7 @@ import { useTheme } from "next-themes"
 import React from 'react'
 import Split from 'react-split'
 import "./editor.css"
+import Link from 'next/link'
 
 const md = `## Test
 
@@ -148,7 +149,7 @@ const oneDark = {
     { token: "metatag.html", foreground: "808080" },
     { token: "metatag.xml", foreground: "808080" },
     { token: "metatag.php", fontStyle: "bold" },
-    
+
     { token: "key", foreground: "c678dd" },
     { token: "string.key.json", foreground: "c678dd" },
     { token: "string.value.json", foreground: "98c379" },
@@ -169,7 +170,7 @@ const oneDark = {
     { token: "keyword.json", foreground: "c678dd" },
     { token: "keyword.flow", foreground: "c678dd" },
     { token: "keyword.flow.scss", foreground: "c678dd" },
-    
+
     { token: "operator.scss", foreground: "909090" },
     { token: "operator.sql", foreground: "909090" },
     { token: "operator.swift", foreground: "909090" },
@@ -209,7 +210,9 @@ const page = () => {
     <div id='editor' className='h-full flex flex-col max-h-screen overflow-hidden'>
       <header className='flex shadow items-center justify-between px-4 py-2 bg-background'>
         <div className='flex items-center justify-start space-x-3 e-header-start w-auto md:w-[300px]'>
-          <Logo />
+          <Link href={"/"} className='no-underline'>
+            <Logo />
+          </Link>
           <ProblemListButton />
         </div>
         <div className='e-header-center text-center'>

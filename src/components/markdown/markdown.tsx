@@ -16,7 +16,7 @@ export const Markdown = ({ markdown }: Props) => {
     const { theme } = useTheme()
     return (
         <ReactMarkdown
-            className='kod-md psrose psrose-sm md:sprose !max-w-full w-full'
+            className='kod-md prose prose-sm md:prose !max-w-full w-full'
             remarkPlugins={[remarkGfm]}
             components={{
                 code({ node, inline, className, children, ...props }) {

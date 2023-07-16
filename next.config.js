@@ -2,7 +2,6 @@ const path = require('path')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    transpilePackages: ['react-daisyui'],
     trailingSlash: true,
 	webpackDevMiddleware: config => {
 		config.watchOptions = {
@@ -16,7 +15,16 @@ const nextConfig = {
 	},
 	eslint: {
 		ignoreDuringBuilds: true
-	}
+	},
+	async redirects() {
+		return [
+		  {
+			source: '/editor',
+			destination: '/problems',
+			permanent: true,
+		  },
+		]
+	  },
 }
 
 module.exports = nextConfig
