@@ -1,30 +1,27 @@
 "use client"
+import ProblemListButton from '@/app/editor/components/ProblemListButton'
 import { Logo } from '@/components/logo'
 import { Markdown } from '@/components/markdown'
 import { Button } from '@/components/ui/button'
-import { CaretSortIcon, CheckIcon, CopyIcon, EnterFullScreenIcon, GearIcon, HamburgerMenuIcon, MoonIcon, UpdateIcon } from '@radix-ui/react-icons'
-import "./editor.css"
-import ProblemListButton from '@/app/editor/components/ProblemListButton'
-import MonacoEditor from "@monaco-editor/react";
-import editor from 'monaco-editor'
-import React, { useEffect } from 'react'
-import { cn } from '@/lib/utils'
-import Split from 'react-split'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
-  CommandInput,
-  CommandItem,
+  CommandItem
 } from "@/components/ui/command"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { useTheme } from "next-themes"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { THEMES } from '@/constants'
+import { cn } from '@/lib/utils'
+import MonacoEditor from "@monaco-editor/react"
+import { CaretSortIcon, CheckIcon, CopyIcon, EnterFullScreenIcon, GearIcon, MoonIcon, UpdateIcon } from '@radix-ui/react-icons'
+import { useTheme } from "next-themes"
+import React from 'react'
+import Split from 'react-split'
+import "./editor.css"
 
 const md = `## Test
 
@@ -204,15 +201,10 @@ const languages = [
 
 
 const page = () => {
-  const editorRef = React.useRef<editor.editor.IStandaloneCodeEditor>()
+  // const editorRef = React.useRef<editor.editor.IStandaloneCodeEditor>()
   const { setTheme, theme } = useTheme()
   const [open, setOpen] = React.useState(false)
   const [language, setLanguage] = React.useState<typeof languages[0]>(languages.find(x => x.value == "js") ?? languages[0])
-  // useEffect(() => {
-  //   editorRef
-  //   setShowConsole(false)
-  // }, [])
-
   return (
     <div id='editor' className='h-full flex flex-col max-h-screen overflow-hidden'>
       <header className='flex shadow items-center justify-between px-4 py-2 bg-background'>
@@ -337,7 +329,7 @@ const page = () => {
                       // monaco.editor.defineTheme('one-dark', oneDark)
                     }}
                     onMount={(editor, monaco) => {
-                      editorRef.current = editor
+                      // editorRef.current = editor
                     }}
                   />
                 </div>
