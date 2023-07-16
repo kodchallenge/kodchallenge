@@ -114,6 +114,78 @@ const showNumber = (nums) => {
 }
 `
 
+// write one dark theme for monoaco editor
+const oneDark = {
+  base: "vs-dark",
+  inherit: true,
+  rules: [
+    { token: "", foreground: "abb2bf" },
+    { token: "invalid", foreground: "ff3333" },
+    { token: "emphasis", fontStyle: "italic" },
+    { token: "strong", fontStyle: "bold" },
+
+    { token: "variable", foreground: "d19a66" },
+    { token: "variable.predefined", foreground: "d19a66" },
+    { token: "variable.parameter", foreground: "9CDCFE" },
+    { token: "constant", foreground: "569cd6" },
+    { token: "comment", foreground: "8c8c8c" },
+    { token: "number", foreground: "b5cea8" },
+    { token: "number.hex", foreground: "5bb498" },
+    { token: "regexp", foreground: "d16969" },
+    { token: "annotation", foreground: "cc6666" },
+    { token: "type", foreground: "3DC9B0" },
+
+    { token: "delimiter", foreground: "abb2bf" },
+    { token: "delimiter.html", foreground: "808080" },
+    { token: "delimiter.xml", foreground: "808080" },
+
+    { token: "tag", foreground: "e06c75" },
+    { token: "tag.id.jade", foreground: "e06c75" },
+    { token: "tag.class.jade", foreground: "e06c75" },
+    { token: "meta.scss", foreground: "e06c75" },
+    { token: "metatag", foreground: "e06c75" },
+    { token: "metatag.content.html", foreground: "ff0000" },
+    { token: "metatag.html", foreground: "808080" },
+    { token: "metatag.xml", foreground: "808080" },
+    { token: "metatag.php", fontStyle: "bold" },
+    
+    { token: "key", foreground: "c678dd" },
+    { token: "string.key.json", foreground: "c678dd" },
+    { token: "string.value.json", foreground: "98c379" },
+
+    { token: "attribute.name", foreground: "d19a66" },
+    { token: "attribute.value", foreground: "98c379" },
+    { token: "attribute.value.number", foreground: "d19a66" },
+    { token: "attribute.value.unit", foreground: "d19a66" },
+    { token: "attribute.value.html", foreground: "d19a66" },
+    { token: "attribute.value.xml", foreground: "d19a66" },
+
+    { token: "string", foreground: "98c379" },
+    { token: "string.html", foreground: "98c379" },
+    { token: "string.sql", foreground: "98c379" },
+    { token: "string.yaml", foreground: "98c379" },
+
+    { token: "keyword", foreground: "c678dd" },
+    { token: "keyword.json", foreground: "c678dd" },
+    { token: "keyword.flow", foreground: "c678dd" },
+    { token: "keyword.flow.scss", foreground: "c678dd" },
+    
+    { token: "operator.scss", foreground: "909090" },
+    { token: "operator.sql", foreground: "909090" },
+    { token: "operator.swift", foreground: "909090" },
+    { token: "predefined.sql", foreground: "d19a66" },
+
+  ],
+  colors: {
+    "editor.foreground": "#ABB2BF",
+    "editor.background": "#282C34",
+    "editor.selectionBackground": "#3E4451",
+    "editor.lineHighlightBackground": "#2C313A",
+    "editorCursor.foreground": "#528BFF",
+    "editorWhitespace.foreground": "#3B4048",
+  },
+}
+
 
 const languages = [
   { value: "c", label: "C" },
@@ -139,8 +211,8 @@ const page = () => {
   // }, [])
 
   return (
-    <div className='h-full flex flex-col max-h-screen overflow-hidden'>
-      <header className='flex shadow items-center justify-between px-4 py-2'>
+    <div id='editor' className='h-full flex flex-col max-h-screen overflow-hidden'>
+      <header className='flex shadow items-center justify-between px-4 py-2 bg-background'>
         <div className='flex items-center justify-start space-x-3 e-header-start w-auto md:w-[300px]'>
           <Logo />
           <ProblemListButton />
@@ -161,14 +233,14 @@ const page = () => {
           </div>
         </div>
       </header>
-      <main className='h-full flex-1 bg-slate-100'>
+      <main className='h-full flex-1 bg-slate-100 dark:bg-slate-800 dark:text-foreground'>
         <Split
           className='px-4 h-full py-2 flex'
           gutterSize={8}
           sizes={[50, 50]}
           minSize={[300, 400]}
         >
-          <Tabs defaultValue="description" className="h-full flex-col flex e-side-info border bg-white">
+          <Tabs defaultValue="description" className="h-full flex-col flex e-side-info border bg-background">
             <TabsList className='h-10 border-b bg-transparent justify-start rounded-none text-left'>
               <TabsTrigger value="description">Açıklama</TabsTrigger>
               <TabsTrigger value="solutions">Çözümler</TabsTrigger>
@@ -192,7 +264,7 @@ const page = () => {
               sizes={[70, 30]}
               minSize={40}
             >
-              <section className='flex flex-col border bg-white !w-full'>
+              <section className='flex flex-col border bg-background !w-full'>
                 <div className='h-10 border-b'>
                   <div className='h-full flex justify-between items-center px-2'>
                     <div>
@@ -203,7 +275,7 @@ const page = () => {
                             variant="outline"
                             role="combobox"
                             aria-expanded={open}
-                            className="w-[125px] border-slate-300 justify-between"
+                            className="w-[125px] border-slate-300 dark:border-slate-600 justify-between"
                           >
                             <span className="truncate">{language.label}</span>
                             <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -257,9 +329,9 @@ const page = () => {
                     // height={height}
                     language={"javascript"}
                     value={defaultCode}
-                    theme={"light"}
+                    theme={"vs-dark"}
                     beforeMount={(monaco) => {
-                      // monaco.editor.defineTheme("dark", Dark)
+                      // monaco.editor.defineTheme('one-dark', oneDark)
                     }}
                     onMount={(editor, monaco) => {
                       editorRef.current = editor
@@ -267,7 +339,7 @@ const page = () => {
                   />
                 </div>
               </section>
-              <Tabs defaultValue="console" className="flex flex-col bg-white border min-h-0">
+              <Tabs defaultValue="console" className="flex flex-col bg-background border min-h-0">
                 <TabsList className='h-10 border-b bg-transparent justify-between rounded-none text-left'>
                   <div>
                     <TabsTrigger value="console">Konsol</TabsTrigger>

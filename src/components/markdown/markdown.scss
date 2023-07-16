@@ -10,7 +10,10 @@
     // text-rendering: optimizeLegibility;
     // -webkit-font-smoothing: antialiased;
     // -moz-osx-font-smoothing: grayscale;
-
+    @apply dark:text-foreground;
+    h1, h2, h3, h4, h5, h6 {
+        all: unset;
+    }
     & > * {
         margin-bottom: 1.5rem;
     }
@@ -24,7 +27,7 @@
         padding: 0;
     }
     code.inline {
-        @apply bg-slate-100 border-slate-300 font-sans text-foreground/75 border;
+        @apply bg-slate-100 border-slate-300 dark:bg-slate-700 border-slate-600 font-sans text-foreground/75 border;
         font-size: .75rem;
         font-weight: 400;
         line-height: 1rem;

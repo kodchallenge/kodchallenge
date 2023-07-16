@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils"
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import './markdown.scss'
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 export const Markdown = ({ markdown }: Props) => {
     return (
         <ReactMarkdown
-            className='kod-md prose prose-sm md:prose !max-w-full w-full'
+            className='kod-md psrose psrose-sm md:sprose !max-w-full w-full'
             remarkPlugins={[remarkGfm]}
             components={{
                 code({ node, inline, className, children, ...props }) {
@@ -22,7 +22,7 @@ export const Markdown = ({ markdown }: Props) => {
                         <SyntaxHighlighter
                             children={String(children).replace(/\n$/, '')}
                             //@ts-ignore
-                            style={oneLight}
+                            style={oneDark}
                             language={match[1]}
                             PreTag="div"
                             {...props}

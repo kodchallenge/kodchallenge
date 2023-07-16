@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className='dark'>
       <body className='font-nunito text-base text-black dark:text-white dark:bg-slate-900'>
         {/* <Theme dataTheme='dark'> */}
         {/* <div className={clsx("dot-points", "full-screen")}></div> */}
