@@ -23,6 +23,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { useTheme } from "next-themes"
+import { THEMES } from '@/constants'
+
 const md = `## Test
 
 Lorem ipsum, dolor sit \`test="asda asda sd as"\` amet consectetur adipisicing elit. Quisquam odio asperiores nobis accusantium modi fugiat alias vitae illum est iusto blanditiis molestias voluptatem explicabo ipsum, distinctio dolores eveniet perferendis! Dolorem fuga omnis, tempora quis, accusamus facilis eligendi harum at aperiam cumque quisquam praesentium iste placeat aliquam repudiandae similique libero sit dolor voluptatibus incidunt corrupti! Esse voluptas aliquam incidunt magni!
@@ -202,7 +205,7 @@ const languages = [
 
 const page = () => {
   const editorRef = React.useRef<editor.editor.IStandaloneCodeEditor>()
-
+  const { setTheme, theme } = useTheme()
   const [open, setOpen] = React.useState(false)
   const [language, setLanguage] = React.useState<typeof languages[0]>(languages.find(x => x.value == "js") ?? languages[0])
   // useEffect(() => {
@@ -224,7 +227,7 @@ const page = () => {
         </div>
         <div className='flex items-center justify-end space-x-3 e-header-end w-auto md:w-[300px]'>
           <div>
-            <Button size={"icon"} variant={"ghost"}>
+            <Button size={"icon"} variant={"ghost"} onClick={() => setTheme(theme == THEMES.DARK ? THEMES.LIGHT : THEMES.DARK)}>
               <MoonIcon />
             </Button>
           </div>
@@ -329,7 +332,7 @@ const page = () => {
                     // height={height}
                     language={"javascript"}
                     value={defaultCode}
-                    theme={"vs-dark"}
+                    theme={theme == THEMES.DARK ? "vs-dark" : "light"}
                     beforeMount={(monaco) => {
                       // monaco.editor.defineTheme('one-dark', oneDark)
                     }}
