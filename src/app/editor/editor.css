@@ -9,7 +9,7 @@ html, body {
 }
 
 .gutter {
-    @apply bg-slate-100;
+    @apply bg-transparent;
 }
 
 .gutter.gutter-horizontal {

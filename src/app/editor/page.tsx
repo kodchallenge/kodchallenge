@@ -98,8 +98,8 @@ const page = () => {
         <Split
           className='px-4 h-full py-2 flex'
           gutterSize={8}
-          minSize={0}
-          snapOffset={50}
+          sizes={[50, 50]}
+          minSize={200}
         >
           <section className='h-full flex-col flex flex-11 e-side-info border bg-white'>
             <div className='h-10 border-b'></div>
