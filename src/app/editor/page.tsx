@@ -2,7 +2,7 @@
 import { Logo } from '@/components/logo'
 import { Markdown } from '@/components/markdown'
 import { Button } from '@/components/ui/button'
-import { HamburgerMenuIcon, MoonIcon } from '@radix-ui/react-icons'
+import { CopyIcon, EnterFullScreenIcon, GearIcon, HamburgerMenuIcon, MoonIcon, UpdateIcon } from '@radix-ui/react-icons'
 import "./editor.css"
 import ProblemListButton from '@/app/editor/components/ProblemListButton'
 import MonacoEditor from "@monaco-editor/react";
@@ -82,62 +82,14 @@ const output = colorizeTerminalOutput(`- [WARNING]warn[/WARNING] See more info h
 - [INFO]event compiled client and server[/INFO] [SUCCESS]successfully in 185 ms (20 modules)[/SUCCESS]
 - [ERROR]wait compiling...[/ERROR]
 - [SUCCESS]event compiled client and server successfully in 73 ms (20 modules)[/SUCCESS]
-- wait compiling /editor/page (client and server)...
-- event compiled client and server successfully in 2.7s (2289 modules)
-- wait compiling...
-- event compiled successfully in 574 ms (1143 modules)
-- wait compiling /favicon.ico/route (client and server)...
-- event compiled client and server successfully in 1129 ms (2315 modules)
-- wait compiling...
-- event compiled client and server successfully in 1028 ms (2342 modules)
-- [WARNING]warn[/WARNING] See more info here: https://nextjs.org/docs/messages/invalid-next-config
-- [INFO]event compiled client and server[/INFO] [SUCCESS]successfully in 185 ms (20 modules)[/SUCCESS]
-- [ERROR]wait compiling...[/ERROR]
-- [SUCCESS]event compiled client and server successfully in 73 ms (20 modules)[/SUCCESS]
-- wait compiling /editor/page (client and server)...
-- event compiled client and server successfully in 2.7s (2289 modules)
-- wait compiling...
-- event compiled successfully in 574 ms (1143 modules)
-- wait compiling /favicon.ico/route (client and server)...
-- event compiled client and server successfully in 1129 ms (2315 modules)
-- wait compiling...
-- event compiled client and server successfully in 1028 ms (2342 modules)
-- [WARNING]warn[/WARNING] See more info here: https://nextjs.org/docs/messages/invalid-next-config
-- [INFO]event compiled client and server[/INFO] [SUCCESS]successfully in 185 ms (20 modules)[/SUCCESS]
-- [ERROR]wait compiling...[/ERROR]
-- [SUCCESS]event compiled client and server successfully in 73 ms (20 modules)[/SUCCESS]
-- wait compiling /editor/page (client and server)...
-- event compiled client and server successfully in 2.7s (2289 modules)
-- wait compiling...
-- event compiled successfully in 574 ms (1143 modules)
-- wait compiling /favicon.ico/route (client and server)...
-- event compiled client and server successfully in 1129 ms (2315 modules)
-- wait compiling...
-- event compiled client and server successfully in 1028 ms (2342 modules)
-- [WARNING]warn[/WARNING] See more info here: https://nextjs.org/docs/messages/invalid-next-config
-- [INFO]event compiled client and server[/INFO] [SUCCESS]successfully in 185 ms (20 modules)[/SUCCESS]
-- [ERROR]wait compiling...[/ERROR]
-- [SUCCESS]event compiled client and server successfully in 73 ms (20 modules)[/SUCCESS]
-- wait compiling /editor/page (client and server)...
-- event compiled client and server successfully in 2.7s (2289 modules)
-- wait compiling...
-- event compiled successfully in 574 ms (1143 modules)
-- wait compiling /favicon.ico/route (client and server)...
-- event compiled client and server successfully in 1129 ms (2315 modules)
-- wait compiling...
-- event compiled client and server successfully in 1028 ms (2342 modules)
-- [WARNING]warn[/WARNING] See more info here: https://nextjs.org/docs/messages/invalid-next-config
-- [INFO]event compiled client and server[/INFO] [SUCCESS]successfully in 185 ms (20 modules)[/SUCCESS]
-- [ERROR]wait compiling...[/ERROR]
-- [SUCCESS]event compiled client and server successfully in 73 ms (20 modules)[/SUCCESS]
-- wait compiling /editor/page (client and server)...
-- event compiled client and server successfully in 2.7s (2289 modules)
-- wait compiling...
-- event compiled successfully in 574 ms (1143 modules)
-- wait compiling /favicon.ico/route (client and server)...
-- event compiled client and server successfully in 1129 ms (2315 modules)
-- wait compiling...
-- event compiled client and server successfully in 1028 ms (2342 modules)
+- [WARNING]warn[/WARNING] compiling /editor/page (client and server)...
+- [INFO]event[/INFO] compiled client and server successfully in 2.7s (2289 modules)
+- [WARNING]warn[/WARNING] compiling...
+- [INFO]event[/INFO] compiled successfully in 574 ms (1143 modules)
+- [WARNING]warn[/WARNING] compiling /favicon.ico/route (client and server)...
+- [INFO]event[/INFO] compiled client and server successfully in 1129 ms (2315 modules)
+- [WARNING]warn[/WARNING] compiling...
+- [INFO]event[/INFO] compiled client and server successfully in 1028 ms (2342 modules)
 `)
 
 const defaultCode = `/**
@@ -213,7 +165,23 @@ const page = () => {
             >
               <section className='flex flex-col border bg-white !w-full'>
                 <div className='h-10 border-b'>
-
+                  <div className='h-full flex justify-between items-center'>
+                    <div></div>
+                    <div className='flex justify-end items-center space-x-1'>
+                      <Button size={"icon"} variant={"ghost"}>
+                        <CopyIcon />
+                      </Button>
+                      <Button size={"icon"} variant={"ghost"}>
+                        <UpdateIcon />
+                      </Button>
+                      <Button size={"icon"} variant={"ghost"}>
+                        <GearIcon />
+                      </Button>
+                      <Button size={"icon"} variant={"ghost"}>
+                        <EnterFullScreenIcon />
+                      </Button>
+                    </div>
+                  </div>
                 </div>
                 <div className='h-0 flex-1 flex-grow overflow-auto !w-full'>
                   <MonacoEditor
@@ -244,7 +212,7 @@ const page = () => {
                 <div className='h-0 flex-auto overflow-auto p-2'>
                   <div className='h-full overflow-y-auto'>
                     <TabsContent value="console">
-                      <div className={"font-code text-sm"} dangerouslySetInnerHTML={{__html: output}}/>
+                      <div className={"font-code text-sm"} dangerouslySetInnerHTML={{ __html: output }} />
                     </TabsContent>
                     <TabsContent value="output">Change your password here.</TabsContent>
                   </div>
