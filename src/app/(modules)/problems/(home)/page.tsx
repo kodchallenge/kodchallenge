@@ -1,5 +1,4 @@
-"use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
     Card,
     CardContent,
@@ -12,22 +11,17 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
+import problemService from '@/services/problemService'
 
 const badgeColors = {
     easy: "bg-teal-500 hover:bg-teal-600",
-    medium: "bg-indigo-500 hover:bg-indigo-600",
+    normal: "bg-indigo-500 hover:bg-indigo-600",
     hard: "bg-rose-500 hover:bg-rose-600",
 }
 
-const ProblemsPage = () => {
-    const [problems, setProblems] = React.useState([
-        { title: 'Merhaba KodChallenge', difficulty: "easy", image: "https://dg8krxphbh767.cloudfront.net/exercises/hello-world.svg", description: 'Klasik programlama başlangıç sorusudur.' },
-        { title: 'Problem 2', difficulty: "medium", image: "https://dg8krxphbh767.cloudfront.net/exercises/armstrong-numbers.svg", description: 'Problem 2 açıklaması' },
-        { title: 'Problem 3', difficulty: "easy", image: "https://dg8krxphbh767.cloudfront.net/exercises/hamming.svg", description: 'Problem 3 açıklaması' },
-        { title: 'Problem 4', difficulty: "hard", image: "https://dg8krxphbh767.cloudfront.net/exercises/isogram.svg", description: 'Problem 4 açıklaması' },
-        { title: 'Problem 5', difficulty: "medium", image: "https://dg8krxphbh767.cloudfront.net/exercises/circular-buffer.svg", description: 'Problem 5 açıklaması' },
-    ])
-
+const ProblemsPage = async () => {
+    const problems = await problemService.getProblems()
+    console.log(problems)
     return (
         <main className='mt-32'>
             <div className='container'>
@@ -35,12 +29,12 @@ const ProblemsPage = () => {
                     <h1 className='text-4xl font-bold text-center'>Problemler</h1>
                     <div className='my-12 grid grid-cols-2 grid-flow-row gap-4 w-full'>
                         {problems.map((problem) => (
-                            <Link className='no-underline' href={`/problems/${problem.title.trim()}`} key={problem.title}>
+                            <Link className='no-underline hover:no-underline' href={`/problems/${problem.title.trim()}`} key={problem.title}>
                                 <Card key={problem.title} className='bg-background z-10 cursor-pointer hover:shadow-lg'>
                                     <div className="flex justify-between items-center px-2 space-x-4">
                                         <Avatar className='w-16 h-16'>
-                                            <AvatarImage src={problem.image} />
-                                            <AvatarFallback>VC</AvatarFallback>
+                                            {/* <AvatarImage src={problem.image} /> */}
+                                            <AvatarFallback>{problem.title.split(" ").map(x => x.charAt(0)).join("")}</AvatarFallback>
                                         </Avatar>
                                         <div className='flex flex-1 flex-col space-y-1'>
                                             <CardHeader className='pb-1'>
@@ -57,7 +51,7 @@ const ProblemsPage = () => {
                                             </CardHeader>
                                             <CardContent>
                                                 <p className='opacity-70'>
-                                                    {problem.description}
+                                                    {problem.introduction}
                                                 </p>
                                             </CardContent>
                                         </div>

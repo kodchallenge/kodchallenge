@@ -18,7 +18,7 @@ export const MainFooter = () => {
                                     <Logo className={"w-10 h-10"} />
                                     {/* <LogoWithLabel size='lg'/> */}
                                     <p className="max-w-xl mx-auto mt-6">
-                                        KodTeam, yazılım geliştirme alanında kendini geliştirmek isteyenler için oluşturulmuş bir topluluktur.
+                                        KodChallenge, yazılım geliştirme alanında kendini geliştirmek isteyenler için oluşturulmuş bir topluluktur.
                                     </p>
                                 </div>
                                 <ul className="list-none text-center mt-6 flex items-center justify-center space-x-1">
@@ -46,7 +46,7 @@ export const MainFooter = () => {
             <div className="py-[30px] px-0 border-t border-primary/50">
                 <div className="container relative text-center">
                     <div className="grid md:grid-cols-1">
-                        <p className="mb-0">© {new Date().getFullYear()} <span className='text-primary'>KodTeam</span> Tüm hakları Saklıdır.</p>
+                        <p className="mb-0">© {new Date().getFullYear()} <span className='text-primary'>KodChallenge</span> Tüm hakları Saklıdır.</p>
                     </div>
                 </div>
             </div>
