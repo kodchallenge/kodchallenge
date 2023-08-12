@@ -1,7 +1,8 @@
 "use client"
-import ProblemListButton from '@/app/(modules)/problems/[slug]/(editor)/components/ProblemListButton'
 import { Logo } from '@/components/logo'
 import { Markdown } from '@/components/markdown'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
   Command,
@@ -13,19 +14,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { THEMES } from '@/constants'
 import { cn } from '@/lib/utils'
 import MonacoEditor from "@monaco-editor/react"
-import { CaretSortIcon, ChatBubbleIcon, CheckIcon, CopyIcon, EnterFullScreenIcon, EyeOpenIcon, GearIcon, MoonIcon, ThickArrowUpIcon, UpdateIcon, UploadIcon } from '@radix-ui/react-icons'
+import { CaretSortIcon, ChatBubbleIcon, CheckIcon, CopyIcon, EnterFullScreenIcon, EyeOpenIcon, GearIcon, MoonIcon, ThickArrowUpIcon, UpdateIcon } from '@radix-ui/react-icons'
 import { useTheme } from "next-themes"
+import Link from 'next/link'
 import React from 'react'
 import Split from 'react-split'
+import ProblemListButton from './components/ProblemListButton'
 import "./editor.css"
-import Link from 'next/link'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
-import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
 const md = `## Test
 
@@ -203,8 +203,13 @@ const languages = [
   { value: "go", label: "Go" },
 ]
 
+type EditorPageProps = {
+  params: {
+    slug: string
+  }
+}
 
-const page = () => {
+const page = ({ params }: EditorPageProps) => {
   // const editorRef = React.useRef<editor.editor.IStandaloneCodeEditor>()
   const { setTheme, theme } = useTheme()
   const [open, setOpen] = React.useState(false)

@@ -29,7 +29,7 @@ const ProblemsPage = async () => {
                     <h1 className='text-4xl font-bold text-center'>Problemler</h1>
                     <div className='my-12 grid grid-cols-2 grid-flow-row gap-4 w-full'>
                         {problems.map((problem) => (
-                            <Link className='no-underline hover:no-underline' href={`/problems/${problem.title.trim()}`} key={problem.title}>
+                            <Link className='no-underline hover:no-underline' href={`/problems/${problem.slug}`} key={problem.id}>
                                 <Card key={problem.title} className='bg-background z-10 cursor-pointer hover:shadow-lg'>
                                     <div className="flex justify-between items-center px-2 space-x-4">
                                         <Avatar className='w-16 h-16'>
