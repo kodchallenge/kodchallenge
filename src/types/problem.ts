@@ -9,6 +9,7 @@ export type Problem = {
     isPrivate: boolean;
     isDeleted: boolean;
     categoryId?: number;
+    difficulty: "easy" | "normal" | "hard";
     base_codes: ProblemBaseCode[];
 }
 

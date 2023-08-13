@@ -9,15 +9,9 @@ import {
 } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { cn } from '@/lib/utils'
+import { cn, problemDifficultyColors } from '@/lib/utils'
 import Link from 'next/link'
 import problemService from '@/services/problemService'
-
-const badgeColors = {
-    easy: "bg-teal-500 hover:bg-teal-600",
-    normal: "bg-indigo-500 hover:bg-indigo-600",
-    hard: "bg-rose-500 hover:bg-rose-600",
-}
 
 const ProblemsPage = async () => {
     const problems = await problemService.getProblems()
@@ -43,7 +37,7 @@ const ProblemsPage = async () => {
                                                     <Badge
                                                         variant={"secondary"}
                                                         // @ts-ignore
-                                                        className={cn('text-white', badgeColors[problem.difficulty])}
+                                                        className={cn('text-white', problemDifficultyColors[problem.difficulty])}
                                                     >
                                                         {problem.difficulty}
                                                     </Badge>

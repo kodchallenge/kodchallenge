@@ -255,7 +255,7 @@ const Layout = ({ params }: EditorPageProps) => {
                                     </div>
                                     <div className='flex items-start space-x-2'>
                                         <Button variant={"secondary"} size={"sm"}>Çalıştır</Button>
-                                        <Button variant={"success"} size={"sm"}>Kaydet</Button>
+                                        <Button variant={"success"} size={"sm"} disabled>Kaydet</Button>
                                     </div>
                                 </TabsList>
                                 <div className='h-0 flex-auto overflow-auto p-2'>
