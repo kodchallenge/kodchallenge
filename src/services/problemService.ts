@@ -1,5 +1,5 @@
 import { Problem } from "@/types/problem";
-import { BASE_API_URL, api } from "./config";
+import { api } from "./config";
 
 const getProblems = async (): Promise<Problem[]> => {
     const problems: Problem[] = await api.get("v1/problems")
@@ -7,6 +7,12 @@ const getProblems = async (): Promise<Problem[]> => {
     return problems;
 };
 
+const getProblemBySlug = async (slug: string): Promise<Problem> => {
+    const problem: Problem = await api.get(`v1/problems/${slug}`)
+    return problem;
+};
+
 export default {
-    getProblems
+    getProblems,
+    getProblemBySlug,
 };

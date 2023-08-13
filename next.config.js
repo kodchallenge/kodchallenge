@@ -23,11 +23,6 @@ const nextConfig = {
 			destination: '/problems',
 			permanent: true,
 		  },
-		  {
-			source: "/problems/:slug",
-			destination: "/problems/:slug/description",
-			permanent: false,
-		  },
 		]
 	  },
 }
