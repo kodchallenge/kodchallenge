@@ -15,11 +15,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { THEMES } from '@/constants'
 import { cn } from '@/lib/utils'
 import MonacoEditor from "@monaco-editor/react"
-import { CaretSortIcon, CheckIcon, CopyIcon, EnterFullScreenIcon, GearIcon, MoonIcon, UpdateIcon } from '@radix-ui/react-icons'
+import { CaretSortIcon, CheckIcon, CopyIcon, EnterFullScreenIcon, ExitFullScreenIcon, GearIcon, MoonIcon, UpdateIcon } from '@radix-ui/react-icons'
 import { useTheme } from "next-themes"
 import Link from 'next/link'
 import { useRouter, useParams, usePathname } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import Split from 'react-split'
 import ProblemListButton from './_components/ProblemListButton'
 import "./editor.css"
@@ -28,6 +28,11 @@ import { Problem, ProblemLanguage } from '@/types/problem'
 import { CommandLoading } from 'cmdk'
 import EditorLoading from './_components/EditorLoading'
 import { Markdown } from '@/components/markdown'
+import { editor } from 'monaco-editor'
+import { useKcAlert } from '@/core/alert-provider'
+import CopyCodeToClipboard from './_components/CopyCodeToClipboard'
+import FullScreenService from '@/lib/fullscreen-service'
+import EditorSettings from './_components/EditorSettings'
 
 const colorizeTerminalOutput = (output: string) => {
     const colorCodes = ["WARNING", "INFO", "SUCCESS", "ERROR"]
@@ -110,6 +115,13 @@ const Layout = ({ params }: EditorPageProps) => {
     const [open, setOpen] = React.useState(false)
     const [language, setLanguage] = React.useState<ProblemLanguage | null>(null)
     const [problem, setProblem] = React.useState<Problem | null>(null)
+    const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null)
+
+    // TODO: change this. use full screen hook
+    const [isFullscreen, setIsFullscreen] = React.useState(false)
+    const kcAlert = useKcAlert()
+
+    const problemDefaultCode = useMemo(() => problem?.base_codes.find(baseCode => baseCode.language == language)?.code ?? "", [problem, language])
 
     useEffect(() => {
         problemService.getProblemBySlug(params.slug).then(problem => {
@@ -119,6 +131,16 @@ const Layout = ({ params }: EditorPageProps) => {
     }, [params.slug])
 
     if (problem == null) return <EditorLoading />
+
+    const handleResetEditor = () => {
+        kcAlert.alert("Uyarı", "Kodunuzu sıfırlamak istediğinize emin misiniz?", [
+            {
+                text: "Sıfırla", onClick: () => {
+                    editorRef.current?.setValue(problemDefaultCode)
+                }
+            }
+        ])
+    }
 
     return (
         <div id='editor' className='h-full flex flex-col max-h-screen overflow-hidden'>
@@ -145,7 +167,7 @@ const Layout = ({ params }: EditorPageProps) => {
                     </div>
                 </div>
             </header>
-            <main className='h-full flex-1 bg-slate-100 dark:bg-slate-800 dark:text-foreground'>
+            <main id='kc-editor-main' className='h-full flex-1 bg-slate-100 dark:bg-slate-800 dark:text-foreground'>
                 <Split
                     className='px-4 h-full py-2 flex'
                     gutterSize={8}
@@ -217,17 +239,31 @@ const Layout = ({ params }: EditorPageProps) => {
                                             </Popover>
                                         </div>
                                         <div className='flex justify-end items-center space-x-1'>
-                                            <Button size={"icon"} variant={"ghost"}>
-                                                <CopyIcon />
-                                            </Button>
-                                            <Button size={"icon"} variant={"ghost"}>
+                                            <CopyCodeToClipboard editorRef={editorRef} />
+                                            <Button
+                                                size={"icon"}
+                                                variant={"ghost"}
+                                                onClick={handleResetEditor}
+                                                title='Editörü sıfırla'
+                                            >
                                                 <UpdateIcon />
                                             </Button>
-                                            <Button size={"icon"} variant={"ghost"}>
-                                                <GearIcon />
-                                            </Button>
-                                            <Button size={"icon"} variant={"ghost"}>
-                                                <EnterFullScreenIcon />
+                                            {!!editorRef.current && (
+                                                <EditorSettings editorRef={editorRef} />
+                                            )}
+                                            <Button
+                                                size={"icon"}
+                                                variant={"ghost"}
+                                                onClick={() => {
+                                                    const fullscreen = new FullScreenService()
+                                                    isFullscreen
+                                                        ? fullscreen.exitFullscreen() :
+                                                        fullscreen.requestFullscreen(document.documentElement)
+                                                    setIsFullscreen(!isFullscreen)
+                                                }}
+                                                title={isFullscreen ? "Tam ekrandan çık" : "Tam ekran"}
+                                            >
+                                                {isFullscreen ? <ExitFullScreenIcon /> : <EnterFullScreenIcon />}
                                             </Button>
                                         </div>
                                     </div>
@@ -236,14 +272,15 @@ const Layout = ({ params }: EditorPageProps) => {
                                     <MonacoEditor
                                         // height={height}
                                         language={convertToMonacoLanguage(language?.slug ?? "")}
-                                        value={problem?.base_codes.find(x => x.language.id == language?.id)?.code ?? ""}
+                                        value={problemDefaultCode}
                                         theme={theme == THEMES.DARK ? "vs-dark" : "light"}
                                         beforeMount={(monaco) => {
                                             // monaco.editor.defineTheme('one-dark', oneDark)
                                         }}
                                         onMount={(editor, monaco) => {
-                                            // editorRef.current = editor
+                                            editorRef.current = editor
                                         }}
+
                                     />
                                 </div>
                             </section>
@@ -263,7 +300,9 @@ const Layout = ({ params }: EditorPageProps) => {
                                         <TabsContent value="console">
                                             <div className={"font-code text-sm"} dangerouslySetInnerHTML={{ __html: output }} />
                                         </TabsContent>
-                                        <TabsContent value="output">Change your password here.</TabsContent>
+                                        <TabsContent value="output">
+
+                                        </TabsContent>
                                     </div>
                                 </div>
                             </Tabs>
