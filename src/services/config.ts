@@ -6,7 +6,7 @@ export const api = {
         const response = await fetch(`${BASE_API_URL}/${url}`);
         return await response.json();
     },
-    post: async (url: string, body: any) => {
+    post: async <T = any>(url: string, body: any): Promise<T> => {
         const response = await fetch(`${BASE_API_URL}/${url}`, {
             method: "POST",
             headers: {
@@ -14,6 +14,9 @@ export const api = {
             },
             body: JSON.stringify(body)
         });
+        if (!response.ok)
+            throw new Error(response.statusText);
+
         return await response.json();
     },
     put: async (url: string, body: any) => {

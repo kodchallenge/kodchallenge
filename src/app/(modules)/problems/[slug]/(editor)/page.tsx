@@ -15,11 +15,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { THEMES } from '@/constants'
 import { cn } from '@/lib/utils'
 import MonacoEditor from "@monaco-editor/react"
-import { CaretSortIcon, CheckIcon, CopyIcon, EnterFullScreenIcon, ExitFullScreenIcon, GearIcon, MoonIcon, UpdateIcon } from '@radix-ui/react-icons'
+import { CaretSortIcon, CheckIcon, CopyIcon, EnterFullScreenIcon, ExitFullScreenIcon, GearIcon, MixerHorizontalIcon, MoonIcon, PlayIcon, Share2Icon, UpdateIcon } from '@radix-ui/react-icons'
 import { useTheme } from "next-themes"
 import Link from 'next/link'
 import { useRouter, useParams, usePathname } from 'next/navigation'
-import React, { useEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Split from 'react-split'
 import ProblemListButton from './_components/ProblemListButton'
 import "./editor.css"
@@ -33,55 +33,19 @@ import { useKcAlert } from '@/core/alert-provider'
 import CopyCodeToClipboard from './_components/CopyCodeToClipboard'
 import FullScreenService from '@/lib/fullscreen-service'
 import EditorSettings from './_components/EditorSettings'
+import codeService from '@/services/codeService'
 
 const colorizeTerminalOutput = (output: string) => {
     const colorCodes = ["WARNING", "INFO", "SUCCESS", "ERROR"]
 
     colorCodes.forEach((colorCode) => {
-        const regex = new RegExp(`\\[${colorCode}\\](.*?)\\[\\/${colorCode}\\]`, "g")
+        const regex = new RegExp(`\\[${colorCode}\\]([\\s\\S]*?)\\[\\/${colorCode}\\]`, "g")
         output = output.replace(regex, `<span class="terminal-${colorCode.toLowerCase()}">$1</span>`)
     })
     // replace \n to <br>
     output = output.replace(/\n/g, "<br>")
     return output
 }
-
-const output = colorizeTerminalOutput(`- [WARNING]warn[/WARNING] See more info here: https://nextjs.org/docs/messages/invalid-next-config
-- [INFO]event compiled client and server[/INFO] [SUCCESS]successfully in 185 ms (20 modules)[/SUCCESS]
-- [ERROR]wait compiling...[/ERROR]
-- [SUCCESS]event compiled client and server successfully in 73 ms (20 modules)[/SUCCESS]
-- [WARNING]warn[/WARNING] compiling /editor/page (client and server)...
-- [INFO]event[/INFO] compiled client and server successfully in 2.7s (2289 modules)
-- [WARNING]warn[/WARNING] compiling...
-- [INFO]event[/INFO] compiled successfully in 574 ms (1143 modules)
-- [WARNING]warn[/WARNING] compiling /favicon.ico/route (client and server)...
-- [INFO]event[/INFO] compiled client and server successfully in 1129 ms (2315 modules)
-- [WARNING]warn[/WARNING] compiling...
-- [INFO]event[/INFO] compiled client and server successfully in 1028 ms (2342 modules)
-`)
-
-const defaultCode = `/**
- * @Author: Yasin Torun
- * @Description: 
- * lorem ipsum dolor sit amet
- * @param {number[]} nums
-*/
-const showNumber = (nums) => {
-  // TODO: implement
-}
-`
-
-const languages = [
-    // { value: "c", label: "C" },
-    // { value: "cpp", label: "C++", },
-    // { value: "cs", label: "C#" },
-    // { value: "java", label: "Java" },
-    { value: "js", label: "JavaScript" },
-    // { value: "ts", label: "TypeScript" },
-    // { value: "py", label: "Python" },
-    // { value: "kt", label: "Kotlin" },
-    // { value: "go", label: "Go" },
-]
 
 const convertToMonacoLanguage = (language: string): string => {
     const map = {
@@ -116,6 +80,8 @@ const Layout = ({ params }: EditorPageProps) => {
     const [language, setLanguage] = React.useState<ProblemLanguage | null>(null)
     const [problem, setProblem] = React.useState<Problem | null>(null)
     const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null)
+    const [isRunning, setIsRunning] = useState<boolean>(false)
+    const [output, setOutput] = React.useState<string>("")
 
     // TODO: change this. use full screen hook
     const [isFullscreen, setIsFullscreen] = React.useState(false)
@@ -140,6 +106,27 @@ const Layout = ({ params }: EditorPageProps) => {
                 }
             }
         ])
+    }
+
+    const handleRunCode = () => {
+        const code = editorRef.current?.getValue()
+        if(!language || !code) return;
+        setIsRunning(true)
+        setOutput(colorizeTerminalOutput("[SUCCESS]Çalıştırılıyor...[/SUCCESS]"))
+        codeService.runCode({
+            code,
+            language: language.slug,
+            problemSlug: problem.slug,
+            userId: 1,
+        }).then(res => {
+            console.log(res.output)
+            setOutput(colorizeTerminalOutput(res.output))
+        }).catch(err => {
+            console.error("Hata: ", typeof err.message)
+            setOutput("[ERROR]Sistemsel hata oluştu![/ERROR]")
+        }).finally(() => {
+            setIsRunning(false)
+        })
     }
 
     return (
@@ -291,8 +278,18 @@ const Layout = ({ params }: EditorPageProps) => {
                                         <TabsTrigger value="output">Sonuç</TabsTrigger>
                                     </div>
                                     <div className='flex items-start space-x-2'>
-                                        <Button variant={"secondary"} size={"sm"}>Çalıştır</Button>
-                                        <Button variant={"success"} size={"sm"} disabled>Kaydet</Button>
+                                        <Button variant={"ghost"} size={"sm"} onClick={handleRunCode}>
+                                            <PlayIcon className='mr-1'/>
+                                            Çalıştır
+                                        </Button>
+                                        <Button variant={"secondary"} size={"sm"} onClick={handleRunCode}>
+                                            <MixerHorizontalIcon className='mr-1'/>
+                                            Testleri Başlat
+                                        </Button>
+                                        <Button variant={"success"} size={"sm"} disabled>
+                                            <Share2Icon className='mr-1'/>
+                                            Kaydet
+                                        </Button>
                                     </div>
                                 </TabsList>
                                 <div className='h-0 flex-auto overflow-auto p-2'>
