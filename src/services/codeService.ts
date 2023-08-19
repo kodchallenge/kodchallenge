@@ -10,6 +10,14 @@ export type RunCodeData= {
 export type RunCodeResult = {
     status: string;
     output: string;
+    cases: {
+        input: string,
+        expected: string,
+        output: string,
+        status: boolean,
+        build: boolean,
+        timeout: boolean
+    }[];
 }
 
 const runCode = async (data: RunCodeData) => {
