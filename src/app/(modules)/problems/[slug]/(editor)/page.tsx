@@ -1,5 +1,6 @@
 "use client"
 import { Logo } from '@/components/logo'
+import { Markdown } from '@/components/markdown'
 import { Button } from '@/components/ui/button'
 import {
     Command,
@@ -12,32 +13,30 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import UserAvatar from '@/components/user/UserAvatar'
 import { THEMES } from '@/constants'
+import { useKcAlert } from '@/core/alert-provider'
+import { useAuth } from '@/core/auth-provider'
+import FullScreenService from '@/lib/fullscreen-service'
 import { cn } from '@/lib/utils'
-import MonacoEditor from "@monaco-editor/react"
-import { CaretSortIcon, CheckIcon, CopyIcon, DividerHorizontalIcon, DividerVerticalIcon, EnterFullScreenIcon, ExitFullScreenIcon, GearIcon, MixerHorizontalIcon, MoonIcon, PlayIcon, Share2Icon, UpdateIcon } from '@radix-ui/react-icons'
-import { useTheme } from "next-themes"
-import Link from 'next/link'
-import { useRouter, useParams, usePathname } from 'next/navigation'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import Split from 'react-split'
-import ProblemListButton from './_components/ProblemListButton'
-import "./editor.css"
+import codeService, { RunCodeResult } from '@/services/codeService'
 import problemService from '@/services/problemService'
 import { Problem, ProblemLanguage } from '@/types/problem'
-import { CommandLoading } from 'cmdk'
-import EditorLoading from './_components/EditorLoading'
-import { Markdown } from '@/components/markdown'
+import MonacoEditor from "@monaco-editor/react"
+import { CaretSortIcon, CheckIcon, DividerVerticalIcon, EnterFullScreenIcon, ExitFullScreenIcon, MoonIcon, PlayIcon, Share2Icon, UpdateIcon } from '@radix-ui/react-icons'
 import { editor } from 'monaco-editor'
-import { useKcAlert } from '@/core/alert-provider'
-import CopyCodeToClipboard from './_components/CopyCodeToClipboard'
-import FullScreenService from '@/lib/fullscreen-service'
-import EditorSettings from './_components/EditorSettings'
-import codeService, { RunCodeResult } from '@/services/codeService'
-import { Badge } from '@/components/ui/badge'
-import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { useTheme } from "next-themes"
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import Split from 'react-split'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import LoginModal from '@/components/auth/login/LoginModal'
+import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import CopyCodeToClipboard from './_components/CopyCodeToClipboard'
+import EditorLoading from './_components/EditorLoading'
+import EditorSettings from './_components/EditorSettings'
+import ProblemListButton from './_components/ProblemListButton'
+import "./editor.css"
 
 const colorizeTerminalOutput = (output: string) => {
     const colorCodes = ["WARNING", "INFO", "SUCCESS", "ERROR"]
@@ -79,6 +78,7 @@ const tabs = [
 
 const Layout = ({ params }: EditorPageProps) => {
     // const editorRef = React.useRef<editor.editor.IStandaloneCodeEditor>()
+    const { user, loading: authLoading } = useAuth()
     const { setTheme, theme } = useTheme()
     const [open, setOpen] = React.useState(false)
     const [language, setLanguage] = React.useState<ProblemLanguage | null>(null)
@@ -88,7 +88,7 @@ const Layout = ({ params }: EditorPageProps) => {
     const [output, setOutput] = React.useState<string>("")
     const [codeResult, setCodeResult] = React.useState<RunCodeResult | null>(null)
     const [currentTestIndex, setCurrentTestIndex] = React.useState<number>(0)
-
+    const pathName = usePathname()
     // TODO: change this. use full screen hook
     const [isFullscreen, setIsFullscreen] = React.useState(false)
     const kcAlert = useKcAlert()
@@ -165,11 +165,19 @@ const Layout = ({ params }: EditorPageProps) => {
                         </Button>
                     </div>
                     <div>
-                        <LoginModal
-                            trigger={(
-                                <Button size={"sm"}>Giriş Yap</Button>
-                            )}
-                        />
+                        {user ? (
+                            <UserAvatar
+                                avatar={user.avatar}
+                                username={user.username}
+                                loading={authLoading}
+                            />
+                        ) : (
+                            <Link className='hover:no-underline' href={"/login?returnUrl="+pathName}>
+                                <Button size={"sm"}>
+                                    Giriş Yap
+                                </Button>
+                            </Link>
+                        )}
                     </div>
                 </div>
             </header>
