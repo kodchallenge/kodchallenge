@@ -19,11 +19,11 @@ export const authOptions: AuthOptions = {
 
           const user = await authService.signin(credentials.usernameOrEmail, credentials.password)
 
-          if (!user?.id) throw new Error("User not found")
+          if (!user?.id) throw new Error("Kullanıcı bulunamadı!")
 
           return { ...user }
-        } catch (err) {
-          return null;
+        } catch (err: any) {
+          throw new Error( JSON.stringify({ error: err.message, status: false }))
         }
       }
     })
@@ -40,8 +40,8 @@ export const authOptions: AuthOptions = {
   },
   session: { strategy: "jwt" },
   pages: {
-    signIn: '/auth/login',
-  }
+    signIn: '/login',
+  },
 }
 
 const handler = NextAuth(authOptions)

@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/core/auth-provider'
 import Link from 'next/link'
-import { FormEvent, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { FormEvent, useEffect, useState } from 'react'
 
 const page = () => {
     const [loading, setLoading] = useState<boolean>(false)
@@ -26,6 +27,10 @@ const page = () => {
             setError(err.message)
         })
     }
+    const searchParams = useSearchParams()
+    useEffect(() => {
+        if(searchParams.get('error')) setError("Kullanıcı adı veya şifre hatalı")
+    }, [searchParams])
 
     return (
         <>

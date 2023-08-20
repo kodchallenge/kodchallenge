@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/popover"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import UserAvatar from '@/components/user/UserAvatar'
-import { THEMES } from '@/constants'
+import { SEARCH_PARAMS, THEMES } from '@/constants'
 import { useKcAlert } from '@/core/alert-provider'
 import { useAuth } from '@/core/auth-provider'
 import FullScreenService from '@/lib/fullscreen-service'
@@ -176,7 +176,7 @@ const Layout = ({ params }: EditorPageProps) => {
                                 loading={authLoading}
                             />
                         ) : (
-                            <Link className='hover:no-underline' href={"/login?returnUrl=" + pathName}>
+                            <Link className='hover:no-underline' href={`/login?${SEARCH_PARAMS.RETURN_URL}=` + pathName}>
                                 <Button size={"sm"}>
                                     Giriş Yap
                                 </Button>

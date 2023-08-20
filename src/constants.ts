@@ -4,7 +4,7 @@ export const THEMES = {
 }
 
 export const SEARCH_PARAMS = {
-    RETURN_URL: 'returnUrl',
+    RETURN_URL: 'callbackUrl',
 }
 
 export const STORAGE_KEYS = {

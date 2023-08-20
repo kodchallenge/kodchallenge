@@ -43,6 +43,7 @@ const KcAuthProvider = ({ children }: Props) => {
         const redirectUrl = returnUrl && returnUrl !== '/' ? returnUrl : '/'
         signIn("credentials", {
             ...params,
+            // redirect: false,
             callbackUrl: redirectUrl
         })
     }
