@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/popover"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import UserAvatar from '@/components/user/UserAvatar'
-import { SEARCH_PARAMS, THEMES } from '@/constants'
+import { SEARCH_PARAMS, STORAGE_KEYS, THEMES } from '@/constants'
 import { useKcAlert } from '@/core/alert-provider'
 import { useAuth } from '@/core/auth-provider'
 import FullScreenService from '@/lib/fullscreen-service'
@@ -28,7 +28,7 @@ import { editor } from 'monaco-editor'
 import { useTheme } from "next-themes"
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Split from 'react-split'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
@@ -93,16 +93,43 @@ const Layout = ({ params }: EditorPageProps) => {
     const [isFullscreen, setIsFullscreen] = React.useState(false)
     const kcAlert = useKcAlert()
 
-    const problemDefaultCode = useMemo(() => problem?.base_codes.find(baseCode => baseCode.language == language)?.code ?? "", [problem, language])
+    const problemDefaultCode = useMemo(() => {
+        if(!language || !problem) return "";
+        const defaultCode = problem?.base_codes.find(baseCode => baseCode.language == language)?.code ?? ""
+        const currentCodes = JSON.parse(localStorage.getItem(STORAGE_KEYS.CODE) ?? "{}")
+        const currentProblem = currentCodes[problem.slug] ?? {}
+        return currentProblem[language.slug] ?? defaultCode
+    }, [problem, language])
 
     useEffect(() => {
         problemService.getProblemBySlug(params.slug).then(problem => {
             setProblem(problem)
-            setLanguage(problem.base_codes[0].language)
+            const currentLanguage = localStorage.getItem(STORAGE_KEYS.CURRENT_EDITOR_LANGUAGE) ?? ""
+            const languageCode = problem.base_codes.find(baseCode => baseCode.language.slug == currentLanguage) ?? problem.base_codes[0]
+            setLanguage(languageCode.language)
         })
     }, [params.slug])
 
     if (problem == null) return <EditorLoading />
+
+    // const getInitialCode = () => {
+    //     const currentCodes = JSON.parse(localStorage.getItem(STORAGE_KEYS.CODE) ?? "{}")
+    //     const currentProblem = currentCodes[problem.slug] ?? {}
+    //     return currentProblem[language?.slug ?? ""] ?? problemDefaultCode
+    // }
+
+    const handleChangeCode = (value: string | undefined) => {
+        if (!problem || !language || !value) return;
+        const currentCodes = JSON.parse(localStorage.getItem(STORAGE_KEYS.CODE) ?? "{}")
+
+        const currentProblem = currentCodes[problem.slug] ?? {}
+
+        currentProblem[language.slug] = value
+
+        currentCodes[problem.slug] = currentProblem
+
+        localStorage.setItem(STORAGE_KEYS.CODE, JSON.stringify(currentCodes))
+    }
 
     const handleResetEditor = () => {
         kcAlert.alert("Uyarı", "Kodunuzu sıfırlamak istediğinize emin misiniz?", [
@@ -115,7 +142,7 @@ const Layout = ({ params }: EditorPageProps) => {
     }
 
     const handleRunCode = () => {
-        if(!user?.id) {
+        if (!user?.id) {
             setOutput(colorizeTerminalOutput("[ERROR]Önce giriş yapınız![/ERROR]"))
             return;
         }
@@ -240,6 +267,7 @@ const Layout = ({ params }: EditorPageProps) => {
                                                                     onSelect={() => {
                                                                         setLanguage(code.language)
                                                                         setOpen(false)
+                                                                        localStorage.setItem(STORAGE_KEYS.CURRENT_EDITOR_LANGUAGE, code.language.slug)
                                                                     }}
                                                                 >
                                                                     <CheckIcon
@@ -298,6 +326,7 @@ const Layout = ({ params }: EditorPageProps) => {
                                         onMount={(editor, monaco) => {
                                             editorRef.current = editor
                                         }}
+                                        onChange={handleChangeCode}
 
                                     />
                                 </div>
