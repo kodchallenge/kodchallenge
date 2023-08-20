@@ -1,11 +1,11 @@
 "use client"
+import AuthCard from '@/components/auth/AuthCard'
 import { Icons } from '@/components/icons'
 import { Logo } from '@/components/logo'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import Link from 'next/link'
-import AuthCard from '../components/AuthCard'
 
 const page = () => {
     return (

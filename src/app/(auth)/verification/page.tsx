@@ -1,7 +1,7 @@
 "use client"
+import AuthCard from '@/components/auth/AuthCard'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import AuthCard from '../components/AuthCard'
 
 const page = () => {
     // CSS.paintWorklet.addModule('https://unpkg.com/brand-colors/dist/brand-colors.js');

@@ -37,6 +37,7 @@ import codeService, { RunCodeResult } from '@/services/codeService'
 import { Badge } from '@/components/ui/badge'
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import LoginModal from '@/components/auth/login/LoginModal'
 
 const colorizeTerminalOutput = (output: string) => {
     const colorCodes = ["WARNING", "INFO", "SUCCESS", "ERROR"]
@@ -126,7 +127,7 @@ const Layout = ({ params }: EditorPageProps) => {
             userId: 1,
         }).then(res => {
             console.log(res)
-            if(res.status) {
+            if (res.status) {
                 setCodeResult(res)
                 setOutput("")
             }
@@ -164,7 +165,11 @@ const Layout = ({ params }: EditorPageProps) => {
                         </Button>
                     </div>
                     <div>
-                        <Button size={"sm"}>Giriş Yap</Button>
+                        <LoginModal
+                            trigger={(
+                                <Button size={"sm"}>Giriş Yap</Button>
+                            )}
+                        />
                     </div>
                 </div>
             </header>
@@ -312,7 +317,7 @@ const Layout = ({ params }: EditorPageProps) => {
                                             {(isRunning || output) && <div className={"font-code text-sm"} dangerouslySetInnerHTML={{ __html: output }} />}
                                             {codeResult?.cases && (
                                                 <div className='flex flex-col space-y-5'>
-                                                    <div className={`${codeResult.cases?.some(x => !x.status) || codeResult.cases.length<1 ? "bg-destructive/75" : "bg-success/75"}`}>
+                                                    <div className={`${codeResult.cases?.some(x => !x.status) || codeResult.cases.length < 1 ? "bg-destructive/75" : "bg-success/75"}`}>
                                                         <label className='text-sm flex gap-x-2 items-center'>
                                                             <p>Toplam Test: <strong className='text-base/6'>{codeResult.cases.length}</strong></p>
                                                             <DividerVerticalIcon />

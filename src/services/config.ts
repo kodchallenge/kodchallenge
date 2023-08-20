@@ -14,8 +14,10 @@ export const api = {
             },
             body: JSON.stringify(body)
         });
-        if (!response.ok)
-            throw new Error(response.statusText);
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message);
+        }
 
         return await response.json();
     },

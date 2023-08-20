@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/sheet"
 import NavItem from "./components/NavItem"
 import { NavigationMenu, NavigationMenuList } from "../ui/navigation-menu"
+import { useAuth } from "@/core/auth-provider"
 
 const navs = [
     { name: "Problemler", to: "/problems" },
@@ -27,6 +28,7 @@ const navs = [
 ]
 
 export const MainHeader = () => {
+    const { user } = useAuth()
     const scrollY = useScroll()
 
     return (
@@ -46,16 +48,18 @@ export const MainHeader = () => {
                         </NavigationMenuList>
                     </div>
                     <div className="flex items-center space-x-2">
-                        {/* {!session ? ( */}
-                        <Link href={"/login"}>
-                            Giriş Yap
-                        </Link>
-                        <Link href={"/register"}>
-                            <Button>Kayıt Ol</Button>
-                        </Link>
-                        {/* ) : (
-                            <Link href={"/@" + session.user.username} className="btn btn-primary">Hesabım</Link>
-                        )} */}
+                        {!user ? (
+                            <>
+                                <Link href={"/login"}>
+                                    Giriş Yap
+                                </Link>
+                                <Link href={"/register"}>
+                                    <Button>Kayıt Ol</Button>
+                                </Link>
+                            </>
+                        ) : (
+                            <Link href={"/@" + user.username} className="btn btn-primary">Hesabım</Link>
+                        )}
                     </div>
                 </NavigationMenu>
             </div>
