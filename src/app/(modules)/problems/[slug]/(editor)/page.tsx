@@ -115,6 +115,10 @@ const Layout = ({ params }: EditorPageProps) => {
     }
 
     const handleRunCode = () => {
+        if(!user?.id) {
+            setOutput(colorizeTerminalOutput("[ERROR]Önce giriş yapınız![/ERROR]"))
+            return;
+        }
         const code = editorRef.current?.getValue()
         if (!language || !code || isRunning) return;
         setIsRunning(true)
@@ -124,7 +128,7 @@ const Layout = ({ params }: EditorPageProps) => {
             code,
             language: language.slug,
             problemSlug: problem.slug,
-            userId: 1,
+            userId: user?.id,
         }).then(res => {
             console.log(res)
             if (res.status) {
@@ -172,7 +176,7 @@ const Layout = ({ params }: EditorPageProps) => {
                                 loading={authLoading}
                             />
                         ) : (
-                            <Link className='hover:no-underline' href={"/login?returnUrl="+pathName}>
+                            <Link className='hover:no-underline' href={"/login?returnUrl=" + pathName}>
                                 <Button size={"sm"}>
                                     Giriş Yap
                                 </Button>
