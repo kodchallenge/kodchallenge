@@ -1,16 +1,31 @@
+import { getSession } from "next-auth/react";
+
 export const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 
 // Create get, post, put, delete functions for each resource
-export const api = {
-    get: async (url: string) => {
-        const response = await fetch(`${BASE_API_URL}/${url}`);
-        return await response.json();
-    },
-    post: async <T = any>(url: string, body: any): Promise<T> => {
+export class KcFetch {
+    token: string;
+    constructor(token?: string) {
+        this.token = token ?? "";
+    }
+
+    async get<T>(url: string) {
+        const response = await fetch(`${BASE_API_URL}/${url}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + this.token
+            }
+        });
+        return await response.json() as T;
+    }
+
+    async post<T = any>(url: string, body: any): Promise<T> {
         const response = await fetch(`${BASE_API_URL}/${url}`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + this.token
             },
             body: JSON.stringify(body)
         });
@@ -20,23 +35,36 @@ export const api = {
         }
 
         return await response.json();
-    },
-    put: async (url: string, body: any) => {
+    }
+
+    async put(url: string, body: any) {
         const response = await fetch(`${BASE_API_URL}/${url}`, {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + this.token
             },
             body: JSON.stringify(body)
         });
         return await response.json();
-    },
-    delete: async (url: string) => {
+    }
+    async delete(url: string) {
         const response = await fetch(`${BASE_API_URL}/${url}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + this.token
+            }
         });
         return await response.json();
-    },
+    }
 
-    // TODO: Add interceptors for each resource
+    async auth() {
+        const session = await getSession();
+        const token = session?.user?.token;
+
+        return new KcFetch(token);
+    }
 }
+
+export const api = new KcFetch();

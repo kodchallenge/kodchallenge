@@ -32,7 +32,7 @@ export const MainHeader = () => {
     const scrollY = useScroll()
 
     return (
-        <header className={cn("fixed top-0 right-0 left-0 z-50 duration-500", scrollY > 50 ? "bg-white dark:bg-slate-800 shadow" : "")}>
+        <header className={""}>
             <div className="md:flex flex-col hidden">
                 <NavigationMenu className="flex justify-between items-center py-5 container">
                     <Link href={"/"} className="hover:no-underline">

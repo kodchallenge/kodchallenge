@@ -10,6 +10,7 @@ export type RunCodeData= {
 export type RunCodeResult = {
     status: string;
     output: string;
+    id: number;
     cases: {
         input: string,
         expected: string,

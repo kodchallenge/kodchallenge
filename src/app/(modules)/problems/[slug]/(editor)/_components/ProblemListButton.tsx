@@ -81,7 +81,7 @@ const ProblemListContent = () => {
             </SheetHeader>
             <div className='my-2 flex border last:border-b-0 flex-col rounded'>
                 {problems.filter(x => !selectedDifficulty || x.difficulty == selectedDifficulty).map((problem) => (
-                    <Link href={"/problems/" + problem.slug} className='border-b hover:bg-slate-50 dark:hover:bg-slate-700 hover:no-underline'>
+                    <Link href={"/problems/" + problem.slug} className='border-b hover:bg-accent hover:no-underline'>
                         <div className="flex px-2 py-4 justify-between items-center space-x-2">
                             <Avatar className='w-10 h-10'>
                                 {/* <AvatarImage src={problem.image} /> */}

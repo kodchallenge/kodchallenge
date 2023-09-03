@@ -37,7 +37,12 @@ import EditorLoading from './_components/EditorLoading'
 import EditorSettings from './_components/EditorSettings'
 import ProblemListButton from './_components/ProblemListButton'
 import "./editor.css"
-
+import solutionService from '@/services/solutionService'
+import clsx from 'clsx'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { SolutionState, UserSolution } from '@/types/solution'
+import moment from 'moment'
+import 'moment/locale/tr'
 const colorizeTerminalOutput = (output: string) => {
     const colorCodes = ["WARNING", "INFO", "SUCCESS", "ERROR"]
 
@@ -74,7 +79,31 @@ type EditorPageProps = {
 
 const tabs = [
     { value: "description", label: "Açıklama" },
+    { value: "solutions", label: "Çözümlerim" },
 ]
+
+const SolutionDisplays = {
+    [SolutionState.Success]: {
+        color: "text-success",
+        text: "Başarılı"
+    },
+    [SolutionState.BuildError]: {
+        color: "text-destructive",
+        text: "Build Hatası"
+    },
+    [SolutionState.Failed]: {
+        color: "text-destructive",
+        text: "Yanlış Cevap"
+    },
+    [SolutionState.Timeout]: {
+        color: "text-warning",
+        text: "Zaman Aşımı"
+    },
+    [SolutionState.Pending]: {
+        color: "text-info",
+        text: "Bekliyor"
+    }
+}
 
 const Layout = ({ params }: EditorPageProps) => {
     // const editorRef = React.useRef<editor.editor.IStandaloneCodeEditor>()
@@ -88,13 +117,14 @@ const Layout = ({ params }: EditorPageProps) => {
     const [output, setOutput] = React.useState<string>("")
     const [codeResult, setCodeResult] = React.useState<RunCodeResult | null>(null)
     const [currentTestIndex, setCurrentTestIndex] = React.useState<number>(0)
+    const [userSolutions, setUserSolutions] = React.useState<UserSolution[]>([])
     const pathName = usePathname()
     // TODO: change this. use full screen hook
     const [isFullscreen, setIsFullscreen] = React.useState(false)
     const kcAlert = useKcAlert()
 
     const problemDefaultCode = useMemo(() => {
-        if(!language || !problem) return "";
+        if (!language || !problem) return "";
         const defaultCode = problem?.base_codes.find(baseCode => baseCode.language == language)?.code ?? ""
         const currentCodes = JSON.parse(localStorage.getItem(STORAGE_KEYS.CODE) ?? "{}")
         const currentProblem = currentCodes[problem.slug] ?? {}
@@ -109,6 +139,14 @@ const Layout = ({ params }: EditorPageProps) => {
             setLanguage(languageCode.language)
         })
     }, [params.slug])
+    
+    useEffect(() => {
+        if(!user || !problem) return;
+        
+        problemService.getUserSolutions(problem.id, user?.id ?? 0).then(solutions => {
+            setUserSolutions(solutions)
+        })
+    }, [user, problem])
 
     if (problem == null) return <EditorLoading />
 
@@ -175,6 +213,11 @@ const Layout = ({ params }: EditorPageProps) => {
         })
     }
 
+    const handleSaveCode = () => {
+        if (!codeResult) return;
+        solutionService.save(codeResult.id, problem.id)
+    }
+
     return (
         <div id='editor' className='h-full flex flex-col max-h-screen overflow-hidden'>
             <header className='flex shadow items-center justify-between px-4 py-2 bg-background'>
@@ -212,24 +255,65 @@ const Layout = ({ params }: EditorPageProps) => {
                     </div>
                 </div>
             </header>
-            <main id='kc-editor-main' className='h-full flex-1 bg-slate-100 dark:bg-slate-800 dark:text-foreground'>
+            <main id='kc-editor-main' className='h-full flex-1 bg-editor-background dark:text-foreground'>
                 <Split
                     className='px-4 h-full py-2 flex'
                     gutterSize={8}
                     sizes={[50, 50]}
                     minSize={[300, 400]}
                 >
-                    <Tabs className="w-[50%] h-full flex-col flex e-side-info border bg-background">
+                    <Tabs defaultValue={tabs[0].value} className="w-[50%] h-full flex-col flex e-side-info border bg-background">
                         <TabsList defaultValue={tabs[0].value} className='h-10 border-b bg-transparent justify-start rounded-none text-left'>
                             {tabs.map((tab, i) => (
                                 <TabsTrigger key={i} value={tab.value}>{tab.label}</TabsTrigger>
                             ))}
                         </TabsList>
-                        <div className='h-0 flex-auto overflow-auto p-2'>
+                        <TabsContent value='description' className="h-0 flex-auto overflow-auto p-2">
                             <div className='h-full overflow-y-auto'>
                                 <Markdown markdown={problem?.description} />
                             </div>
-                        </div>
+                        </TabsContent>
+
+                        <TabsContent value='solutions' className='h-0 flex-auto overflow-auto p-2'>
+                            <div className='h-full overflow-y-auto'>
+                                <div>
+                                    <div className=''>
+                                        <Table className='min-w[500px] overflow-auto'>
+                                            <TableHeader>
+                                                <TableRow>
+                                                    <TableHead>
+                                                        Durum
+                                                    </TableHead>
+                                                    <TableHead>
+                                                        Dil
+                                                    </TableHead>
+                                                    <TableHead>
+                                                        Tarih
+                                                    </TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                                {userSolutions.map((solution, i) => (
+                                                    <TableRow key={i} >
+                                                        <TableCell>
+                                                            <p className={SolutionDisplays[solution.state]?.color}>
+                                                                {SolutionDisplays[solution.state]?.text}
+                                                            </p>
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {solution.language.name}
+                                                        </TableCell>
+                                                        <TableCell>
+                                                            {moment(solution.createdAt).format('LLL')}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </div>
+                                </div>
+                            </div>
+                        </TabsContent>
                     </Tabs>
                     <div className='w-[50%]'>
                         <Split
@@ -346,7 +430,7 @@ const Layout = ({ params }: EditorPageProps) => {
                                             <MixerHorizontalIcon className='mr-1'/>
                                             Testleri Başlat
                                         </Button> */}
-                                        <Button variant={"success"} size={"sm"} disabled>
+                                        <Button variant={"success"} size={"sm"} onClick={handleSaveCode}>
                                             <Share2Icon className='mr-1' />
                                             Kaydet
                                         </Button>

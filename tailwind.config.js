@@ -63,6 +63,9 @@ module.exports = {
           DEFAULT: "hsl(var(--info))",
           foreground: "hsl(var(--info-foreground))",
         },
+        editor: {
+          background: "hsl(var(--editor-background))",
+        },
       },
       zIndex: {
         "100": 100,
