@@ -215,7 +215,13 @@ const Layout = ({ params }: EditorPageProps) => {
 
     const handleSaveCode = () => {
         if (!codeResult) return;
-        solutionService.save(codeResult.id, problem.id)
+        setCodeResult(null)
+        setOutput(colorizeTerminalOutput("[INFO]Kaydediliyor...[/INFO]"))
+        solutionService.save(codeResult.id, problem.id).then(() => {
+            setOutput(colorizeTerminalOutput("[SUCCESS]Kaydedildi[/SUCCESS]"))
+        }).catch((err) => {
+            setOutput(colorizeTerminalOutput(`[ERROR]Kaydedilemedi! ${err.message}[/ERROR]`))
+        })
     }
 
     return (
