@@ -1,0 +1,12 @@
+#menu-nav {
+    display: block;
+    &>li {
+        margin-left: 0;
+        margin-top: 0.5rem;
+        
+        &>a {
+            display: block;
+            width: 100%;
+        }
+    }
+}

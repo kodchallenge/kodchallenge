@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --switch: 210 40% 90.4%;
+ 
+    --primary: 13.95deg 100% 63.73%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 167.38deg 83.97% 40.29%;
+    --success-foreground: 210 40% 98%;
+
+    --warning: 34.8deg 100% 54.97%;
+    --warning-foreground: 222.2 84% 4.9%;
+
+    --info: 208deg 78.26% 54.9%;
+    --info-foreground: 222.2 84% 4.9%;
+ 
+    --ring: 215 20.2% 65.1%;
+
+    --editor-background: 210 40% 96.1%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 210 24% 15%;
+    --foreground: 208 8% 70%;
+    --muted: 210 24% 20%;
+    --muted-foreground: 210 9% 60%;
+    --popover: 210 24% 15%;
+    --popover-foreground: 208 8% 70%;
+    --card: 210 24% 15%;
+    --card-foreground: 208 8% 70%;
+    --border: 220 5% 22%;
+    --input: 209 17% 45%;
+    --switch: 210 40% 40%;
+    --primary: 23 86% 47%;
+    --primary-foreground: 209 41% 90%;
+    --secondary: 209 40% 25%;
+    --secondary-foreground: 220 25% 30%;
+    --accent: 209 40% 25%;
+    --accent-foreground: 220 21% 76%;
+    --destructive: 0 76% 50%;
+    --destructive-foreground: 209 41% 90%;
+    --success: 120 45% 40%;
+    --success-foreground: 209 41% 90%;
+    --warning: 40 100% 60%;
+    --warning-foreground: 208 8% 70%;
+    --info: 210 55% 45%;
+    --info-foreground: 208 8% 70%;
+    --editor-background: 205 23% 16%;
+    --ring: 215 20% 60%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.full-screen {
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  width: 100%;
+}
+
+.dot-points {
+  pointer-events: none;
+  background-color: hsl(var(--foreground));
+  opacity: 0.15;
+  -webkit-mask-image: url(/assets/dot-point.svg);
+  mask-repeat: repeat;
+  -webkit-mask-repeat: repeat;
+  mask-image: url(/assets/dot-point.svg);
+}
