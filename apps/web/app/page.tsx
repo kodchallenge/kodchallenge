@@ -1,9 +1,10 @@
-import { Button } from "@kod/ui";
+import Landing from "@/components/landing";
+import { KodMainLayout } from "@/components/layouts";
 
 export default function Page(): JSX.Element {
   return (
-    <main className="grid place-items-center h-screen w-full">
-      <Button>Test</Button>
-    </main>
+    <KodMainLayout>
+      <Landing />
+    </KodMainLayout>
   );
 }
