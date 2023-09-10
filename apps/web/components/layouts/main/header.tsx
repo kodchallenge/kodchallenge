@@ -32,10 +32,10 @@ const Header = () => {
                     <div className="flex items-center space-x-2">
                         {!user ? (
                             <>
-                                <Link href={"/login"}>
+                                <Link href={"/auth/login"}>
                                     Giriş Yap
                                 </Link>
-                                <Link href={"/register"}>
+                                <Link href={"/auth/register"}>
                                     <Button>Kayıt Ol</Button>
                                 </Link>
                             </>
