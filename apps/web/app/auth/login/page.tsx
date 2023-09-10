@@ -5,6 +5,7 @@ import { GitHubLogoIcon } from '@kod/icons'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { FormEvent, useEffect, useState } from 'react'
+import { LINKS } from '@/utils/constants'
 
 const page = () => {
     const [loading, setLoading] = useState<boolean>(false)
@@ -42,7 +43,7 @@ const page = () => {
                         <div className="flex flex-col space-y-1.5">
                             <div className='flex justify-between items-center'>
                                 <label htmlFor="password">Şifre</label>
-                                <Link href={"/forgot-password"}>
+                                <Link href={LINKS.forgotPassword}>
                                     <Button size={"sm"} variant='link' className='text-primary'>
                                         Şifremi Unuttum
                                     </Button>
@@ -70,7 +71,7 @@ const page = () => {
             </AuthCard>
             <p>
                 Hesabınız yok mu?
-                <Link href={"/register"}>
+                <Link href={LINKS.register}>
                     <Button variant='link' className='text-primary'>Kayıt Ol</Button>
                 </Link>
             </p>
