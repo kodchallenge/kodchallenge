@@ -15,6 +15,22 @@ const error = (code?: number, message?: string, init?: ResponseInit) => {
     })
 }
 
+const validationError = (errors: any, init?: ResponseInit) => {
+    return NextResponse.json({
+        status: false,
+        message: "Doğrulama hatası",
+        errors: errors || {},
+    }, {
+        ...init,
+        status: 422,
+        headers: {
+            ...init?.headers,
+            'content-type': 'application/json; charset=utf-8'
+        },
+    })
+}
+
+
 const success = (data?: any, message?: string, init?: ResponseInit) => {
     return NextResponse.json({
         status: true,
@@ -33,6 +49,7 @@ const success = (data?: any, message?: string, init?: ResponseInit) => {
 const KodResponse = {
     error,
     success,
+    validationError,
     json: NextResponse.json,
     redirect: NextResponse.redirect,
     rewrite: NextResponse.rewrite,
