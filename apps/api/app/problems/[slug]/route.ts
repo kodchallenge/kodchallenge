@@ -1,3 +1,4 @@
+import KodResponse from "@/lib/KodResponse";
 import { prisma } from "@kod/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -13,9 +14,7 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
         }
     })
 
-    return NextResponse.json(problem, {
-        headers: {
-            'content-type': 'application/json; charset=utf-8'
-        }
-    })
+    if(!problem) return KodResponse.error(404, "Problem bulunamadı")
+
+    return KodResponse.success(problem, "Problem detayı")
 }
