@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model categories {
+  id       Int        @id @default(autoincrement())
+  name     String     @db.VarChar
+  problems problems[]
+}
+
+model base_codes {
+  id          Int       @id @default(autoincrement())
+  code        String    @db.VarChar
+  language_id Int
+  problem_id  Int
+  languages   languages @relation(fields: [language_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  problems    problems  @relation(fields: [problem_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model languages {
+  id         Int          @id @default(autoincrement())
+  name       String       @db.VarChar
+  slug       String       @db.VarChar
+  base_codes base_codes[]
+
+  @@unique([slug], map: "language_slug_ukey")
+}
+
+model problems {
+  id          Int          @id @default(autoincrement())
+  title       String       @db.VarChar
+  slug        String       @db.VarChar
+  description String       @db.VarChar
+  io          String       @db.VarChar
+  score       Int
+  is_private  Boolean
+  is_deleted  Boolean
+  difficulty  String       @db.VarChar
+  category_id Int
+  base_codes  base_codes[]
+  categories  categories   @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  solutions   solutions[]
+}
+
+model roles {
+  id   Int    @id
+  name String @db.VarChar
+}
+
+model solution_cases {
+  id          Int       @id @default(autoincrement())
+  solution_id Int
+  case_index  Int
+  output      String    @db.VarChar
+  status      Boolean
+  build       Boolean?
+  timeout     Boolean?
+  solutions   solutions @relation(fields: [solution_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solution_test_cases_solution_id")
+}
+
+model solutions {
+  id             Int              @id @default(autoincrement())
+  problem_id     Int
+  user_id        Int
+  code           String           @db.VarChar
+  score          Int
+  created_at     DateTime         @db.Timestamp(6)
+  approved       Boolean          @default(false)
+  language_id    Int
+  state          solution_state?
+  solution_cases solution_cases[]
+  problems       problems         @relation(fields: [problem_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solutions_problem_id")
+  users          users            @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_solutions_user_id")
+}
+
+model user_roles {
+  id      Int @id @default(autoincrement())
+  user_id Int
+  role_id Int
+}
+
+model users {
+  id          Int         @id @default(autoincrement())
+  email       String      @unique(map: "users_email_uk") @db.VarChar(50)
+  password    String      @db.VarChar
+  username    String      @unique(map: "users_username_uk") @db.VarChar(24)
+  firstname   String?     @db.VarChar
+  lastname    String?     @db.VarChar
+  created_at  DateTime?   @db.Timestamp(6)
+  deleted_at  DateTime?   @db.Timestamptz(6)
+  is_deleted  Boolean?
+  is_verified Boolean?
+  verified_at DateTime?   @db.Timestamp(6)
+  biography   String?     @db.VarChar
+  location    String?     @db.VarChar
+  github      String?     @db.VarChar
+  linkedin    String?     @db.VarChar
+  twitter     String?     @db.VarChar
+  website     String?     @db.VarChar
+  avatar      String?     @db.VarChar
+  solutions   solutions[]
+}
+
+enum solution_state {
+  success
+  failed
+  build_error @map("build-error")
+  timeout
+  pending
+}
