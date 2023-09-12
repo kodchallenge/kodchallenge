@@ -7,6 +7,13 @@
   "author": "Yasin Torun",
   "license": "MIT",
   "private": true,
+  "dependencies": {
+    "@kod/icons": "*",
+    "@kod/ui": "*"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  },
   "peerDependencies": {
     "next": "^13.4.19",
     "react": "^18.2.0"
