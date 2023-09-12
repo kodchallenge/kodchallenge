@@ -1,5 +1,5 @@
 import "@kod/ui/styles/globals.css";
-
+import { default as KodTRPCProvider } from "@kod/server/next/trpc/Provider";
 export default function RootLayout({
   children,
 }: {
@@ -7,7 +7,11 @@ export default function RootLayout({
 }): JSX.Element {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <KodTRPCProvider>
+          {children}
+        </KodTRPCProvider>
+      </body>
     </html>
   );
 }

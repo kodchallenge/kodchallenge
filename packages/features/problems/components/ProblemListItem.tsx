@@ -21,7 +21,7 @@ const ProblemListItem = ({ problem }: Props) => {
                             <CardDescription>
                                 <Badge
                                     variant={"secondary"}
-                                    className={cn('text-white', problemDifficulty[problem.difficulty].badgeColor)}
+                                    className={cn('text-white', problemDifficulty[problem.difficulty]?.badgeColor)}
                                 >
                                     {problem.difficulty}
                                 </Badge>

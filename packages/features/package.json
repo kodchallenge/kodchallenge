@@ -9,7 +9,8 @@
   "private": true,
   "dependencies": {
     "@kod/icons": "*",
-    "@kod/ui": "*"
+    "@kod/ui": "*",
+    "@kod/server": "*"
   },
   "devDependencies": {
     "tsconfig": "workspace:*"
