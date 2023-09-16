@@ -5,12 +5,18 @@ import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/pris
 import remarkGfm from 'remark-gfm'
 import './markdown.scss'
 import { cn } from '@kod/ui'
+import { KodThemes, useKodTheme } from '../hoc'
 type Props = {
     markdown: string;
 }
 
+const SyntaxThemes = {
+    [KodThemes.dark]: oneDark,
+    [KodThemes.light]: oneLight
+}
 
 const KodMarkdown = ({ markdown }: Props) => {
+    const { theme } = useKodTheme()
     return (
         <ReactMarkdown
             className='kod-md prose prose-sm md:prose !max-w-full w-full'
@@ -22,7 +28,7 @@ const KodMarkdown = ({ markdown }: Props) => {
                         <SyntaxHighlighter
                             children={String(children).replace(/\n$/, '')}
                             //@ts-ignore
-                            style={oneDark}
+                            style={SyntaxThemes[theme]}
                             language={match[1]}
                             PreTag="div"
                             {...props}

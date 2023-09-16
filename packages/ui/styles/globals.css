@@ -48,7 +48,7 @@
     --radius: 0.5rem;
   }
 
-  /* .dark {
+  .dark {
     --background: 210 24% 15%;
     --foreground: 208 8% 70%;
     --muted: 210 24% 20%;
@@ -76,7 +76,7 @@
     --info-foreground: 208 8% 70%;
     --editor-background: 205 23% 16%;
     --ring: 215 20% 60%;
-  } */
+  }
 }
 
 @layer base {

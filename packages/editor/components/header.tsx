@@ -1,8 +1,9 @@
+import { HamburgerMenuIcon } from '@kod/icons'
 import { Button, KodLogo, UserAvatar } from '@kod/ui'
 import Link from 'next/link'
 import React from 'react'
-import { HamburgerMenuIcon, MoonIcon } from '@kod/icons'
 import ProblemList from './problem-list'
+import ThemeToggleButton from './theme-toggle-button'
 
 type Props = {
     title?: string;
@@ -37,9 +38,7 @@ const Header = ({
             </div>
             <div className='flex items-center justify-end space-x-3 e-header-end w-auto md:w-[300px]'>
                 <div>
-                    <Button size={"icon"} variant={"ghost"}>
-                        <MoonIcon />
-                    </Button>
+                    <ThemeToggleButton />
                 </div>
                 <div>
                     {user ? (

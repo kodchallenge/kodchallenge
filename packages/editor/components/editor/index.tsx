@@ -13,7 +13,8 @@ import { RouterOutputs } from '@kod/server/trpc'
 import { KodStorage } from '@kod/lib/storage'
 import { StorageKeys } from '../../constants'
 import { convertToMonacoLanguage } from '../../lib/monaco-extends'
-import { getProblemSavedCodeByLanguage, setProblemCodeToStorage } from '../../lib/editor'
+import { getEditorTheme, getProblemSavedCodeByLanguage, setProblemCodeToStorage } from '../../lib/editor'
+import { useKodTheme } from '@kod/lib/hoc'
 
 type Props = {
   problem: NonNullable<RouterOutputs["problem"]["getBySlug"]>
@@ -24,6 +25,7 @@ type Language = Props["problem"]["base_codes"][number]["languages"]
 const KodEditor = ({ problem }: Props) => {
   const [editorLanguage, setEditorLanguage] = useState<Language>(KodStorage.getObject(StorageKeys.CURRENT_LANGUAGE) ?? problem.base_codes[0].languages);
   const editorRef = React.useRef<editor.IStandaloneCodeEditor | null>(null)
+  const { theme } = useKodTheme()
 
   const getProblemCode = useCallback(() => {
     return problem?.base_codes.find(baseCode => baseCode.language_id == editorLanguage.id)?.code ?? ""
@@ -73,7 +75,7 @@ const KodEditor = ({ problem }: Props) => {
             <MonacoEditor
               language={convertToMonacoLanguage(editorLanguage.slug)}
               value={problemDefaultCode}
-              theme={"vs-dark"}
+              theme={getEditorTheme(theme)}
               onMount={(editor, monaco) => {
                 editorRef.current = editor
               }}
