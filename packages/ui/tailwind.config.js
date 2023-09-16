@@ -8,6 +8,7 @@ module.exports = {
     './src/**/*.{ts,tsx}',
     '../../packages/ui/components/**/*.{ts,tsx}',
     '../../packages/features/**/*.{ts,tsx}',
+    '../../packages/editor/**/*.{ts,tsx}',
 	],
   theme: {
     container: {

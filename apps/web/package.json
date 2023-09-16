@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@kod/editor": "*",
     "@kod/icons": "*",
     "@kod/prisma": "*",
     "@kod/ui": "*",

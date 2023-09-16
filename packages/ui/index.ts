@@ -1,8 +1,5 @@
 export * from './lib/utils'
-export * from './components/ui/button'
-export * from './components/ui/navigation-menu'
-export * from './components/ui/nav-item'
-export * from './components/ui/card'
-export * from './components/ui/avatar'
-export * from './components/ui/badge'
-export * from './components/ui/input'
+
+export * from './components/common/'
+
+export * from './components/ui/'
