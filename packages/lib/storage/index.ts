@@ -1,0 +1,1 @@
+export {default as KodStorage} from './kod-storage'

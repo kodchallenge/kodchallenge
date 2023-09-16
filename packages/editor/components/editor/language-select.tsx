@@ -1,8 +1,20 @@
 import { CaretSortIcon, CheckIcon } from '@kod/icons'
-import { Button, Command, CommandGroup, CommandItem, Popover, PopoverContent, PopoverTrigger } from '@kod/ui'
+import { RouterOutputs } from '@kod/server/trpc'
+import { Button, Command, CommandGroup, CommandItem, Popover, PopoverContent, PopoverTrigger, cn } from '@kod/ui'
 import React, { useState } from 'react'
+import { KodStorage } from '@kod/lib/storage'
+import { StorageKeys } from '../../constants'
+type Props = {
+    data: NonNullable<RouterOutputs["language"]["byId"]>[],
+    selected: Props["data"][number],
+    onSelect: (lang: Props["data"][number]) => void
+}
 
-const LanguageSelect = () => {
+const LanguageSelect = ({
+    data: languages,
+    selected: language,
+    onSelect: setLanguage
+}: Props) => {
     const [open, setOpen] = useState(false)
 
     return (
@@ -15,40 +27,31 @@ const LanguageSelect = () => {
                     aria-expanded={open}
                     className="w-[125px] border-slate-300 dark:border-slate-600 justify-between"
                 >
-                    {/* <span className="truncate">{language?.name}</span> */}
-                    <span className="truncate">JavaScript</span>
+                    <span className="truncate">{language?.name}</span>
                     <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[200px] p-0">
                 <Command>
                     <CommandGroup>
-                        {["C", "C++"].map((lang) => (
+                        {languages.map(lang => (
                             <CommandItem
-                                key={lang}
+                                key={lang.slug}
                                 onSelect={() => {
+                                    setLanguage(lang)
                                     setOpen(false)
-                                }}
-                            />
-                        ))}
-                        {/* {problem?.base_codes.map(code => (
-                            <CommandItem
-                                key={code.language.slug}
-                                onSelect={() => {
-                                    setLanguage(code.language)
-                                    setOpen(false)
-                                    localStorage.setItem(STORAGE_KEYS.CURRENT_EDITOR_LANGUAGE, code.language.slug)
+                                    KodStorage.set(StorageKeys.CURRENT_LANGUAGE, lang)
                                 }}
                             >
                                 <CheckIcon
                                     className={cn(
                                         "mr-2 h-4 w-4",
-                                        language?.id === code.language.id ? "opacity-100" : "opacity-0"
+                                        language?.id === lang.id ? "opacity-100" : "opacity-0"
                                     )}
                                 />
-                                {code.language.name}
+                                {lang.name}
                             </CommandItem>
-                        ))} */}
+                        ))}
                     </CommandGroup>
                 </Command>
             </PopoverContent>

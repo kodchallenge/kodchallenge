@@ -11,6 +11,13 @@ export const problem = router({
         return await ctx.prisma.problems.findFirst({
             where: {
                 slug: input
+            },
+            include: {
+                base_codes: {
+                    include: {
+                        languages: true
+                    }
+                }
             }
         })
     })
