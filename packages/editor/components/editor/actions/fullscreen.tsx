@@ -1,22 +1,27 @@
-import { EnterFullScreenIcon } from '@kod/icons'
+import { EnterFullScreenIcon, ExitFullScreenIcon } from '@kod/icons'
 import { Button } from '@kod/ui'
-import React from 'react'
-
+import React, { useEffect, useState } from 'react'
+import { toggleFullscreen, onFullscreenChange } from '@kod/lib/services/fullscreen'
 const Fullscreen = () => {
+    const [isFullscreen, setIsFullScreen] = useState(false)
+
+    useEffect(() => {
+        onFullscreenChange(setIsFullScreen)
+    }, [isFullscreen])
+
     return (
         <Button
             size={"icon"}
             variant={"ghost"}
             onClick={() => {
-                // const fullscreen = new FullScreenService()
-                // isFullscreen
-                //     ? fullscreen.exitFullscreen() :
-                //     fullscreen.requestFullscreen(document.documentElement)
-                // setIsFullscreen(!isFullscreen)
+                toggleFullscreen()
             }}
-            title={"Tam ekran"}
+            title={isFullscreen ? "Tam ekrandan çık" : "Tam ekran"}
         >
-            <EnterFullScreenIcon />
+            {isFullscreen
+                ? <ExitFullScreenIcon />
+                : <EnterFullScreenIcon />
+            }
         </Button>
     )
 }

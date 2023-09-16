@@ -784,6 +784,11 @@
   dependencies:
     "@types/ms" "*"
 
+"@types/fscreen@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@types/fscreen/-/fscreen-1.0.2.tgz#24a835740f3d9cd18ca19c3d88e393c8af6f0b24"
+  integrity sha512-mcLTUz/csZ0orKbsPUXCRLs+NTK7+LWX52id+ws7HSsu/wMeuX3320Bpq+zeAfxGw0gPUVhuUozuvKbmsB+u6A==
+
 "@types/hast@^2.0.0":
   version "2.3.6"
   resolved "https://registry.yarnpkg.com/@types/hast/-/hast-2.3.6.tgz#bb8b05602112a26d22868acb70c4b20984ec7086"
@@ -1393,6 +1398,11 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
+
+fscreen@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/fscreen/-/fscreen-1.2.0.tgz#1a8c88e06bc16a07b473ad96196fb06d6657f59e"
+  integrity sha512-hlq4+BU0hlPmwsFjwGGzZ+OZ9N/wq9Ljg/sq3pX+2CD7hrJsX9tJgWWK/wiNTFM212CLHWhicOoqwXyZGGetJg==
 
 fsevents@~2.3.2:
   version "2.3.3"
