@@ -1,6 +1,6 @@
 "use client"
 import { Button, Split } from '@kod/ui'
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import MonacoEditor from '@monaco-editor/react'
 import { editor } from 'monaco-editor'
 import Terminal from './Terminal'
@@ -25,12 +25,15 @@ const KodEditor = ({ problem }: Props) => {
   const [editorLanguage, setEditorLanguage] = useState<Language>(KodStorage.getObject(StorageKeys.CURRENT_LANGUAGE) ?? problem.base_codes[0].languages);
   const editorRef = React.useRef<editor.IStandaloneCodeEditor | null>(null)
 
+  const getProblemCode = useCallback(() => {
+    return problem?.base_codes.find(baseCode => baseCode.language_id == editorLanguage.id)?.code ?? ""
+  }, [problem, editorLanguage])
+
   const problemDefaultCode = useMemo(() => {
     if (!editorLanguage || !problem) return "";
-    const defaultCode = problem?.base_codes.find(baseCode => baseCode.language_id == editorLanguage.id)?.code ?? ""
-    
+    const defaultCode = getProblemCode()
     const savedCode = getProblemSavedCodeByLanguage(problem.slug, editorLanguage.slug)
-    
+
     return savedCode || defaultCode
   }, [problem, editorLanguage])
 
@@ -39,9 +42,6 @@ const KodEditor = ({ problem }: Props) => {
     if (!problem || !editorLanguage || !value) return;
 
     setProblemCodeToStorage(problem.slug, editorLanguage.slug, value)
-}
-
-  const handleSelectedLanguage = () => {
   }
 
   return (
@@ -63,7 +63,7 @@ const KodEditor = ({ problem }: Props) => {
               />
               <div className='flex justify-end items-center space-x-1'>
                 <CopyCodeToClipboard editorRef={editorRef} />
-                <ResetEditor editorRef={editorRef} />
+                <ResetEditor editorRef={editorRef} defaultCode={getProblemCode()} />
                 <EditorSettings editorRef={editorRef} />
                 <Fullscreen />
               </div>

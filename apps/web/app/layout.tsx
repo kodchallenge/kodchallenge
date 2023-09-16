@@ -1,5 +1,6 @@
 import "@kod/ui/styles/globals.css";
 import { default as KodTRPCProvider } from "@kod/server/next/trpc/Provider";
+import { KodAlertProvider } from "@kod/lib/hoc";
 export default function RootLayout({
   children,
 }: {
@@ -9,9 +10,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <KodTRPCProvider>
-          {children}
+          <KodAlertProvider>
+            {children}
+          </KodAlertProvider>
         </KodTRPCProvider>
       </body>
-    </html>
+    </html >
   );
 }

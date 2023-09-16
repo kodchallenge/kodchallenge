@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@kod/icons": "*",
+    "@radix-ui/react-alert-dialog": "^1.0.4",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-navigation-menu": "^1.1.3",
