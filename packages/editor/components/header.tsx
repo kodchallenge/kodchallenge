@@ -1,7 +1,8 @@
 import { Button, KodLogo, UserAvatar } from '@kod/ui'
 import Link from 'next/link'
 import React from 'react'
-import { MoonIcon } from '@kod/icons'
+import { HamburgerMenuIcon, MoonIcon } from '@kod/icons'
+import ProblemList from './problem-list'
 
 type Props = {
     title?: string;
@@ -18,7 +19,14 @@ const Header = ({
                 <Link href={"/"} className='no-underline'>
                     <Logo />
                 </Link>
-                {/* <ProblemListButton /> */}
+                <ProblemList
+                    trigger={(
+                        <Button variant={"ghost"}>
+                            <HamburgerMenuIcon className='mr-2' />
+                            Problem Listesi
+                        </Button>
+                    )}
+                />
             </div>
             <div className='e-header-center text-center'>
                 {title && (

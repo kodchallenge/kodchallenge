@@ -19,7 +19,7 @@ const Editor = async ({ slug }: Props) => {
 
   return (
     <div id='k-editor' className='h-full flex flex-col max-h-screen overflow-hidden'>
-      <Header title={problem.title} logo={KodLogoWithLabel} />
+      <Header title={problem.title} />
 
       <main id='kc-editor-main' className='h-full flex-1 bg-editor-background dark:text-foreground'>
         <Split
