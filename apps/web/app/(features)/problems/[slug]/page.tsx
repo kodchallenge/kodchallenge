@@ -9,7 +9,7 @@ type Props = {
 
 const page = ({ params }: Props) => {
     return (
-        <KodEditor />
+        <KodEditor slug={params.slug} />
     )
 }
 

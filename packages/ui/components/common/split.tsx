@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import ReactSplit, { SplitProps } from 'react-split'
 import './split.css'

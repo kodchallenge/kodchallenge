@@ -1,4 +1,4 @@
-export type { AppRouter } from './routers'
+export type { AppRouter, RouterOutputs } from './routers'
 export { appRouter } from './routers'
 
 

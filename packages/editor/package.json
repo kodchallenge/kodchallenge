@@ -8,16 +8,20 @@
   "license": "MIT",
   "private": true,
   "peerDependencies": {
-    "next": "^13.4.19",
-    "react": "^18.2.0",
+    "@kod/icons": "*",
+    "@kod/lib": "*",
+    "@kod/prisma": "*",
+    "@kod/server": "*",
     "@kod/ui": "*",
-    "@kod/icons": "*"
+    "next": "^13.4.19",
+    "react": "^18.2.0"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.5.2",
     "monaco-editor": "^0.43.0"
   },
   "devDependencies": {
+    "sass": "^1.67.0",
     "tsconfig": "*"
   }
 }

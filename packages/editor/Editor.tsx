@@ -1,15 +1,25 @@
-"use client"
-import React from 'react'
-import MonacoEditor from '@monaco-editor/react'
-import Header from './components/header'
+import { KodServerTrpc } from '@kod/server/next'
 import { KodLogoWithLabel, Split } from '@kod/ui'
+import KodEditor from './components/editor'
+import Header from './components/header'
 import ProblemPanel from './components/problem'
 import './editor.css'
-import KodEditor from './components/editor'
-const Editor = () => {
+import { redirect } from 'next/navigation'
+
+type Props = {
+  slug: string
+}
+
+const Editor = async ({ slug }: Props) => {
+  const problem = await KodServerTrpc.problem.getBySlug(slug)
+
+  if (!problem) {
+    return redirect("/problems")
+  }
+
   return (
     <div id='k-editor' className='h-full flex flex-col max-h-screen overflow-hidden'>
-      <Header title="Buraya problem başlığı gelecek :)" logo={KodLogoWithLabel} />
+      <Header title={problem.title} logo={KodLogoWithLabel} />
 
       <main id='kc-editor-main' className='h-full flex-1 bg-editor-background dark:text-foreground'>
         <Split
@@ -17,8 +27,8 @@ const Editor = () => {
           sizes={[50, 50]}
           minSize={[300, 400]}
         >
-          <ProblemPanel />
-          <KodEditor />
+          <ProblemPanel problem={problem} />
+          <KodEditor problem={problem} />
         </Split>
       </main>
 

@@ -1,0 +1,1 @@
+export { default as KodMarkdown } from './kod-md'

@@ -1,6 +1,8 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Tabs, TabsContent, TabsList, TabsTrigger } from '@kod/ui'
+"use client"
+import { RouterOutputs } from '@kod/server/trpc'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@kod/ui'
 import dynamic from 'next/dynamic'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 
 const ProblemIntroductionTab = dynamic(() => import('./introduction'), {
     loading: () => <p>Yükleniyor...</p>,
@@ -10,13 +12,17 @@ const UserSolutionTab = dynamic(() => import('./submissions'), {
     loading: () => <p>Yükleniyor...</p>,
 })
 
-const ProblemPanel = () => {
+type Props = {
+    problem: RouterOutputs["problem"]["getBySlug"]
+}
+
+const ProblemPanel = ({ problem }: Props) => {
     const tabs = useMemo(() => [
         {
             value: "description",
             label: "Açıklama",
             content: ProblemIntroductionTab,
-            props: { markdown: "Hello from markdown" }
+            props: { markdown: problem?.description }
         },
         {
             value: "solutions",

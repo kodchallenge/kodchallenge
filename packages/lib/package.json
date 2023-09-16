@@ -1,0 +1,23 @@
+{
+  "name": "@kod/lib",
+  "version": "1.0.0",
+  "description": "KodChallenge lib package",
+  "main": "index.ts",
+  "repository": "https://github.com/kodchallenge/kodchallenge",
+  "author": "Yasin Torun",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@kod/icons": "*",
+    "@kod/server": "*",
+    "@kod/ui": "*",
+    "react-markdown": "^8.0.7",
+    "react-syntax-highlighter": "^15.5.0",
+    "remark-gfm": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/react-syntax-highlighter": "^15.5.7",
+    "react-syntax-highlighter": "^15.5.0",
+    "tsconfig": "*"
+  }
+}

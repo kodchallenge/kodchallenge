@@ -1,3 +1,4 @@
+"use client"
 import { Button, Split } from '@kod/ui'
 import React from 'react'
 import MonacoEditor from '@monaco-editor/react'
@@ -8,8 +9,13 @@ import CopyCodeToClipboard from './actions/copy-code-to-clipboard'
 import ResetEditor from './actions/reset-editor'
 import EditorSettings from './actions/editor-settings'
 import Fullscreen from './actions/fullscreen'
+import { RouterOutputs } from '@kod/server/trpc'
 
-const KodEditor = () => {
+type Props = {
+  problem: RouterOutputs["problem"]["getBySlug"]
+}
+
+const KodEditor = ({ problem }: Props) => {
   const editorRef = React.useRef<editor.IStandaloneCodeEditor | null>(null)
 
   const handleChangeCode = () => {
