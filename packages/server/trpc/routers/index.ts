@@ -1,4 +1,4 @@
-import { inferRouterOutputs } from "@trpc/server";
+import type { inferRouterOutputs } from "@trpc/server";
 import { mergeRouters, router } from "../trpc";
 
 import { problem } from "./problem/router";
