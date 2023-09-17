@@ -3,3 +3,46 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
+.terminal-success {
+    @apply text-success;
+}
+
+.terminal-error {
+    @apply text-destructive;
+}
+
+.terminal-warning {
+    @apply text-warning;
+}
+
+.terminal-info {
+    @apply text-info;
+}
+
+
+/* Update scrollbar for dark theme */
+#kod-editor ::-webkit-scrollbar {
+    width: 8px;
+}
+
+#kod-editor ::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+#kod-editor ::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 1px;
+}
+
+#kod-editor ::-webkit-scrollbar-thumb:hover {
+    background: #ddd;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+    background: #555;
+}
+
+html.dark  ::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}

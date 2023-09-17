@@ -1,20 +1,22 @@
 import { DividerVerticalIcon, PlayIcon, Share2Icon } from '@kod/icons'
+import { SyntaxThemes } from '@kod/lib/common'
+import { useKodTheme } from '@kod/lib/hoc'
 import { KodTrpc } from '@kod/server/next'
+import { RouterOutputs } from '@kod/server/trpc'
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@kod/ui'
 import { editor } from 'monaco-editor'
-import { monacoToLanguageSlug } from '../../lib/monaco-extends'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { useState } from 'react'
-import { RouterOutputs } from '@kod/server/trpc'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { useKodTheme } from '@kod/lib/hoc'
-import { SyntaxThemes } from '@kod/lib/common'
+import { monacoToLanguageSlug } from '../../lib/monaco-extends'
+import { colorizeTerminalInput, colorizeTerminalOutput } from '../../lib/terminal'
 
 type Props = {
     editorRef: React.MutableRefObject<editor.IStandaloneCodeEditor | null>,
     problemSlug?: string
 }
 type RunCodeResult = NonNullable<RouterOutputs["code"]["run"]["data"]>["result"]
+
 const Terminal = ({ editorRef, problemSlug }: Props) => {
     const runCodeMutation = KodTrpc.code.run.useMutation()
     const params = useParams()
@@ -35,7 +37,7 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
 
             if (!code || !languageSlug || !problemSlug) return;
 
-            setOutput("Çalıştırılıyor...")
+            setOutput(colorizeTerminalInput("Çalıştırılıyor...", "SUCCESS"))
             setCodeResult(null)
             const result = await runCodeMutation.mutateAsync({
                 code,
@@ -47,7 +49,7 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
                 setCodeResult(result.data.result)
                 setOutput("")
             } else {
-                setOutput(result.error || result.message)
+                setOutput(colorizeTerminalInput(result.error || result.message, "ERROR"))
             }
 
         } catch (err: any) {
@@ -71,10 +73,6 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
                         <PlayIcon className='mr-1' />
                         Çalıştır
                     </Button>
-                    {/* <Button variant={"secondary"} size={"sm"} onClick={handleRunCode}>
-                                            <MixerHorizontalIcon className='mr-1'/>
-                                            Testleri Başlat
-                                        </Button> */}
                     <Button variant={"default"} size={"sm"} onClick={handleSaveCode}>
                         <Share2Icon className='mr-1' />
                         Kaydet
@@ -84,7 +82,7 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
             <div className='h-0 flex-auto overflow-auto p-2'>
                 <div className='h-full overflow-y-auto'>
                     <TabsContent value="output">
-                        {(runCodeMutation.isLoading || output) && <div className={"font-code text-sm"} dangerouslySetInnerHTML={{ __html: output }} />}
+                        {(runCodeMutation.isLoading || output) && <div className={"font-code text-sm"} dangerouslySetInnerHTML={{ __html: colorizeTerminalOutput(output) }} />}
                         {codeResult?.cases && (
                             <div className='flex flex-col space-y-5'>
                                 <div className={`${codeResult.cases?.some(x => !x.status) || codeResult.cases.length < 1 ? "bg-destructive/75" : "bg-success/75"}`}>
@@ -121,7 +119,6 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
                                     <div key={i} className=''>
                                         <label className='text-sm'>{item.label}</label>
                                         <SyntaxHighlighter
-                                            //@ts-ignore
                                             children={String(item.value).replace(/\n$/, '')}
                                             style={SyntaxThemes[theme]}
                                             PreTag="div"
@@ -130,11 +127,7 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
                                 ))}
                             </div>
                         )}
-                        {/* <div className={"font-code text-sm"} dangerouslySetInnerHTML={{ __html: output }} /> */}
                     </TabsContent>
-                    {/* <TabsContent value="console">
-                                            <div className={"font-code text-sm"} dangerouslySetInnerHTML={{ __html: output }} />
-                                        </TabsContent> */}
                 </div>
             </div>
         </Tabs>

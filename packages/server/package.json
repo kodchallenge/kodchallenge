@@ -10,6 +10,7 @@
   "dependencies": {
     "@kod/compiler": "*",
     "@kod/prisma": "*",
+    "@kod/lib": "*",
     "@tanstack/react-query": "^4.35.0",
     "@trpc/client": "^10.38.2",
     "@trpc/next": "^10.38.2",
