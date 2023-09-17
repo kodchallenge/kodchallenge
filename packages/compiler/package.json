@@ -1,0 +1,16 @@
+{
+  "name": "@kod/compiler",
+  "version": "1.0.0",
+  "description": "KodChallenge Compiler Package",
+  "main": "index.ts",
+  "repository": "https://github.com/kodchallenge/kodchallenge",
+  "author": "Yasin Torun",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@kod/prisma": "*"
+  },
+  "devDependencies": {
+    "tsconfig": "*"
+  }
+}
