@@ -14,7 +14,7 @@ export const useKodTheme = () => {
     const isDark = theme === KodThemes.dark
     return {
         themes,
-        theme,
+        theme: theme as string,
         isDark,
         setTheme,
         toggleTheme

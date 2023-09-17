@@ -1,8 +1,58 @@
-import { PlayIcon, Share2Icon } from '@kod/icons'
+import { DividerVerticalIcon, PlayIcon, Share2Icon } from '@kod/icons'
+import { KodTrpc } from '@kod/server/next'
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@kod/ui'
+import { editor } from 'monaco-editor'
+import { monacoToLanguageSlug } from '../../lib/monaco-extends'
+import { useParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { RouterOutputs } from '@kod/server/trpc'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { useKodTheme } from '@kod/lib/hoc'
+import { SyntaxThemes } from '@kod/lib/common'
 
-const Terminal = () => {
-    const handleRunCode = () => {
+type Props = {
+    editorRef: React.MutableRefObject<editor.IStandaloneCodeEditor | null>,
+    problemSlug?: string
+}
+type RunCodeResult = NonNullable<RouterOutputs["code"]["run"]["data"]>["result"]
+const Terminal = ({ editorRef, problemSlug }: Props) => {
+    const runCodeMutation = KodTrpc.code.run.useMutation()
+    const params = useParams()
+    const { theme } = useKodTheme()
+
+    // states
+    const [codeResult, setCodeResult] = useState<RunCodeResult | null>(null)
+    const [output, setOutput] = useState("")
+    const [currentTestIndex, setCurrentTestIndex] = useState<number>(0)
+
+    // handlers
+    const handleRunCode = async () => {
+        try {
+            const code = editorRef.current?.getValue()
+            // TODO: Language, problem gibi editor için önemli olan verileri state management da tut. Zustand kullanılabilir. useEditor()
+            const languageSlug = monacoToLanguageSlug(editorRef.current?.getModel()?.getLanguageId() || "")
+            problemSlug = problemSlug || params.slug as string;
+
+            if (!code || !languageSlug || !problemSlug) return;
+
+            setOutput("Çalıştırılıyor...")
+            setCodeResult(null)
+            const result = await runCodeMutation.mutateAsync({
+                code,
+                languageSlug,
+                problemSlug
+            })
+
+            if (result.success && result.data) {
+                setCodeResult(result.data.result)
+                setOutput("")
+            } else {
+                setOutput(result.error || result.message)
+            }
+
+        } catch (err: any) {
+
+        }
     }
 
     const handleSaveCode = () => {
@@ -34,9 +84,8 @@ const Terminal = () => {
             <div className='h-0 flex-auto overflow-auto p-2'>
                 <div className='h-full overflow-y-auto'>
                     <TabsContent value="output">
-                        <div className={"font-code text-sm"} dangerouslySetInnerHTML={{ __html: "Çalıştırılıyor..." }} />
-                        {/* {(isRunning || output) && <div className={"font-code text-sm"} dangerouslySetInnerHTML={{ __html: output }} />} */}
-                        {/* {codeResult?.cases && (
+                        {(runCodeMutation.isLoading || output) && <div className={"font-code text-sm"} dangerouslySetInnerHTML={{ __html: output }} />}
+                        {codeResult?.cases && (
                             <div className='flex flex-col space-y-5'>
                                 <div className={`${codeResult.cases?.some(x => !x.status) || codeResult.cases.length < 1 ? "bg-destructive/75" : "bg-success/75"}`}>
                                     <label className='text-sm flex gap-x-2 items-center'>
@@ -74,14 +123,13 @@ const Terminal = () => {
                                         <SyntaxHighlighter
                                             //@ts-ignore
                                             children={String(item.value).replace(/\n$/, '')}
-                                            //@ts-ignore
-                                            style={theme == THEMES.DARK ? oneDark : oneLight}
+                                            style={SyntaxThemes[theme]}
                                             PreTag="div"
                                         />
                                     </div>
                                 ))}
                             </div>
-                        )} */}
+                        )}
                         {/* <div className={"font-code text-sm"} dangerouslySetInnerHTML={{ __html: output }} /> */}
                     </TabsContent>
                     {/* <TabsContent value="console">

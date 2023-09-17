@@ -84,7 +84,7 @@ const KodEditor = ({ problem }: Props) => {
             />
           </div>
         </section>
-        <Terminal />
+        <Terminal editorRef={editorRef} />
       </Split>
     </div>
   )

@@ -6,14 +6,11 @@ import remarkGfm from 'remark-gfm'
 import './markdown.scss'
 import { cn } from '@kod/ui'
 import { KodThemes, useKodTheme } from '../hoc'
+import { SyntaxThemes } from '../common'
 type Props = {
     markdown: string;
 }
 
-const SyntaxThemes = {
-    [KodThemes.dark]: oneDark,
-    [KodThemes.light]: oneLight
-}
 
 const KodMarkdown = ({ markdown }: Props) => {
     const { theme } = useKodTheme()
@@ -27,7 +24,6 @@ const KodMarkdown = ({ markdown }: Props) => {
                     return !inline && match ? (
                         <SyntaxHighlighter
                             children={String(children).replace(/\n$/, '')}
-                            //@ts-ignore
                             style={SyntaxThemes[theme]}
                             language={match[1]}
                             PreTag="div"
