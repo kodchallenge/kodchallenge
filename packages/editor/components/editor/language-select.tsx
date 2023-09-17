@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { KodStorage } from '@kod/lib/storage'
 import { StorageKeys } from '../../constants'
 type Props = {
-    data: NonNullable<RouterOutputs["language"]["byId"]>[],
+    data: NonNullable<RouterOutputs["problem"]["getBySlug"]>["base_codes"][number]["languages"][], // WTF? Why is this so complicated?
     selected: Props["data"][number],
     onSelect: (lang: Props["data"][number]) => void
 }

@@ -1,11 +1,8 @@
 import { PlayIcon, Share2Icon } from '@kod/icons'
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@kod/ui'
-import React from 'react'
 
 const Terminal = () => {
-
     const handleRunCode = () => {
-
     }
 
     const handleSaveCode = () => {
