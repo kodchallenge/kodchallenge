@@ -42,6 +42,7 @@ model problems {
   is_deleted  Boolean
   difficulty  String       @db.VarChar
   category_id Int
+  subtitle    String?      @db.VarChar(255)
   base_codes  base_codes[]
   categories  categories   @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   solutions   solutions[]

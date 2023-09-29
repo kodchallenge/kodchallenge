@@ -1,6 +1,7 @@
 import { Logo } from "@/components/logo"
 import { GitHubLogoIcon, LinkedInLogoIcon, TwitterLogoIcon } from "@kod/icons"
 import { Button } from '@kod/ui'
+import Link from "next/link"
 
 const Footer = () => {
 
@@ -12,6 +13,18 @@ const Footer = () => {
 
     return (
         <footer className="relative order-2 border-t border-primary/50">
+            <div className='my-4 text-center'>
+                <p className="text-foreground/75">
+                    KodChallenge platformu <b className='underline'>açık kaynaklıdır.</b> <br />
+                    Geliştirmek için bize katkıda bulunabilirsin.
+                </p>
+                <Link href={"https://github.com/kodchallenge/kodchallenge/issues"} target="_blank">
+                    <Button variant={'secondary'} className="mt-2">
+                        Sorun veya öneri bildir
+                        <GitHubLogoIcon className="ml-2"/>
+                    </Button>
+                </Link>
+            </div>
             <section className="">
                 <div className="container flex flex-col items-center px-8 py-8 mx-auto max-w-7xl sm:flex-row">
                     <Logo />

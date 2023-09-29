@@ -1,15 +1,17 @@
-import { Avatar, AvatarFallback, Badge, Card, CardContent, CardDescription, CardHeader, CardTitle, cn } from '@kod/ui'
+import { Avatar, AvatarFallback, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, cn } from '@kod/ui'
 import Link from 'next/link'
 import { problemDifficulty } from '../lib/problemDifficulty'
+import { RouterOutputs } from '@kod/server/trpc'
+import { CheckCircledIcon, PlayIcon, RulerSquareIcon } from '@kod/icons'
 
 type Props = {
-    problem: any
+    problem: RouterOutputs["problem"]["getAll"][number]
 }
 
 const ProblemListItem = ({ problem }: Props) => {
     return (
         <Link className='no-underline hover:no-underline' href={`/problems/${problem.slug}`} key={problem.id}>
-            <Card key={problem.title} className='bg-background z-10 cursor-pointer hover:shadow-lg'>
+            <Card key={problem.title} className='bg-card z-10 cursor-pointer hover:shadow-xl hover:scale-102 ease-in-out duration-200'>
                 <div className="flex justify-between items-center px-2 space-x-4">
                     <Avatar className='w-16 h-16'>
                         {/* <AvatarImage src={problem.image} /> */}
@@ -29,9 +31,29 @@ const ProblemListItem = ({ problem }: Props) => {
                         </CardHeader>
                         <CardContent>
                             <p className='opacity-70'>
-                                {problem.introduction}
+                                {problem.subtitle}
                             </p>
                         </CardContent>
+                    </div>
+                    <div className='flex text-start'>
+                        <Button
+                            variant={'secondary'}
+                            disabled={problem.is_deleted}
+                            className='flex items-center gap-2 mr-12'
+                        >
+                            {problem.is_deleted
+                            ? (
+                                <>
+                                    Çözüldü
+                                    <CheckCircledIcon />
+                                </>
+                            ) : (
+                                <>
+                                    Çöz
+                                    <PlayIcon />
+                                </>
+                            )}
+                        </Button>
                     </div>
                 </div>
             </Card>

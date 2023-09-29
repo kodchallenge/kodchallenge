@@ -10,7 +10,8 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "ui:add": "yarn workspace @kod/ui ui:add"
+    "ui:add": "yarn workspace @kod/ui ui:add",
+    "db:generate": "prisma generate"
   },
   "devDependencies": {
     "eslint": "^8.48.0",
