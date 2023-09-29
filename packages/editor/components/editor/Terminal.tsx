@@ -45,6 +45,8 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
                 problemSlug
             })
 
+            console.log(result)
+
             if (result.success && result.data) {
                 setCodeResult(result.data.result)
                 setOutput("")
@@ -115,11 +117,11 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
                                     { label: "Girdi", value: codeResult.cases[currentTestIndex]?.input },
                                     { label: "Beklenen", value: codeResult.cases[currentTestIndex]?.expected },
                                     { label: "Çıktı", value: codeResult.cases[currentTestIndex]?.output },
-                                ].map((item, i) => item.value && (
+                                ].map((item, i) => (
                                     <div key={i} className=''>
                                         <label className='text-sm'>{item.label}</label>
                                         <SyntaxHighlighter
-                                            children={String(item.value).replace(/\n$/, '')}
+                                            children={String(item.value)?.replace(/\n$/, '') || ""}
                                             style={SyntaxThemes[theme]}
                                             PreTag="div"
                                         />

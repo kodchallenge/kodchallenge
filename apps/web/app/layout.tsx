@@ -7,7 +7,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body>
         <KodTRPCProvider>
           <KodThemeProvider attribute="class" themes={["dark", "light"]} defaultTheme="dark">

@@ -21,7 +21,7 @@ const Editor = async ({ slug }: Props) => {
     <div id='k-editor' className='h-full flex flex-col max-h-screen overflow-hidden'>
       <Header title={problem.title} />
 
-      <main id='kc-editor-main' className='h-full flex-1 bg-editor-background dark:text-foreground'>
+      <main id='kc-editor-main' className='h-full flex-1 bg-editor-background'>
         <Split
           className='px-4 h-full py-2 flex'
           sizes={[50, 50]}
