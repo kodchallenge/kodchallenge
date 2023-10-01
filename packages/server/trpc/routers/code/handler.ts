@@ -1,6 +1,7 @@
 import { z } from "zod"
 import { prisma } from '@kod/prisma'
 import { kodCompilerRun } from "@kod/compiler"
+import { getProblemIO, kodProblemPath } from "../../../common/problem"
 
 export const ZRunInput = z.object({
     code: z.string(),
@@ -29,7 +30,7 @@ export const runHandler = async ({ input }: { input: TZRunInput }) => {
 
         if (!language) throw new Error('Çalıştırmak istediğiniz programlama dili bulunamadı!')
 
-        const problemPath = path.join(process.env.KOD_PROBLEM_PATH ?? process.cwd(), problemSlug, language.slug)
+        const problemPath = path.join(kodProblemPath, problemSlug, language.slug)
 
         if (!fse.existsSync(problemPath)) throw new Error('Henüz bu soruyu bu dilde çözemezsiniz!')
 
@@ -43,8 +44,10 @@ export const runHandler = async ({ input }: { input: TZRunInput }) => {
 
         fse.writeFileSync(path.join(solutionPath, 'solution.' + language.slug), code)
 
+        const io = getProblemIO(problemSlug)
+
         const codeResult = await kodCompilerRun({
-            cases: JSON.parse(problem.io),
+            cases: io,
             languageSlug,
             solutionPath,
         })
@@ -86,7 +89,7 @@ export const runHandler = async ({ input }: { input: TZRunInput }) => {
         return {
             success: false,
             message: "Sunucu taraflı hata oluştu",
-            error: error.message,
+            error: error.message?.replace(kodProblemPath, "<problem>"),
             data: null
         }
     }

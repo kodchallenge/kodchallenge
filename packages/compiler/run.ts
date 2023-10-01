@@ -11,6 +11,9 @@ export type RunCodeProps = {
         output: string
     }[],
 }
+
+const WORKDIR = '/usr/src/kod/solution'
+
 export const run = async ({
     solutionPath,
     languageSlug,
@@ -33,7 +36,10 @@ export const run = async ({
         // BUILD
         execSync(`docker run -t -d ${languageSlug}_app`)
         const container = execSync(`docker ps -l -q`).toString().trim()
-        execSync(`docker cp ${solutionPath}/. ${container}:/app`)
+        execSync(`docker cp ${solutionPath}/. ${container}:${WORKDIR}`)
+
+        // Copy runner-lib
+        execSync(`docker cp ${process.env.KOD_RUNNER_LIB_PATH}/. ${container}:/usr/src/runner-lib`)
 
         const casePromises = cases.map(async ({ input, output: expected }, index): Promise<ResultCase> => {
             return new Promise((resolve, reject) => {
@@ -46,7 +52,7 @@ export const run = async ({
                     timeout: false
                 }
                 try {
-                    const runExec = exec(`docker exec -i ${container} sh -c "cd /app && ${command} ${input}"`, (err, stdout, stderr) => {
+                    const runExec = exec(`docker exec -i ${container} sh -c "cd ${WORKDIR} && ${command} ${input}"`, (err, stdout, stderr) => {
                         if (stderr) {
                             caseResult.build = true
                             caseResult.output = stderr
