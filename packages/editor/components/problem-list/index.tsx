@@ -26,7 +26,7 @@ const ProblemList = async ({ trigger }: Props) => {
         </SheetHeader>
         <div className='my-2 flex border last:border-b-0 flex-col rounded'>
           {problems?.map((problem) => (
-              <Link href={"/problems/" + problem.slug} className='border-b hover:bg-accent hover:no-underline'>
+              <Link href={"/problems/" + problem.slug} className='border-b hover:bg-accent hover:no-underline duration-200'>
                 <div className="flex px-2 py-4 justify-between items-center space-x-2">
                   <ProblemAvatar title={problem.title} className="w-10 h-10" />
                   <div className='pb-1 flex flex-1 flex-row items-center justify-between space-y-1'>
@@ -34,7 +34,6 @@ const ProblemList = async ({ trigger }: Props) => {
                     <div>
                       <Badge
                         variant={"secondary"}
-                        className={'text-white'}
                       >
                         {problem.difficulty}
                       </Badge>

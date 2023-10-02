@@ -114,7 +114,7 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
                                     ))}
                                 </div>
                                 {[
-                                    { label: "Girdi", value: codeResult.cases[currentTestIndex]?.input },
+                                    { label: "Girdi", value: codeResult.cases[currentTestIndex]?.input?.replace(/\\"/g, '') },
                                     { label: "Beklenen", value: codeResult.cases[currentTestIndex]?.expected },
                                     { label: "Çıktı", value: codeResult.cases[currentTestIndex]?.output },
                                 ].map((item, i) => (

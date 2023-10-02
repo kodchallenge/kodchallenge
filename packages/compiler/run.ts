@@ -52,7 +52,8 @@ export const run = async ({
                     timeout: false
                 }
                 try {
-                    const runExec = exec(`docker exec -i ${container} sh -c "cd ${WORKDIR} && ${command} ${input}"`, (err, stdout, stderr) => {
+                    const runCommand = `${command} ${input}`
+                    const runExec = exec(`docker exec -i ${container} sh -c "cd ${WORKDIR} && ${runCommand}"`, (err, stdout, stderr) => {
                         if (stderr) {
                             caseResult.build = true
                             caseResult.output = stderr

@@ -66,7 +66,7 @@ html.dark ::-webkit-scrollbar-thumb:hover {
         --primary: 23 86% 47%;
         --primary-foreground: 209 41% 90%;
         --secondary: 209 40% 25%;
-        --secondary-foreground: 220 25% 30%;
+        --secondary-foreground: 209, 22%, 76%;
         --accent: 209 40% 25%;
         --accent-foreground: 220 21% 76%;
         --destructive: 0 76% 50%;

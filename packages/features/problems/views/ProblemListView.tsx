@@ -25,6 +25,9 @@ const ProblemListView = async () => {
             <div className='container'>
                 <div className=''>
                     <h1 className='text-4xl font-bold text-center'>Problemler</h1>
+                    <p className='text-foreground/75 text-center'>
+                        KodChallenge'da yer alan problemleri çözerek kendini geliştirebilirsin.
+                    </p>
                     <div className='my-12'>
                         <div className='grid grid-cols-4 grid-flow-row gap-4 w-full'>
                             <div className='col-span-3 grid grid-cols-1 gap-4'>

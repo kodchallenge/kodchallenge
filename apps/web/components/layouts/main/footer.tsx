@@ -20,7 +20,7 @@ const Footer = () => {
                 </p>
                 <Link href={"https://github.com/kodchallenge/kodchallenge/issues"} target="_blank">
                     <Button variant={'secondary'} className="mt-2">
-                        Sorun veya öneri bildir
+                        Hata veya öneri bildir
                         <GitHubLogoIcon className="ml-2"/>
                     </Button>
                 </Link>

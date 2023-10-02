@@ -1,6 +1,6 @@
 "use client"
 import React, { PropsWithChildren, useCallback, useMemo, useReducer } from 'react';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@kod/ui';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, Button } from '@kod/ui';
 import KodAlertContext from './context';
 import { KodAlertMethods } from './type';
 import reducer, { initialState } from './reducer';
@@ -39,15 +39,16 @@ const KodAlertProvider = ({ children }: PropsWithChildren) => {
                         <AlertDialogCancel onClick={dismiss}>İptal</AlertDialogCancel>
                         {!!state.buttons?.length && (
                             state.buttons.map((button, i) => (
-                                <AlertDialogAction
+                                <Button
                                     className={button.className}
                                     onClick={() => {
                                         button.onClick?.()
                                         !button.disableHideAlert && dismiss()
                                     }}
+                                    variant={"default"}
                                 >
                                     {button.text}
-                                </AlertDialogAction>
+                                </Button>
                             ))
                         )}
                     </AlertDialogFooter>
