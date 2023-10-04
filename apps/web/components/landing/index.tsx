@@ -8,8 +8,8 @@ const index = () => {
 
     const editorFeatures = [
         { title: "Türkçe Sorular", description: "Sorular Türkçe olarak hazırlanmıştır.", icon: "🇹🇷" },
-        { title: "Unit Test Mantığı", description: "Soruların testleri unit test olarak hazırlanmakta.", icon: "🧪" },
-        { title: "Editor", description: "Özelleştirilebilir editör, hızlı adapte olma", icon: "📝" },
+        { title: "Programlama Dilleri", description: "Soruları birden fazla dilde çözebilirsiniz.", icon: "👨‍💻" },
+        { title: "Editor", description: "Özelleştirilebilir editör, hızlı adapte olma, esneklik", icon: "📝" },
     ]
 
     const teams = [
@@ -40,10 +40,15 @@ const index = () => {
             </section>
 
             <section className="py-6 border-t border-b border-gray-100 dark:border-gray-700">
-                <div className="container relative">
-                    <p className='flex justify-center flex-col items-center'>
-                        Açık Kaynak Kodlu 🚀
-                    </p>
+                <div className="container relative text-center">
+                    <a href='https://github.com/kodchallenge/kodchallenge' target='_blank' className='hover:underline hover:text-blue-400'>
+                        <label className='flex justify-center items-center gap-2 cursor-pointer'>
+                            <span>
+                                Açık Kaynak Kodlu
+                            </span>
+                            <GitHubLogoIcon />
+                        </label>
+                    </a>
                 </div>
             </section>
 
