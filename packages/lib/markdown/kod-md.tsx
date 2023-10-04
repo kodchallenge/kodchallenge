@@ -1,5 +1,6 @@
 "use client"
 import ReactMarkdown from 'react-markdown'
+import rehypeRaw from "rehype-raw";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
@@ -18,6 +19,8 @@ const KodMarkdown = ({ markdown }: Props) => {
         <ReactMarkdown
             className='kod-md prose prose-sm md:prose !max-w-full w-full'
             remarkPlugins={[remarkGfm]}
+            // @ts-ignore
+            rehypePlugins={[rehypeRaw]}
             components={{
                 code({ node, inline, className, children, ...props }) {
                     const match = /language-(\w+)/.exec(className || '')
