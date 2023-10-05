@@ -4,30 +4,30 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 233, 31%, 11%;
+    --foreground: 0 0% 91%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 30 40% 96.1%;
+    --muted-foreground: 233.16, 3.36%, 42.09%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 12 12 12;
+    --popover-foreground: 222 84% 4.9%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 230, 28%, 13%;
+    --card-foreground: 208 8% 70%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 0 0% 100%;
-    --switch: 210 40% 90.4%;
+    --border: 235, 11%, 23%;
+    --input: 12 12 12;
+    --switch: 30 40% 90.4%;
 
     --primary: 13.95deg 100% 63.73%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 30 40% 96.1%;
+    --secondary-foreground: 222 47.4% 11.2%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 30 40% 96.1%;
+    --accent-foreground: 222 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -36,14 +36,14 @@
     --success-foreground: 210 40% 98%;
 
     --warning: 34.8deg 100% 54.97%;
-    --warning-foreground: 222.2 84% 4.9%;
+    --warning-foreground: 222 84% 4.9%;
 
     --info: 208deg 78.26% 54.9%;
-    --info-foreground: 222.2 84% 4.9%;
+    --info-foreground: 222 84% 4.9%;
 
-    --ring: 215 20.2% 65.1%;
+    --ring: 50 20.2% 65.1%;
 
-    --editor-background: 210 40% 96.1%;
+    --editor-background: 30 40% 96.1%;
 
     --radius: 0.5rem;
   }
@@ -53,7 +53,7 @@
     --foreground: 0 0% 91%;
 
     --muted: 30 40% 96.1%;
-    --muted-foreground: 40 16.3% 46.9%;
+    --muted-foreground: 233.16, 3.36%, 42.09%;
 
     --popover: 12 12 12;
     --popover-foreground: 222 84% 4.9%;
