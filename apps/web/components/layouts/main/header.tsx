@@ -7,7 +7,7 @@ import { LogoWithLabel } from '@/components/logo';
 const navs = [
     { name: "Problemler", to: "/problems" },
     { name: "Yarışmalar", to: "/contests" },
-    { name: "Etkinlikler", to: "/challenges" },
+    // { name: "Etkinlikler", to: "/challenges" },
     { name: "Projeler", to: "/projects" },
 ]
 
