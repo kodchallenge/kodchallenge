@@ -3,14 +3,24 @@ import AuthCard from '@/components/auth/auth-card'
 import { Button, Input } from '@kod/ui'
 import { GitHubLogoIcon } from '@kod/icons'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { FormEvent, useEffect, useState } from 'react'
 import { LINKS } from '@/utils/constants'
+import { AuthErrors, login } from '@kod/features/auth/next'
+import { useKodAuth } from '@kod/lib/hoc'
+
+const authErrorMessages: { [key: string]: string } = {
+    [AuthErrors.MISSING_CREDENTIALS]: "Kullanıcı adı veya şifre boş bırakılamaz",
+    [AuthErrors.NO_CREDENTIALS_PROVIDED]: "Kullanıcı adı veya şifre boş bırakılamaz",
+    [AuthErrors.INVALID_USERNAME_PASSWORD]: "Kullanıcı adı veya şifre hatalı",
+}
 
 const page = () => {
+    const { isAuthenticated } = useKodAuth()
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>("")
-    // const { login } = useAuth()
+
+    const router = useRouter()
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -20,16 +30,20 @@ const page = () => {
         const usernameOrEmail = formData.get('username') as string
         const password = formData.get('password') as string
         setLoading(true)
-        // login({ usernameOrEmail, password }, (err) => {
-        //     setLoading(false)
-        //     console.error(err)
-        //     setError(err.message)
-        // })
+        const res = await login({ usernameOrEmail, password })
+        if (!res.error) router.push("/") // TODO: add callback url
+        else setError(authErrorMessages[res.error] || "Bir hata oluştu")
+        setLoading(false)
     }
     const searchParams = useSearchParams()
-    useEffect(() => {
-        if (searchParams.get('error')) setError("Kullanıcı adı veya şifre hatalı")
-    }, [searchParams])
+
+    // useEffect(() => {
+    //     if (searchParams.get('error')) setError("Kullanıcı adı veya şifre hatalı")
+    // }, [searchParams])
+
+    if(isAuthenticated) {
+        router.push("/")
+    }
 
     return (
         <>

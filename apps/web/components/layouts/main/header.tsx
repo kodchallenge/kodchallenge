@@ -1,8 +1,16 @@
 "use client";
-import React from 'react'
-import { Button, NavItem, NavigationMenu, NavigationMenuList } from "@kod/ui";
-import Link from "next/link";
 import { LogoWithLabel } from '@/components/logo';
+import { logout } from '@kod/features/auth/next';
+import { ExitIcon, UserIcon } from '@kod/icons';
+import { useKodAuth } from '@kod/lib/hoc';
+import {
+    Button, DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, NavItem, NavigationMenu, NavigationMenuList, UserAvatar
+} from "@kod/ui";
+import Link from "next/link";
 
 const navs = [
     { name: "Problemler", to: "/problems" },
@@ -12,7 +20,32 @@ const navs = [
 ]
 
 const Header = () => {
-    const user = null;
+    const { isAuthenticated, user } = useKodAuth()
+
+    const UserDropdown = () => (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant='ghost'>
+                    <UserAvatar avatar={user.avatar} username={user.username} />
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel>Hesabım</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                    <DropdownMenuItem>
+                        <UserIcon className="mr-2 h-4 w-4" />
+                        <span>Profil</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className='my-2 bg-destructive text-destructive-foreground hover:bg-destructive-foreground hover:text-destructive' onClick={logout}>
+                        <ExitIcon className="mr-2 h-4 w-4" />
+                        <span>Çıkış Yap</span>
+                    </DropdownMenuItem>
+                </DropdownMenuGroup>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+
     return (
         <header className={""}>
             <div className="md:flex flex-col hidden">
@@ -30,7 +63,7 @@ const Header = () => {
                         </NavigationMenuList>
                     </div>
                     <div className="flex items-center space-x-2">
-                        {!user ? (
+                        {!isAuthenticated ? (
                             <>
                                 <Link href={"/auth/login"}>
                                     Giriş Yap
@@ -40,7 +73,9 @@ const Header = () => {
                                 </Link>
                             </>
                         ) : (
-                            <Link href={"/@" + user.username} className="btn btn-primary">Hesabım</Link>
+                            // <Link href={"/@" + user.username} className="btn btn-primary">Hesabım</Link>
+                            // <UserAvatar avatar={user.avatar} username={user.username} />
+                            <UserDropdown />
                         )}
                     </div>
                 </NavigationMenu>

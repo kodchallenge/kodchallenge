@@ -10,7 +10,8 @@
   "dependencies": {
     "@kod/icons": "*",
     "@kod/ui": "*",
-    "@kod/server": "*"
+    "@kod/server": "*",
+    "@kod/lib": "*"
   },
   "devDependencies": {
     "tsconfig": "workspace:*"

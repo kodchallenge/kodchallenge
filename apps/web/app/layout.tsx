@@ -1,6 +1,6 @@
 import "@kod/ui/styles/globals.css";
 import { default as KodTRPCProvider } from "@kod/server/next/trpc/Provider";
-import { KodAlertProvider, KodThemeProvider } from "@kod/lib/hoc";
+import { KodAlertProvider, KodAuthProvider, KodThemeProvider } from "@kod/lib/hoc";
 export default function RootLayout({
   children,
 }: {
@@ -12,7 +12,9 @@ export default function RootLayout({
         <KodTRPCProvider>
           <KodThemeProvider attribute="class" themes={["dark", "light"]} defaultTheme="dark">
             <KodAlertProvider>
-              {children}
+              <KodAuthProvider>
+                {children}
+              </KodAuthProvider>
             </KodAlertProvider>
           </KodThemeProvider>
         </KodTRPCProvider>
