@@ -15,12 +15,12 @@ const page = () => {
                 <div className="grid w-full items-center gap-4">
                     <div className="flex flex-col space-y-1.5">
                         <label htmlFor="username">E-posta</label>
-                        <Input id="username" placeholder="E-posta adresinizi giriniz" />
+                        <Input tabIndex={1} id="username" placeholder="E-posta adresinizi giriniz" />
                     </div>
                 </div>
 
                 <div className='mt-8 flex flex-col space-y-3'>
-                    <Button className='w-full'>
+                    <Button type="submit" tabIndex={2} className='w-full'>
                         Bağlantı Linki Gönder
                     </Button>
                 </div>

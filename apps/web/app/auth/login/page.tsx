@@ -52,23 +52,23 @@ const page = () => {
                     <div className="grid w-full items-center gap-4">
                         <div className="flex flex-col space-y-1.5">
                             <label htmlFor="username">Kullanıcı Adı veya Eposta</label>
-                            <Input id="username" name='username' placeholder="Kullanıcı Adı veya E-posta adresinizi giriniz" />
+                            <Input tabIndex={1} id="username" name='username' placeholder="Kullanıcı Adı veya E-posta adresinizi giriniz" />
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <div className='flex justify-between items-center'>
                                 <label htmlFor="password">Şifre</label>
                                 <Link href={LINKS.forgotPassword}>
-                                    <Button size={"sm"} variant='link' className='text-primary'>
+                                    <Button type='button' size={"sm"} variant='link' className='text-primary'>
                                         Şifremi Unuttum
                                     </Button>
                                 </Link>
                             </div>
-                            <Input id="password" name='password' type='password' placeholder="Şifrenizi giriniz" />
+                            <Input tabIndex={2} id="password" name='password' type='password' placeholder="Şifrenizi giriniz" />
                         </div>
                     </div>
                     {error && <p className='text-red-500 text-sm my-3'>{error}</p>}
                     <div className='mt-8 flex flex-col space-y-3'>
-                        <Button type='submit' className='w-full' disabled={loading}>
+                        <Button tabIndex={3} type='submit' className='w-full' disabled={loading}>
                             {loading ? "Giriş Yapılıyor.." : "Giriş Yap"}
                         </Button>
                         <div className='flex-1 w-full flex justify-between items-center'>

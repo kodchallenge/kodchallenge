@@ -29,7 +29,7 @@ const page = () => {
                     </div>
 
                     <div className='mt-8 flex flex-col space-y-3'>
-                        <Button className='w-full'>
+                        <Button type='submit' className='w-full'>
                             Kayıt Ol
                         </Button>
                     </div>
