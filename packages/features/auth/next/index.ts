@@ -17,7 +17,7 @@ export type LoginResponse = {
 export const login = async (data: LoginProps, callbackUrl = "/"): Promise<LoginResponse> => {
     if (data && data.usernameOrEmail && data.password) {
         return await signIn('credentials', {
-        ...data,
+            ...data,
             callbackUrl: callbackUrl,
             redirect: false
         }) as LoginResponse

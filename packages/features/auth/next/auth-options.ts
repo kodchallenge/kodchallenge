@@ -8,6 +8,7 @@ export const authOptions: NextAuthOptions = {
     session: {
         strategy: "jwt",
     },
+    secret: process.env.NEXTAUTH_SECRET,
     providers: [
         CredentialsProvider({
             name: "Sign in",
@@ -26,7 +27,7 @@ export const authOptions: NextAuthOptions = {
                 const user = await prisma.users.findFirst({
                     where: {
                         OR: [
-                            { username: usernameOrEmail,},
+                            { username: usernameOrEmail, },
                             { email: usernameOrEmail }
                         ],
                     },
@@ -42,7 +43,7 @@ export const authOptions: NextAuthOptions = {
                     console.error("No user found.",);
                     throw new Error(AuthErrors.INVALID_USERNAME_PASSWORD);
                 }
-                console.log(await hashPassword(password))
+
                 if (await verifyPassword(password, user.password)) {
                     console.error("Invalid password");
                     throw new Error(AuthErrors.INVALID_USERNAME_PASSWORD);
@@ -53,10 +54,20 @@ export const authOptions: NextAuthOptions = {
                     email: user.email,
                     username: user.username,
                     avatar: user.avatar,
-                 };
+                };
             },
         }),
     ],
+    callbacks: {
+        async jwt({ token, user }) {
+            return { ...token, ...user };
+        },
+
+        async session({ session, token }) {
+            session.user = token as any;
+            return session;
+        },
+    },
     pages: {
         signIn: "/auth/login",
         signOut: "/auth/logout",
