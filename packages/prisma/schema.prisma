@@ -37,6 +37,7 @@ model problems {
   slug        String       @db.VarChar
   description String       @db.VarChar
   io          String       @db.VarChar
+  icon        String       @db.VarChar
   score       Int
   is_private  Boolean
   is_deleted  Boolean

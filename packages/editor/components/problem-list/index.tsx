@@ -29,7 +29,7 @@ const ProblemList = async ({ trigger }: Props) => {
           {problems?.map((problem) => (
               <Link href={"/problems/" + problem.slug} className='border-b hover:bg-accent hover:no-underline duration-200'>
                 <div className="flex px-2 py-4 justify-between items-center space-x-2">
-                  <ProblemAvatar title={problem.title} className="w-10 h-10" />
+                  <ProblemAvatar title={problem.title} icon={problem.icon} className="w-10 h-10" />
                   <div className='pb-1 flex flex-1 flex-row items-center justify-between space-y-1'>
                     <h2 className='text-md font-medium'>{problem.title}</h2>
                     <div>
