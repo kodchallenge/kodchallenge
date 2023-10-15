@@ -57,7 +57,7 @@ const index = () => {
                     <h3 className="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">KodChallenge Nedir?</h3>
 
                     <p className="text-slate-400 max-w-xl mx-auto">
-                        KodChallenge, yazılım geliştirme alanında kendini geliştirmek isteyenler için oluşturulmuş bir topluluktur.
+                        KodChallenge, yazılım geliştirme alanında kendini geliştirmek isteyenler için oluşturulmuş bir platformdur.
                     </p>
                 </div>
                 <div className="container relative md:mt-24 mt-16">

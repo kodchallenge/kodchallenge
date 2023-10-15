@@ -1,8 +1,8 @@
 import { Avatar, AvatarFallback, Badge, Button, Card, CardContent, CardDescription, CardHeader, CardTitle, cn } from '@kod/ui'
 import Link from 'next/link'
-import { problemDifficulty } from '../lib/problemDifficulty'
 import { RouterOutputs } from '@kod/server/trpc'
 import { CheckCircledIcon, PlayIcon, RulerSquareIcon } from '@kod/icons'
+import { problemDifficulty } from '@kod/lib/common'
 
 type Props = {
     problem: RouterOutputs["problem"]["getAll"][number]
@@ -25,7 +25,7 @@ const ProblemListItem = ({ problem }: Props) => {
                                     variant={"secondary"}
                                     className={cn('text-white', problemDifficulty[problem.difficulty]?.badgeColor)}
                                 >
-                                    {problem.difficulty}
+                                    {problemDifficulty[problem.difficulty].name}
                                 </Badge>
                             </CardDescription>
                         </CardHeader>

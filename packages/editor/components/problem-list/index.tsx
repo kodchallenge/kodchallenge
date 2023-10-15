@@ -1,5 +1,6 @@
-import { KodServerTrpc, KodTrpc } from '@kod/server/next'
-import { Badge, ProblemAvatar, Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, cn } from '@kod/ui'
+import { problemDifficulty } from '@kod/lib/common/problem-difficulty'
+import { KodServerTrpc } from '@kod/server/next'
+import { Badge, ProblemAvatar, Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@kod/ui'
 import Link from 'next/link'
 import React from 'react'
 
@@ -35,7 +36,7 @@ const ProblemList = async ({ trigger }: Props) => {
                       <Badge
                         variant={"secondary"}
                       >
-                        {problem.difficulty}
+                        {problemDifficulty[problem.difficulty].name}
                       </Badge>
                     </div>
                   </div>

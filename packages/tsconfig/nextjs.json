@@ -23,6 +23,6 @@
         "@ui/components/ui/*": ["../../packages/ui/components/ui/*"]
       }
     },
-    "include": ["src", "next-env.d.ts", "../types/next-auth.d.ts"],
+    "include": ["src", "next-env.d.ts", "../lib/next-auth.d.ts"],
     "exclude": ["node_modules"]
   }

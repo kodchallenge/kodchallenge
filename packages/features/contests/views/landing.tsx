@@ -3,7 +3,7 @@ import React from 'react'
 const infos = [
     { title: "Yarışmalar Nedir?", description: "Belli bir süre içerisinde size verilen algoritma sorularını çözerek puan kazanabileceğiniz yarışmalardır.", icon: "🇹" },
     { title: "Ödül", description: "Yarışmalar sonunda en çok puanı toplayan kişiler ödül kazanır. Ödüller, yarışmaya göre değişkenlik gösterir.", icon: "🏆" },
-    { title: "Açık Platform", description: "Dileyen herkes ücretsiz bir şekilde yarışma oluşturabilir ve katılabilir. Kendi algoritmalarınızı tasarlayın veya diğer kullanıcılarımızın hazırladığı zorlu sorunları çözerek becerilerinizi test edin.", icon: "🌐" },
+    { title: "Açık Platform", description: "Dileyen herkes ücretsiz bir şekilde yarışma oluşturabilir ve katılabilir. Kendi algoritmalarınızı tasarlayın veya diğer kullanıcılarımızın hazırladığı problemleri çözerek becerilerinizi test edin.", icon: "🌐" },
     { title: "Katılım Şartları", description: "Yarışmalara katılmak için sadece platformumuza üye olmanız yeterli! Yarışmaların kurallarını ve şartlarını yarışmayı düzenleyen kişinin belirlediğini unutmayın.", icon: "📝" },
 ]
 
