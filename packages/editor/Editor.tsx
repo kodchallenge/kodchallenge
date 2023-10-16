@@ -5,17 +5,13 @@ import Header from './components/header'
 import ProblemPanel from './components/problem'
 import './editor.css'
 import { redirect } from 'next/navigation'
+import { RouterOutputs } from '@kod/server/trpc'
 
 type Props = {
-  slug: string
+  problem: NonNullable<RouterOutputs["problem"]["getBySlug"]>
 }
 
-const Editor = async ({ slug }: Props) => {
-  const problem = await KodServerTrpc.problem.getBySlug(slug)
-
-  if (!problem) {
-    return redirect("/problems")
-  }
+const Editor = ({ problem }: Props) => {
 
   return (
     <div id='k-editor' className='h-full flex flex-col max-h-screen overflow-hidden'>

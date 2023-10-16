@@ -1,6 +1,6 @@
 import { DividerVerticalIcon, PlayIcon, Share2Icon } from '@kod/icons'
 import { SyntaxThemes } from '@kod/lib/common'
-import { useKodTheme } from '@kod/lib/hoc'
+import { useKodAuth, useKodTheme } from '@kod/lib/hoc'
 import { KodTrpc } from '@kod/server/next'
 import { RouterOutputs } from '@kod/server/trpc'
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@kod/ui'
@@ -18,6 +18,7 @@ type Props = {
 type RunCodeResult = NonNullable<RouterOutputs["code"]["run"]["data"]>["result"]
 
 const Terminal = ({ editorRef, problemSlug }: Props) => {
+    const { isAuthenticated, user } = useKodAuth()
     const runCodeMutation = KodTrpc.code.run.useMutation()
     const params = useParams()
     const { theme } = useKodTheme()
@@ -30,6 +31,9 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
     // handlers
     const handleRunCode = async () => {
         try {
+            if(!isAuthenticated) {
+                //return setOutput(colorizeTerminalInput("Kodu çalıştırabilmek için giriş yapmalısın.", "ERROR"))
+            }
             const code = editorRef.current?.getValue()
             // TODO: Language, problem gibi editor için önemli olan verileri state management da tut. Zustand kullanılabilir. useEditor()
             const languageSlug = monacoToLanguageSlug(editorRef.current?.getModel()?.getLanguageId() || "")
@@ -44,7 +48,6 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
                 languageSlug,
                 problemSlug
             })
-
             console.log(result)
 
             if (result.success && result.data) {
@@ -55,7 +58,10 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
             }
 
         } catch (err: any) {
-
+            // runCodeMutation trpc error
+            if(err?.data?.code == "UNAUTHORIZED") {
+                return setOutput(colorizeTerminalInput("Kodu çalıştırabilmek için giriş yapmalısın.", "ERROR"))
+            }
         }
     }
 

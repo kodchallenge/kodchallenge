@@ -1,6 +1,6 @@
-import { publicProcedure, router } from "../../trpc";
-import { z } from "zod";
+import { router } from "../../trpc";
 
+import { publicProcedure } from "../../procedures";
 import { ZGetBySlugInput, getBySlugHandler, listHandler } from "./handler";
 
 export const problem = router({
