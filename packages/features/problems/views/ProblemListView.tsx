@@ -1,9 +1,7 @@
-import React from 'react'
-import ProblemListItem from '../components/ProblemListItem'
-import { KodServerTrpc, KodTrpc } from '@kod/server/next'
-import { Avatar, AvatarImage, Button, Card, CardContent, CardHeader, UserAvatar } from '@kod/ui'
+import { GitHubLogoIcon } from '@kod/icons'
+import { KodServerTrpc } from '@kod/server/next'
 import Link from 'next/link'
-import { ArrowTopRightIcon, GitHubLogoIcon } from '@kod/icons'
+import ProblemListItem from '../components/ProblemListItem'
 // const problems = [
 //     { id: 1, title: 'Problem 1', slug: 'problem-1', difficulty: 'easy', introduction: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget ultricies ultrices, nisl nisl ultricies nisl, nec ultricies nisl nisl eget nisl.' },
 //     { id: 2, title: 'Problem 2', slug: 'problem-2', difficulty: 'medium', introduction: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget ultricies ultrices, nisl nisl ultricies nisl, nec ultricies nisl nisl eget nisl.' },

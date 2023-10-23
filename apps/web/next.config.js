@@ -1,3 +1,5 @@
+const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin')
+
 /**
  * @type {import('next').NextConfig}
  */
@@ -7,7 +9,7 @@ module.exports = {
   experimental: {
     serverActions: true,
   },
-  webpack(config) {
+  webpack(config, { isServer }) {
     config.resolve.fallback = {
 
       // if you miss it, all the other options in fallback, specified
@@ -16,6 +18,9 @@ module.exports = {
 
       fs: false, // the solution
     };
+    if(isServer) {
+      config.plugins = [...config.plugins, new PrismaPlugin()]
+    }
 
     return config;
   },

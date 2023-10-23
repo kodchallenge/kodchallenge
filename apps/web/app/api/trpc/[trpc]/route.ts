@@ -9,7 +9,7 @@ const handler = (req: NextRequest) =>
     req,
     router: appRouter,
     createContext: () => ({
-        // prisma
+        prisma
     }),
   });
 

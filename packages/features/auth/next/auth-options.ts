@@ -16,6 +16,7 @@ export const authOptions: NextAuthOptions = {
                 usernameOrEmail: { label: "Username or email", type: "text", placeholder: "example@example.com" },
                 password: { label: "Password", type: "password" },
             },
+            // @ts-expect-error
             async authorize(credentials) {
                 if (!credentials) {
                     console.error("No credentials provided");

@@ -21,6 +21,7 @@ const Header = ({
                 <Link href={"/"} className='no-underline'>
                     <Logo />
                 </Link>
+                {/* @ts-expect-error Server Component */} 
                 <ProblemList
                     trigger={(
                         <Button variant={"ghost"}>
