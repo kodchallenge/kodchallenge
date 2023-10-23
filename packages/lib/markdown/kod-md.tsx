@@ -4,7 +4,7 @@ import rehypeRaw from "rehype-raw";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
-import './markdown.scss'
+import './markdown.css'
 import { cn } from '@kod/ui'
 import { KodThemes, useKodTheme } from '../hoc'
 import { SyntaxThemes } from '../common'

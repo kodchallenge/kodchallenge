@@ -1,0 +1,48 @@
+.kod-md {
+    @apply dark:text-foreground;
+}
+
+.kod-md>* {
+    margin-bottom: 1.5rem;
+}
+
+.kod-md input[type="checkbox"] {
+    margin: 0;
+    margin-right: 1rem;
+}
+
+.kod-md pre {
+    background-color: transparent;
+    padding: 0;
+}
+
+.kod-md code.inline {
+    @apply bg-slate-100 border-slate-300 dark:bg-slate-700 dark:border-slate-600 font-sans text-foreground/75 border;
+    font-size: .75rem;
+    font-weight: 400;
+    line-height: 1rem;
+    padding: .125rem .25rem;
+    white-space: pre-wrap;
+    border-radius: 0.25rem;
+}
+.kod-md code.inline::before {
+    content: '`';
+}
+.kod-md code.inline::after {
+    content: '`';
+}
+
+.kod-md h1,
+.kod-md h2,
+.kod-md h3,
+.kod-md h4,
+.kod-md h5,
+.kod-md h6 {
+    @apply font-sans font-semibold text-foreground;
+}
+
+.kod-md strong,
+.kod-md b {
+    @apply text-foreground;
+    font-weight: 900;
+}
