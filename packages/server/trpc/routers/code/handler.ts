@@ -2,6 +2,7 @@ import { z } from "zod"
 import { prisma } from '@kod/prisma'
 import { kodCompilerRun } from "@kod/compiler"
 import { getProblemIO, kodProblemPath } from "../../../common/problem"
+import { KodTRPCContext } from "../../contex"
 
 export const ZRunInput = z.object({
     code: z.string(),
@@ -11,9 +12,10 @@ export const ZRunInput = z.object({
 
 export type TZRunInput = z.infer<typeof ZRunInput>
 
-export const runHandler = async ({ input }: { input: TZRunInput }) => {
+export const runHandler = async ({ input, ctx }: { input: TZRunInput, ctx: KodTRPCContext }) => {
     const path = await import('path')
     const fse = await import('fs-extra')
+    const { prisma } = ctx;
     try {
 
         const { code, languageSlug, problemSlug } = input
