@@ -62,6 +62,8 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
             if(err?.data?.code == "UNAUTHORIZED") {
                 return setOutput(colorizeTerminalInput("Kodu çalıştırabilmek için giriş yapmalısın.", "ERROR"))
             }
+            
+            setOutput(colorizeTerminalInput("Bir hata oluştu.", "ERROR"))
         }
     }
 
