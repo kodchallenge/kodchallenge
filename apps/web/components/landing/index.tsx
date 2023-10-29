@@ -89,7 +89,7 @@ const index = () => {
             </section>
 
             {/* Teams */}
-            <section className="relative md:py-24 py-16 overflow-hidden">
+            {/* <section className="relative md:py-24 py-16 overflow-hidden">
                 <div className="grid grid-cols-1 pb-8 text-center">
                     <h3 className="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Ekip</h3>
                 </div>
@@ -108,7 +108,7 @@ const index = () => {
                         </div>
                     ))}
                 </div>
-            </section>
+            </section> */}
 
         </main>
     )

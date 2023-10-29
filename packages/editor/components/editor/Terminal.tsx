@@ -1,7 +1,7 @@
 import { DividerVerticalIcon, PlayIcon, Share2Icon } from '@kod/icons'
 import { SyntaxThemes } from '@kod/lib/common'
 import { useKodAuth, useKodTheme } from '@kod/lib/hoc'
-import { KodTrpc } from '@kod/server/next'
+import { KodServerTrpc, KodTrpc, useKodServerAction } from '@kod/server/next'
 import { RouterOutputs } from '@kod/server/trpc'
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@kod/ui'
 import { editor } from 'monaco-editor'
@@ -10,6 +10,7 @@ import { useState } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { monacoToLanguageSlug } from '../../lib/monaco-extends'
 import { colorizeTerminalInput, colorizeTerminalOutput } from '../../lib/terminal'
+import { runCodeServerAction } from './_actions'
 
 type Props = {
     editorRef: React.MutableRefObject<editor.IStandaloneCodeEditor | null>,
@@ -19,7 +20,17 @@ type RunCodeResult = NonNullable<RouterOutputs["code"]["run"]["data"]>["result"]
 
 const Terminal = ({ editorRef, problemSlug }: Props) => {
     const { isAuthenticated, user } = useKodAuth()
-    const runCodeMutation = KodTrpc.code.run.useMutation()
+    const runCodeMutation = useKodServerAction(runCodeServerAction, {
+        onSuccess: (result) => {
+            if (result.success && result.data) {
+                setCodeResult(result.data.result)
+                setOutput("")
+            } else {
+                setOutput(colorizeTerminalInput(result.error || result.message, "ERROR"))
+            }
+        }
+    })
+    // const runCodeMutation = KodTrpc.code.run.useMutation()
     const params = useParams()
     const { theme } = useKodTheme()
 
@@ -43,19 +54,11 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
 
             setOutput(colorizeTerminalInput("Çalıştırılıyor...", "SUCCESS"))
             setCodeResult(null)
-            const result = await runCodeMutation.mutateAsync({
+            await runCodeMutation.mutateAsync({
                 code,
                 languageSlug,
                 problemSlug
             })
-            console.log(result)
-
-            if (result.success && result.data) {
-                setCodeResult(result.data.result)
-                setOutput("")
-            } else {
-                setOutput(colorizeTerminalInput(result.error || result.message, "ERROR"))
-            }
 
         } catch (err: any) {
             // runCodeMutation trpc error
@@ -92,7 +95,7 @@ const Terminal = ({ editorRef, problemSlug }: Props) => {
             <div className='h-0 flex-auto overflow-auto p-2'>
                 <div className='h-full overflow-y-auto'>
                     <TabsContent value="output">
-                        {(runCodeMutation.isLoading || output) && <div className={"font-code text-sm"} dangerouslySetInnerHTML={{ __html: colorizeTerminalOutput(output) }} />}
+                        {(runCodeMutation.status == "loading" || output) && <div className={"font-code text-sm"} dangerouslySetInnerHTML={{ __html: colorizeTerminalOutput(output) }} />}
                         {codeResult?.cases && (
                             <div className='flex flex-col space-y-5'>
                                 <div className={`${codeResult.cases?.some(x => !x.status) || codeResult.cases.length < 1 ? "bg-destructive/75" : "bg-success/75"}`}>

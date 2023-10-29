@@ -2,7 +2,7 @@ import { TRPCError } from '@trpc/server';
 import { KodTRPCContext } from '../contex'
 import { middleware } from '../trpc';
 
-const getAuth = async (ctx: KodTRPCContext) => {
+export const getAuth = async (ctx: KodTRPCContext) => {
     const { prisma } = ctx;
     const { getSession: getNextSession } = await import("@kod/features/auth/next")
     const session = await getNextSession()

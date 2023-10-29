@@ -4,3 +4,5 @@ export { appRouter } from './routers'
 
 export { createContext } from './contex'
 export type { KodTRPCContext } from './contex'
+
+export { createAction as createKodAction } from './create-action'
