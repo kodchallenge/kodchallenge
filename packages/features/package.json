@@ -1,0 +1,23 @@
+{
+  "name": "@kod/features",
+  "version": "1.0.0",
+  "description": "KodChallenge Features",
+  "main": "index.ts",
+  "repository": "https://github.com/kodchallenge/kodchallenge",
+  "author": "Yasin Torun",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@kod/icons": "*",
+    "@kod/ui": "*",
+    "@kod/server": "*",
+    "@kod/lib": "*"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  },
+  "peerDependencies": {
+    "next": "^13.4.19",
+    "react": "^18.2.0"
+  }
+}

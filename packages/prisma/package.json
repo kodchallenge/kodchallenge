@@ -1,0 +1,17 @@
+{
+  "name": "@kod/prisma",
+  "version": "1.0.0",
+  "description": "KodChallenge Database ORM",
+  "main": "index.ts",
+  "repository": "https://github.com/kodchallenge/kodchallenge",
+  "author": "Yasin Torun",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@prisma/client": "^5.2.0",
+    "prisma": "^5.2.0"
+  },
+  "devDependencies": {
+    "@prisma/nextjs-monorepo-workaround-plugin": "^5.4.2"
+  }
+}

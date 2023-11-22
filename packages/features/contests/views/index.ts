@@ -1,0 +1,1 @@
+export { default as ContestLandingPage } from './landing'

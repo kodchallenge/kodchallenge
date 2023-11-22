@@ -1,65 +1,32 @@
 {
   "name": "kodchallenge",
-  "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@monaco-editor/react": "^4.5.1",
-    "@radix-ui/react-alert-dialog": "^1.0.4",
-    "@radix-ui/react-avatar": "^1.0.3",
-    "@radix-ui/react-checkbox": "^1.0.4",
-    "@radix-ui/react-dialog": "^1.0.4",
-    "@radix-ui/react-icons": "^1.3.0",
-    "@radix-ui/react-navigation-menu": "^1.1.3",
-    "@radix-ui/react-popover": "^1.0.6",
-    "@radix-ui/react-slot": "^1.0.2",
-    "@radix-ui/react-switch": "^1.0.3",
-    "@radix-ui/react-tabs": "^1.0.4",
-    "@tanstack/react-query": "^4.32.6",
-    "@types/node": "20.3.1",
-    "@types/react": "18.2.12",
-    "@types/react-dom": "18.2.5",
-    "autoprefixer": "10.4.14",
-    "class-variance-authority": "^0.6.1",
-    "clsx": "^1.2.1",
-    "cmdk": "^0.2.0",
-    "cookies-next": "^3.0.0",
-    "deepmerge": "^4.3.1",
-    "dotenv": "^16.3.1",
-    "eslint": "8.43.0",
-    "eslint-config-next": "13.4.6",
-    "framer-motion": "^10.12.18",
-    "moment": "^2.29.4",
-    "monaco-editor": "^0.40.0",
-    "next": "13.4.6",
-    "next-auth": "^4.23.1",
-    "next-themes": "^0.2.1",
-    "postcss": "8.4.24",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-markdown": "^8.0.7",
-    "react-spinners": "^0.13.8",
-    "react-split": "^2.0.14",
-    "react-syntax-highlighter": "^15.5.0",
-    "remark-gfm": "^3.0.1",
-    "sass": "^1.63.6",
-    "sequelize": "^6.32.1",
-    "tailwind-merge": "^1.13.2",
-    "tailwindcss": "3.3.2",
-    "tailwindcss-animate": "^1.0.6",
-    "typescript": "5.1.3"
+    "build": "turbo run build",
+    "dev": "turbo run dev --concurrency 11",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "ui:add": "yarn workspace @kod/ui ui:add",
+    "db:generate": "prisma generate",
+    "install-compiler": "node scripts/install-compiler.js"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.9",
-    "@types/react-syntax-highlighter": "^15.5.7",
-    "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-import": "^15.1.0",
-    "postcss-preset-env": "^8.5.1",
-    "precss": "^4.0.0"
+    "eslint": "^8.48.0",
+    "prettier": "^3.0.3",
+    "tsconfig": "*",
+    "turbo": "latest"
+  },
+  "packageManager": "yarn@1.22.19",
+  "prisma": {
+    "schema": "packages/prisma/schema.prisma"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
   }
 }
