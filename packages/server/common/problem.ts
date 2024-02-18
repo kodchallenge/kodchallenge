@@ -23,3 +23,15 @@ export const getProblemIO = (slug: string): {
         output: string;
     }[]
 }
+
+export const getProblemLanguages = (slug: string) => {
+    return fs.readdirSync(getProblemPath(slug), {withFileTypes: true}).filter(item => item.isDirectory()).map(x => x.name)
+}
+
+export const getProblemSolution = (slug: string, language: string) => {
+    const solutionPath = path.join(getProblemPath(slug), 'solution.' + language)
+    if(fs.existsSync(solutionPath)) {
+        return fs.readFileSync(solutionPath, 'utf-8')
+    }
+    return fs.readFileSync(path.join(getProblemPath(slug), language, 'Solution.' + language), 'utf-8')
+}

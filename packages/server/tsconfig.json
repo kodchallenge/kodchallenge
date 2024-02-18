@@ -2,6 +2,7 @@
   "extends": "tsconfig/react-library.json",
   "include": [
     "trpc",
+    "models",
     "../lib/next-auth.d.ts"
   ]
 }

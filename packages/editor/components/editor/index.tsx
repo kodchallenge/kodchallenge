@@ -20,15 +20,15 @@ type Props = {
   problem: NonNullable<RouterOutputs["problem"]["getBySlug"]>
 }
 
-type Language = Props["problem"]["base_codes"][number]["languages"]
+type Language = Props["problem"]["base_codes"][number]["language"]
 
 const KodEditor = ({ problem }: Props) => {
-  const [editorLanguage, setEditorLanguage] = useState<Language>(KodStorage.getObject(StorageKeys.CURRENT_LANGUAGE) ?? problem.base_codes[0].languages);
+  const [editorLanguage, setEditorLanguage] = useState<Language>(KodStorage.getObject(StorageKeys.CURRENT_LANGUAGE) ?? problem.base_codes[0].language);
   const editorRef = React.useRef<editor.IStandaloneCodeEditor | null>(null)
   const { theme } = useKodTheme()
 
   const getProblemCode = useCallback(() => {
-    return problem?.base_codes.find(baseCode => baseCode.language_id == editorLanguage.id)?.code ?? ""
+    return problem?.base_codes.find(baseCode => baseCode.language.slug == editorLanguage.slug)?.code ?? ""
   }, [problem, editorLanguage])
 
   const problemDefaultCode = useMemo(() => {
@@ -59,7 +59,7 @@ const KodEditor = ({ problem }: Props) => {
           <div className='h-10 border-b'>
             <div className='h-full flex justify-between items-center px-2'>
               <LanguageSelect
-                data={problem.base_codes.map(x => x.languages)}
+                data={problem.base_codes.map(x => x.language)}
                 selected={editorLanguage}
                 onSelect={setEditorLanguage}
               />

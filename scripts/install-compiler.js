@@ -15,13 +15,16 @@ compilers.forEach((compiler) => {
         const compilerDockerfilePath = path.join(COMPILER_DOCKER_IMAGES_PATH, compiler);
         const compilerDockerImageName = `${compiler.split('.')[0]}_app`; // _app using the kodchallenge packages :(
 
-        exec(`docker build -t ${compilerDockerImageName} -f ${compilerDockerfilePath} .`, (error, stdout, stderr) => {
+        var buildExec = exec(`docker build -t ${compilerDockerImageName} -f ${compilerDockerfilePath} .`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`\x1b[31mError building docker image for ${compiler}: ${error}\x1b[0m`);
                 return;
             }
 
             console.log(`\x1b[32mSuccess building docker image for ${compiler}\x1b[0m`);
+        });
+        buildExec.stdout.on("data", (data) => {
+            console.log(data);
         });
     } catch(err) {
         console.error(`\x1b[31mError building docker image for ${compiler}: ${err}\x1b[0m`);

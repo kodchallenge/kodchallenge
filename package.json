@@ -12,7 +12,9 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "ui:add": "yarn workspace @kod/ui ui:add",
     "db:generate": "prisma generate",
-    "install-compiler": "node scripts/install-compiler.js"
+    "db-migrate": "npx prisma migrate dev --create-only",
+    "install-compiler": "node scripts/install-compiler.js",
+    "install:submodules": "git submodule update --init --recursive"
   },
   "devDependencies": {
     "eslint": "^8.48.0",

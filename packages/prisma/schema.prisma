@@ -1,10 +1,17 @@
+generator zod {
+  provider      = "zod-prisma"
+  output        = "./zod"
+  imports       = "./zod-utils"
+  relationModel = "default"
+}
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgres://postgres:xd@localhost:5432/kodchallenge"
 }
 
 model categories {
@@ -13,20 +20,10 @@ model categories {
   problems problems[]
 }
 
-model base_codes {
-  id          Int       @id @default(autoincrement())
-  code        String    @db.VarChar
-  language_id Int
-  problem_id  Int
-  languages   languages @relation(fields: [language_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  problems    problems  @relation(fields: [problem_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
-
 model languages {
   id         Int          @id @default(autoincrement())
   name       String       @db.VarChar
   slug       String       @db.VarChar
-  base_codes base_codes[]
 
   @@unique([slug], map: "language_slug_ukey")
 }
@@ -44,7 +41,6 @@ model problems {
   difficulty  String       @db.VarChar
   category_id Int
   subtitle    String?      @db.VarChar(255)
-  base_codes  base_codes[]
   categories  categories   @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   solutions   solutions[]
 }

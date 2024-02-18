@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { KodStorage } from '@kod/lib/storage'
 import { StorageKeys } from '../../constants'
 type Props = {
-    data: NonNullable<RouterOutputs["problem"]["getBySlug"]>["base_codes"][number]["languages"][], // WTF? Why is this so complicated?
+    data: NonNullable<RouterOutputs["problem"]["getBySlug"]>["base_codes"][number]["language"][], // WTF? Why is this so complicated?
     selected: Props["data"][number],
     onSelect: (lang: Props["data"][number]) => void
 }
@@ -46,7 +46,7 @@ const LanguageSelect = ({
                                 <CheckIcon
                                     className={cn(
                                         "mr-2 h-4 w-4",
-                                        language?.id === lang.id ? "opacity-100" : "opacity-0"
+                                        language?.slug === lang.slug ? "opacity-100" : "opacity-0"
                                     )}
                                 />
                                 {lang.name}
