@@ -46,13 +46,14 @@ export const runHandler = async ({ input, ctx }: { input: TZRunInput, ctx: KodTR
 
         fse.writeFileSync(path.join(solutionPath, 'solution.' + language.slug), code)
 
-        const io = getProblemIO(problemSlug)
+        const io = getProblemIO(problemSlug)  
 
         const codeResult = await kodCompilerRun({
             cases: io,
             languageSlug,
             solutionPath,
         })
+        console.log(codeResult)
 
         const solution = await prisma.solutions.create({
             data: {

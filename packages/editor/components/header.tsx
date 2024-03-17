@@ -18,10 +18,9 @@ const Header = ({
     return (
         <header className='flex shadow items-center justify-between px-4 py-2 bg-background'>
             <div className='flex items-center justify-start space-x-3 e-header-start w-auto md:w-[300px]'>
-                <Link href={"/"} className='no-underline'>
+                <Link href={"/problems"} className='no-underline'>
                     <Logo />
                 </Link>
-                {/* @ts-expect-error Server Component */} 
                 <ProblemList
                     trigger={(
                         <Button variant={"ghost"}>
@@ -40,7 +39,7 @@ const Header = ({
             </div>
             <div className='flex items-center justify-end space-x-3 e-header-end w-auto md:w-[300px]'>
                 <div>
-                    <ThemeToggleButton />
+                    {/* <ThemeToggleButton /> */}
                 </div>
                 <UserDropdownOrAuth />
             </div>

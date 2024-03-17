@@ -6,15 +6,17 @@ export const getAuth = async (ctx: KodTRPCContext) => {
     const { prisma } = ctx;
     const { getSession: getNextSession } = await import("@kod/features/auth/next")
     const session = await getNextSession()
+    console.log(session)
     if (!session?.user || !session.user.id) return null;
-
+    
     const user = await prisma.users.findUnique({
         where: {
             id: session.user.id,
-            is_deleted: false,
-            is_verified: true
+            // is_deleted: false,
+            // is_verified: true
         },
     })
+    console.log(">>> ", user)
     return user;
 }
 

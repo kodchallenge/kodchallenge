@@ -13,6 +13,7 @@ export type RunCodeProps = {
 }
 
 const WORKDIR = '/usr/src/kod/solution'
+const MAX_RUN_TIME = 10;
 
 export const run = async ({
     solutionPath,
@@ -54,6 +55,7 @@ export const run = async ({
                 try {
                     const runCommand = `${command} ${input}`
                     const runExec = exec(`docker exec -i ${container} sh -c "cd ${WORKDIR} && ${runCommand}"`, (err, stdout, stderr) => {
+                        console.log(err, stdout.toString(), stderr.toString())
                         if (stderr) {
                             caseResult.build = true
                             caseResult.output = stderr
@@ -64,10 +66,11 @@ export const run = async ({
                         resolve(caseResult)
                     })
                     setTimeout(() => {
+                        console.log('timeout')
                         caseResult.timeout = true
                         runExec.kill()
                         resolve(caseResult)
-                    }, 1000)
+                    }, 1000 * MAX_RUN_TIME)
                 } catch (err: any) {
                     caseResult.build = true
                     caseResult.output = err.message

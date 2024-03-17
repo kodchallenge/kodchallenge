@@ -28,6 +28,7 @@ export const trpc = experimental_createTRPCNextAppDirClient<AppRouter>({
     }
 });
 
+// @ts-ignore
 export const useAction = experimental_createActionHook<AppRouter>({
     links: [loggerLink(), experimental_serverActionLink()],
     transformer: superjson,

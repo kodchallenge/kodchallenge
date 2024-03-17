@@ -7,7 +7,9 @@ module.exports = {
   reactStrictMode: true,
   transpilePackages: ["ui"],
   experimental: {
-    serverActions: true,
+    serverActions: {
+      allowedOrigins: ["*"],
+    },
   },
   webpack(config, { isServer }) {
     config.resolve.fallback = {

@@ -6,8 +6,6 @@ export const _problemsModel = z.object({
   id: z.number().int(),
   title: z.string(),
   slug: z.string(),
-  description: z.string(),
-  io: z.string(),
   icon: z.string(),
   score: z.number().int(),
   is_private: z.boolean(),

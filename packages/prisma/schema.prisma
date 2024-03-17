@@ -32,8 +32,6 @@ model problems {
   id          Int          @id @default(autoincrement())
   title       String       @db.VarChar
   slug        String       @db.VarChar
-  description String       @db.VarChar
-  io          String       @db.VarChar
   icon        String       @db.VarChar
   score       Int
   is_private  Boolean

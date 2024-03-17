@@ -13,10 +13,10 @@ import {
 import Link from "next/link";
 
 const navs = [
-    { name: "Problemler", to: "/problems" },
-    { name: "Yarışmalar", to: "/contests" },
+    // { name: "Problemler", to: "/problems" },
+    // { name: "Yarışmalar", to: "/contests" },
     // { name: "Etkinlikler", to: "/challenges" },
-    { name: "Projeler", to: "/projects" },
+    // { name: "Projeler", to: "/projects" },
 ]
 
 const Header = () => {
@@ -65,11 +65,11 @@ const Header = () => {
                     <div className="flex items-center space-x-2">
                         {!isAuthenticated ? (
                             <>
-                                <Link href={"/auth/login"}>
+                                {/* <Link href={"/auth/login"}>
                                     Giriş Yap
-                                </Link>
-                                <Link href={"/auth/register"}>
-                                    <Button>Kayıt Ol</Button>
+                                </Link> */}
+                                <Link href={"/auth/login"}>
+                                    <Button>Giriş Yap</Button>
                                 </Link>
                             </>
                         ) : (

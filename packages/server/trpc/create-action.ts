@@ -5,10 +5,8 @@ import { prisma } from "@kod/prisma";
 
 export const createAction = experimental_createServerActionHandler(kodTRPCContext, {
     async createContext() {
-        const user = await getAuth({ prisma })
         return {
             prisma,
-            user: user || undefined
         }
     }
 })

@@ -1,13 +1,12 @@
 "use client"
-import ReactMarkdown from 'react-markdown'
+import { cn } from '@kod/ui';
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import rehypeRaw from "rehype-raw";
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import remarkGfm from 'remark-gfm'
-import './markdown.css'
-import { cn } from '@kod/ui'
-import { KodThemes, useKodTheme } from '../hoc'
-import { SyntaxThemes } from '../common'
+import remarkGfm from 'remark-gfm';
+import { SyntaxThemes } from '../common';
+import { useKodTheme } from '../hoc';
+import './markdown.css';
 type Props = {
     markdown: string;
 }
@@ -17,7 +16,7 @@ const KodMarkdown = ({ markdown }: Props) => {
     const { theme } = useKodTheme()
     return (
         <ReactMarkdown
-            className='kod-md prose prose-sm md:prose !max-w-full w-full'
+            className='kod-md !max-w-full w-full'
             remarkPlugins={[remarkGfm]}
             // @ts-ignore
             rehypePlugins={[rehypeRaw]}

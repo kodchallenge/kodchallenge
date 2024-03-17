@@ -1,7 +1,9 @@
+import "server-only";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
 import { appRouter } from "@kod/server/trpc";
 import { NextRequest } from "next/server";
+import { prisma } from "@kod/prisma";
 
 const handler = (req: NextRequest) =>
   fetchRequestHandler({
