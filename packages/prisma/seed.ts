@@ -2,6 +2,10 @@ import { prisma } from '.'
 
 
 const main = async () => {
+
+    // Create kodchallenge database
+    await prisma.$executeRaw`CREATE DATABASE IF NOT EXISTS kodchallenge;`;
+
     const user = await prisma.users.create({
         data: {
             email: 'admin@kodchallenge.com',
