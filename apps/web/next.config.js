@@ -5,6 +5,7 @@ const { PrismaPlugin } = require('@prisma/nextjs-monorepo-workaround-plugin')
  */
 module.exports = {
   reactStrictMode: true,
+  distDir: '../../dist',
   transpilePackages: ["ui"],
   experimental: {
     serverActions: {
@@ -23,6 +24,8 @@ module.exports = {
     if(isServer) {
       config.plugins = [...config.plugins, new PrismaPlugin()]
     }
+    if (config.name === 'server')
+      config.optimization.concatenateModules = false;
 
     return config;
   },

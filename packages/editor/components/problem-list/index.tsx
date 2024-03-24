@@ -8,7 +8,8 @@ type Props = {
   trigger: React.ReactNode
 }
 
-const ProblemList = async ({ trigger }: Props) => {
+//@ts-ignore
+const ProblemList: React.FunctionComponent<Props> = async ({ trigger }: Props) => {
   const problems = await KodServerTrpc.problem.getAll()
 
   return (

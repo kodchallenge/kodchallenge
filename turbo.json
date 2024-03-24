@@ -8,6 +8,11 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
+    "start": {           
+      "dependsOn": ["^start"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "db:seed": {},
     "lint": {},
     "dev": {
       "cache": false,

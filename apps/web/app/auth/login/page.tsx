@@ -1,13 +1,13 @@
 "use client"
 import AuthCard from '@/components/auth/auth-card'
-import { Button, Input } from '@kod/ui'
-import { GitHubLogoIcon } from '@kod/icons'
-import Link from 'next/link'
-import { useSearchParams, useRouter } from 'next/navigation'
-import { FormEvent, useEffect, useState } from 'react'
 import { LINKS } from '@/utils/constants'
 import { AuthErrors, login } from '@kod/features/auth/next'
+import { GitHubLogoIcon } from '@kod/icons'
 import { useKodAuth } from '@kod/lib/hoc'
+import { Button, Input } from '@kod/ui'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import React, { FormEvent, useEffect, useState } from 'react'
 
 const authErrorMessages: { [key: string]: string } = {
     [AuthErrors.MISSING_CREDENTIALS]: "Kullanıcı adı veya şifre boş bırakılamaz",
@@ -35,18 +35,15 @@ const page = () => {
         else setError(authErrorMessages[res.error] || "Bir hata oluştu")
         setLoading(false)
     }
-    const searchParams = useSearchParams()
-
-    // useEffect(() => {
-    //     if (searchParams.get('error')) setError("Kullanıcı adı veya şifre hatalı")
-    // }, [searchParams])
-
-    if(isAuthenticated) {
-        router.push("/")
-    }
+    useEffect(() => {
+        if(isAuthenticated) router.push("/")
+    }, [isAuthenticated])
+    // if(isAuthenticated) {
+    //     redirect("/")
+    // }
 
     return (
-        <>
+        <React.Fragment>
             <AuthCard description="KodChallenge'a Hoşgeldin!">
                 <form onSubmit={handleSubmit}>
                     <div className="grid w-full items-center gap-4">
@@ -89,7 +86,7 @@ const page = () => {
                     <Button variant='link' className='text-primary'>Kayıt Ol</Button>
                 </Link>
             </p>
-        </>
+        </React.Fragment>
     )
 }
 
